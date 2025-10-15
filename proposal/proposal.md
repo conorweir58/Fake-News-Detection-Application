@@ -52,6 +52,7 @@ For the implementation of this project, we decided to use the following programm
 ### Programming Tools
 
 We will be using tools, frameworks and libraries for development including:
+
 **Frontend Tools**
 - React: This will be used to handle the user interface and authentification
 - Tailwind CSS: A CSS framework used for styling our webapp
