@@ -43,7 +43,24 @@ This analysis will include a number of metrics which will determine an overall "
 
 ### Programming Languages
 
+For the implementation of this project, we decided to use the following programming languages:
+- Python: Used for the backend logic. Importing text extraction libraries and natural language processors and integrating with different analytical models.
+- Javascript: Used for building the UI along with React. It will also handle user interaction and communication with API's in the backend
+- HTML & CSS: We will be using this to structure the webapp along with the Tailwind CSS tool for design purposes.
+
+
 ### Programming Tools
+
+We will be using tools, frameworks and libraries for development including:
+**Frontend Tools**
+- React: This will be used to handle the user interface and authentification
+- Tailwind CSS: A CSS framework used for styling our webapp
+- Axios/ Fetch API: Used to send HTTPS requests to backend
+
+**Backend Tools**
+- Django: Used for our backend functionality, user authentification, and database
+- newspaper3k: Text extraction tool from a python library used to get article metadata
+- Docker: Used for containerisation and deployment of our webapp
 
 ### Learning Challenges
 
