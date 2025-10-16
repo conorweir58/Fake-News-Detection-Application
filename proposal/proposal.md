@@ -26,9 +26,9 @@
 
 ### Description of Project
 
-In the current world of politics and news, and the ease of submitting opinions and information to public news platforms, the pressence of inacurate, misleading and fake news has become a serious issue, swaying the public's opinions based on a manipulative narrative. KeepItReal is a proposed web-based application for assisting users in accurately browsing news online by helping detect fake and unreliable news and information.
+In the current world of politics and news, and the ease of submitting opinions and information to public news platforms, the presence of inaccurate, misleading and fake news has become a serious issue, swaying the public's opinions based on a manipulative narrative. KeepItReal is a proposed web-based application for assisting users in accurately browsing news online by helping detect fake and unreliable news and information.
 
-The project provides an interface for users to upload news articles to be checked for accuracy of information and reliability using our frontend web application through the form of the url to the article. The frontend of the web application will be designed using React and the backend using Django, as well as maintaing a database of users and their previous uploads to the web app. The url from the frontend is then sent to our web applications backend where it is parsed, the article data (such as title, authors, publish date, article text, images, etc.) are extracted, and then analysed for this accuracy and reliability.
+The project provides an interface for users to upload news articles to be checked for accuracy of information and reliability using our frontend web application through the form of the url to the article. The frontend of the web application will be designed using React and the backend using Django, as well as maintaining a database of users and their previous uploads to the web app. The url from the frontend is then sent to our web applications backend where it is parsed, the article data (such as title, authors, publish date, article text, images, etc.) are extracted, and then analysed for this accuracy and reliability.
 
 This analysis will include a number of metrics which will determine an overall "Trustworthiness", as well as a confidence in this answer. On top of this, each metric will provide a block of reasoning behind the answer, which will allow us to inform the user how we came to this conclusion on this article of news. These metrics include:
 
@@ -38,10 +38,16 @@ This analysis will include a number of metrics which will determine an overall "
 - A bias analysis to check the article for potential bias which could sway the reliability of the news piece.
 - A comparison of the consistency of image location and text location.
 - An emotional analysis of the article.
+- An AI generation detection analysis of the article
+
+Each analysis metric is applied a weight to it's result, representing it's importance to the overall confidence/trustworthiness score of the piece of news. Given the results of each analysis metric, we will build a breakdown of our results, with our final score and reasoning behind this score based on the individual scores from each metric (for example an article's claims may be deemed as truthful but it may still not have a high trustworthiness due to a high AI generation detection score).
+
+This is then sent the frontend to be displayed to the user for them to be more informed on the potential of "fakeness" within the provided news article. For each user, each upload analysis is saved in a database to be looked back on at any time.  
 
 ### Division of Work
 
 #### Joint Responsibilities
+
 - Creating and formatting documentation
 - Project planning
 - Research into tools
@@ -49,6 +55,7 @@ This analysis will include a number of metrics which will determine an overall "
 - Testing and Debugging
 
 #### Andrew Brady's Responsibilities
+
 - Backend development using Django
 - REST API development
 - Backend user authentication
@@ -56,13 +63,12 @@ This analysis will include a number of metrics which will determine an overall "
 - Integration of fake news detection model
 
 #### Conor Weir's Responsibilities
+
 - Frontend development using React
 - UI/UX design with Tailwind CSS
 - Article text extraction using assorted tools/libraries
 - Integration of external API's
 - Testing and finetuning pretrained models
-
-
 
 ### Programming Languages
 
@@ -78,12 +84,12 @@ We will be using tools, frameworks and libraries for development including:
 
 #### Frontend Tools
 
-- **React:** Used to handle the user interface and authentification.
+- **React:** Used to handle the user interface and authentication.
 - **Tailwind CSS:** CSS framework used for styling our webapp.
 
 #### Backend Tools
 
-- **Django:** Used for our backend functionality and user authentification.
+- **Django:** Used for our backend functionality and user authentication.
 - **PostgreSQL:** Database for storing user related information - Scalable with good performance.
 
 #### Article/Image Extraction Tools
@@ -124,6 +130,6 @@ We will be using tools, frameworks and libraries for development including:
 - **Hardware:** Any Computer with access to internet
 - **Software:** Windows, Linux or macOS
 
-### Special Hardware/Software Requirments
+### Special Hardware/Software Requirements
 
-No special hardware/software requirments.
+No special hardware/software requirements.
