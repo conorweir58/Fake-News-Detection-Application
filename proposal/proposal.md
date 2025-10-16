@@ -41,6 +41,29 @@ This analysis will include a number of metrics which will determine an overall "
 
 ### Division of Work
 
+#### Joint Responsibilities
+- Creating and formatting documentation
+- Project planning
+- Research into tools
+- Integration of the frontend and backend
+- Testing and Debugging
+
+#### Andrew Brady's Responsibilities
+- Backend development using Django
+- REST API development
+- Backend user authentication
+- Using PostgreSQL for database design
+- Integration of fake news detection model
+
+#### Conor Weir's Responsibilities
+- Frontend development using React
+- UI/UX design with Tailwind CSS
+- Article text extraction using assorted tools/libraries
+- Integration of external API's
+- Testing and finetuning pretrained models
+
+
+
 ### Programming Languages
 
 For the implementation of this project, we decided to use the following programming languages:
