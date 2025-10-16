@@ -36,35 +36,71 @@ This analysis will include a number of metrics which will determine an overall "
 - A query of the "Google Fact Check Tools" API for similar articles related to the title, keywords or images present in the current article.
 - A sentiment analysis to review if the author has taken a positive, neutral or negative view on the topic.
 - A bias analysis to check the article for potential bias which could sway the reliability of the news piece.
-- A comparison of the consistency of image location and text location
-- An emotional analysis of the article
+- A comparison of the consistency of image location and text location.
+- An emotional analysis of the article.
 
 ### Division of Work
 
 ### Programming Languages
 
 For the implementation of this project, we decided to use the following programming languages:
-- Python: Used for the backend logic. Importing text extraction libraries and natural language processors and integrating with different analytical models.
-- Javascript: Used for building the UI along with React. It will also handle user interaction and communication with API's in the backend
-- HTML & CSS: We will be using this to structure the webapp along with the Tailwind CSS tool for design purposes.
 
+- **Python:** Used for the backend logic with the Django framework. Also used for importing text extraction libraries and natural language processors and integrating with different analytical models and APIs used to conduct our analysis.
+- **Javascript:** Used for building the frontend User Interface with the React framework - also handles user interaction and communication with API's in the backend.
+- **HTML & CSS:** We will be using this to structure the webapp along with Tailwind CSS for design purposes.
 
 ### Programming Tools
 
 We will be using tools, frameworks and libraries for development including:
 
-**Frontend Tools**
-- React: This will be used to handle the user interface and authentification
-- Tailwind CSS: A CSS framework used for styling our webapp
-- Axios/ Fetch API: Used to send HTTPS requests to backend
+#### Frontend Tools
 
-**Backend Tools**
-- Django: Used for our backend functionality, user authentification, and database
-- newspaper3k: Text extraction tool from a python library used to get article metadata
-- Docker: Used for containerisation and deployment of our webapp
+- **React:** Used to handle the user interface and authentification.
+- **Tailwind CSS:** CSS framework used for styling our webapp.
+
+#### Backend Tools
+
+- **Django:** Used for our backend functionality and user authentification.
+- **PostgreSQL:** Database for storing user related information - Scalable with good performance.
+
+#### Article/Image Extraction Tools
+
+- **newspaper3k:** Python library from article and image scraping from urls (like requests and beautifulsoup libraries combined).
+- **pypdf:** Python library from extracting articles of text from pdfs.
+- **Docxtract:** API for extracting text from .doc/.docx, .ppt/.pptx, .md and .txt files.
+
+#### Analysis Tools
+
+- **Pulk17 Pretrained Fake News Detection Model:** Pretrained model which classifies articles of text as real or fake, with a confidence score.
+- **Twinword Text Analysis Bundle:** API with multiple functionalities around analysing human text, such as Sentiment Analysis.
+- **Google Fact Check Tools API:** Google API for querying manually fact checked articles.
+- **Biaslyze:** Python library that conducts an analysis of text for bias using NLP models.
+- **Hello-SimpleAI AI Detector Model:** Pretrained model for detecting Human vs. ChatGPT text with a confidence score.
+
+#### Deployment Tools
+
+- **Docker:** Used for containerisation and deployment of our webapp.
+
+#### DevOps Tools
+
+- **Git:** Version control for the project and allows for collaboration between students.
 
 ### Learning Challenges
 
+1. Utilizing, testing and finetuning pretrained models.
+2. Extracting content and metadata from different forms of media (including websites, pdfs, docs, etc.).
+3. Ensuring efficient runtimes while managing all models, APIs and libraries used.
+4. Merging the information gathered from analysis using all the different models, APIs and libraries.
+5. Balancing the weight given to each analysis metric for optimum accuracy scores.
+6. Integrating frontend information with the backend analysis tools.
+7. Frontend design using Tailwind CSS.
+8. Handling user information (such as logins) using our backend and PostgreSQL.
+
 ### Hardware/Software Platform
 
+- **Hardware:** Any Computer with access to internet
+- **Software:** Windows, Linux or macOS
+
 ### Special Hardware/Software Requirments
+
+No special hardware/software requirments.
