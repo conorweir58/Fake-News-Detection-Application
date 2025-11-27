@@ -161,54 +161,77 @@ Specify general purpose of the product
 
 ### 2.1.1 Software Interfaces
 
-**Name:** React
-**Version:** latest 19.2
-**Source:** React
+#### React
 
-**Name:**  Tailwind CSS
-**Version:** 4.0
-**Source:** Tailwind CSS - Rapidly build modern websites without ever leaving your HTML.
+- **Name:** React
+- **Version:** latest 19.2
+- **Source:** React
 
-**Name:**  Django
-**Version:** 5.2.8
-**Source:** The web framework for perfectionists with deadlines | Django
+#### Tailwind CSS 
 
-**Name:**  PostgreSQL
-**Version:** 18
-**Source:** PostgreSQL: The world's most advanced open source database
+- **Name:**  Tailwind CSS
+- **Version:** 4.0
+- **Source:** Tailwind CSS - Rapidly build modern websites without ever leaving your HTML.
 
-**Name:**  Newspaper3k
-**Version:** pypi package 0.2.8
-**Source:** newspaper3k · PyPI
+#### Django 
 
-**Name:** Pypdf 
-**Version:** N/A
-**Source:** API reference — PyDPF-Core
+- **Name:**  Django
+- **Version:** 5.2.8
+- **Source:** The web framework for perfectionists with deadlines | Django
 
-**Name:** Docxtract
-**Version:** v1
-**Source:** Docxtract
+#### PostgreSQL
 
-**Name:** Pulk17 Pretrained Fake News Detection Model
-**Version:** v1
-**Source:** Pulk17/Fake-News-Detection · Hugging Face
+- **Name:**  PostgreSQL
+- **Version:** 18
+- **Source:** PostgreSQL: The world's most advanced open source database
 
-**Name:** Twinword Text Analysis Bundle
-**Version:** v1 
-**Source:** Twinword Text Analysis Bundle
+#### Newspaper3k
+
+- **Name:**  Newspaper3k
+- **Version:** pypi package 0.2.8
+- **Source:** newspaper3k · PyPI
+
+#### Pypdf
+
+- **Name:** Pypdf
+- **Version:** N/A
+- **Source:** API reference — PyDPF-Core
+
+#### Docxtract
+
+- **Name:** Docxtract
+- **Version:** v1
+- **Source:** Docxtract
+
+#### Pulk17 Pretrained Fake News Detection Model
+
+- **Name:** Pulk17 Pretrained Fake News Detection Model
+- **Version:** v1
+- **Source:** Pulk17/Fake-News-Detection · Hugging Face
+
+#### Twinword Text Analysis Bundle
+
+- **Name:** Twinword Text Analysis Bundle
+- **Version:** v1
+- **Source:** Twinword Text Analysis Bundle
+
+#### Google Fact Check Tools API
 
 **Name:** Google Fact Check Tools API
-**Version:** v1 
+**Version:** v1
 **Source:** About Fact Check Tools
 
+#### Biaslyze
+
 **Name:** Biaslyze
-**Version:** v1 
+**Version:** v1
 **Source:** Overview - Biaslyze
 
-**Name:** Hello-SimpleAI AI Detector Model
-**Version:** v1
-**Source:** Hello-SimpleAI/chatgpt-detector-roberta · Hugging Face
+#### Hello-SimpleAI AI Detector Model
 
+- **Name:** Hello-SimpleAI AI Detector Model
+- **Version:** v1
+- **Source:** Hello-SimpleAI/chatgpt-detector-roberta · Hugging Face
 
 ## 2.2 Product Functions
 
