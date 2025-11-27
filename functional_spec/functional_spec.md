@@ -693,7 +693,7 @@ The system shall integrate a clear and easy to use user interface, to allow for 
 
 The system shall use the concept of affordances to make the functionality of the system available to the user, clear and informative.
 
-## 3.4 Logical Database Requirments
+## 3.4 Logical Database Requirements
 
 ![Figure 3.4 - Database Structure](diagrams/database_structure.png)
 
@@ -853,10 +853,14 @@ The additional entities specified in the diagram compared to the context diagram
 - **Analysis:** The analysis entity represents the program which sends specific areas of article submissions to their appropriate analysis tool and combines all of the returned results to construct the whole analysis and breakdown.
 - **Database:** The backend database contains all important data stores as specified in the diagram, such as user information and user history. It allows for the web application to query the database as needed to collect needed information.
 
-# 6 Preliminary Schedule
+# 6\. Preliminary Schedule
 
 ![Figure 6.1 - Level 1 Data Flow Diagram](diagrams/image4.png)
 
 ### 6.1 Gantt Schedule Explanation
 
 Here we outline the schedule for our implementation of the webapp. Within each task we specify which team member will be the main programmer for that section. If we do not specify which team member then it will be performed by both of us. Each task has a section heading outlining the main operation we will be performing.
+
+# 7\. Appendices
+
+See section 1.4 for references for the document.
