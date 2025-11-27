@@ -159,6 +159,57 @@ Maybe add a diagram but shouldn't be totally necessary.
 
 Specify general purpose of the product
 
+### 2.1.1 Software Interfaces
+
+**Name:** React
+**Version:** latest 19.2
+**Source:** React
+
+**Name:**  Tailwind CSS
+**Version:** 4.0
+**Source:** Tailwind CSS - Rapidly build modern websites without ever leaving your HTML.
+
+**Name:**  Django
+**Version:** 5.2.8
+**Source:** The web framework for perfectionists with deadlines | Django
+
+**Name:**  PostgreSQL
+**Version:** 18
+**Source:** PostgreSQL: The world's most advanced open source database
+
+**Name:**  Newspaper3k
+**Version:** pypi package 0.2.8
+**Source:** newspaper3k · PyPI
+
+**Name:** Pypdf 
+**Version:** N/A
+**Source:** API reference — PyDPF-Core
+
+**Name:** Docxtract
+**Version:** v1
+**Source:** Docxtract
+
+**Name:** Pulk17 Pretrained Fake News Detection Model
+**Version:** v1
+**Source:** Pulk17/Fake-News-Detection · Hugging Face
+
+**Name:** Twinword Text Analysis Bundle
+**Version:** v1 
+**Source:** Twinword Text Analysis Bundle
+
+**Name:** Google Fact Check Tools API
+**Version:** v1 
+**Source:** About Fact Check Tools
+
+**Name:** Biaslyze
+**Version:** v1 
+**Source:** Overview - Biaslyze
+
+**Name:** Hello-SimpleAI AI Detector Model
+**Version:** v1
+**Source:** Hello-SimpleAI/chatgpt-detector-roberta · Hugging Face
+
+
 ## 2.2 Product Functions
 
 The web application will provide the following major system functions with the main overall goal of the application being as defined in the scope of the document.
