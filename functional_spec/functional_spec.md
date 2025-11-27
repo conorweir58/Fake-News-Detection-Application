@@ -551,6 +551,7 @@ This functional requirement is depended on the "User Account Login" requirement 
 
 ### 4.1 System Architecture Diagram
 
+![Figure 4.1 - System Architecture Diagram](diagrams/system_arch.png)
 
 ### 4.2 Frontend Application
 
@@ -675,7 +676,7 @@ In this section, the overall architecture design and main components are explain
 
 ### 5.1 System Context
 
-
+![Figure 5.1 - Context Level Data Flow Diagram](diagrams/context_diagram.png)
 
 The context level data flow diagram above provides a high-level overview of the system architecture as a single process, showing how external entities interact with the internal web application. It displays the main flows of information in the system.
 
@@ -691,7 +692,7 @@ The diagram shows how information enters, moves around, and leaves the system wi
 
 ### 5.2 System Data Flow
 
-
+![Figure 5.2 - Level 1 Data Flow Diagram](diagrams/DFD.png)
 
 The above data flow diagram expands on the context level diagram, describing the processes between all internal and external entities within the system design. The diagram displays how the flow of data occurs through these entities.
 
@@ -703,6 +704,8 @@ The additional entities specified in the diagram compared to the context diagram
 - **Database:** The backend database contains all important data stores as specified in the diagram, such as user information and user history. It allows for the web application to query the database as needed to collect needed information.
 
 # 6 Preliminary Schedule
+
+![Figure 6.1 - Level 1 Data Flow Diagram](diagrams/image4.png)
 
 ### 6.1 Gantt Schedule Explanation
 
