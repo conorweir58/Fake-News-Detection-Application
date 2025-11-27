@@ -147,6 +147,8 @@ For the remainder of the document, the KeepItREAL web application will simply be
 
 - B. Balter, “Word to Markdown,” Word2md.com, 2025. <https://word2md.com/>
 
+- “Mermaid Chart,” Mermaidchart.com, 2025. Available: <https://www.mermaidchart.com/app/projects/a92929a0-a3f0-4617-bab0-53ce9e9c80d9/diagrams/f5793a90-3c82-4e10-8564-3aa06161207e/version/v0.1/edit>
+
 ## 1.5 Overview
 
 ### Section 2
