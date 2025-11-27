@@ -249,9 +249,10 @@ Handling user account functionality with the following functions:
 
 ### News Article Submission
 
-Provides the interface for users to submit articles to be analysed through an appropriate format (URL, text, or a supported file format) and sends the submission to the backend for the article to be extracted using these functions:
+Provides the interface for users to submit articles to be analysed through an appropriate format (URL, text, or a supported file format) and sends the submission to the backend for the article to be extracted. Users are able to select which metrics of analysis they want to apply/not apply before sending the article for submission. By default, all analysis metrics are applied however if a user wishes they can change this. This is carried out using these functions:
 
 - Display submission interface
+- Select analysis metrics
 - Validate submission
 - Send submission to backend
 
