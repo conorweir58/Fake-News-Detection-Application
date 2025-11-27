@@ -697,6 +697,12 @@ The system shall use the concept of affordances to make the functionality of the
 
 ![Figure 3.4 - Database Structure](diagrams/database_structure.png)
 
+The diagram depicts the data about the user and the article submissions being stored in the database. This relationship is one to many with multiple submissions being stored per user. The primary key for users is the user id. This primary key is used to query the database to find the associated user, we also store the email and password which will be hashed to protect the user details. 
+
+Similarly to the users entity, we use submission id’s to differentiate between submissions and store the submitted article and the analysis result from the article. 
+
+These entities will be used to support our user authentication system for user login. This will allow us to search if users already have an account and then fetch their submission history.
+
 # 4\. System Architecture
 
 ### 4.1 System Architecture Diagram
