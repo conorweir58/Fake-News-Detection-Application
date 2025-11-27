@@ -11,95 +11,81 @@
 
 ### 1\. Introduction
 
-1.1 Purpose
+1.1 [Purpose](#11-purpose)
 
-1.2 Scope
+1.2 [Scope](#12-scope)
 
-1.3 Definitions, Acronyms, and Abbreviations
+1.3 [Definitions, Acronyms, and Abbreviations](#13-definitions-acronyms-and-abbreviations)
 
-1.4 References
+1.4 [References](#14-references)
 
-1.5 Overview
+1.5 [Overview](#15-overview)
 
 ### 2\. The Overall Description
 
-2.1 Product Perspective
+2.1 [Product Perspective](#21-product-perspective)
 
-2.1.1 System Interfaces
+2.2 [Product Functions](#22-product-functions)
 
-2.1.2 Interfaces
+2.3 [User Characteristics](#23-user-characteristics)
 
-2.1.3 Hardware Interfaces
+2.4 [Operational Scenarios](#24-operational-scenarios)
 
-2.1.4 Software Interfaces
+2.5 [Constraints](#25-constraints)
 
-2.1.5 Communications Interfaces
+### 3\. Specific Requirements
 
-2.1.6 Memory Constraints
+3.1 [External interfaces](#31)
 
-2.1.7 Operations
+3.2 [Functional Requirements](#32-functional-requirements)
 
-2.1.8 Site Adaptation Requirements
+- 3.2.1 [User Account Creation](#321-user-account-creation)
 
-2.2 Product Functions
+- 3.2.2 [User Account Login](#322-user-account-login)
 
-2.3 User Characteristics
+- 3.2.3 [URL Article Submission and Extraction](#323-url-article-submission-and-extraction)
 
-2.4 Constraints
+- 3.2.4 [Raw Text Article Submission](#324-raw-text-article-submission)
 
-2.5 Assumptions and Dependencies
+- 3.2.5 [File Article Submission and Extraction](#325-file-article-submission-and-extraction)
 
-2.6 Apportioning of Requirements
+- 3.2.6 [Extracted Article Cleaning](#326-extracted-article-cleaning)
 
-3\. Specific Requirements
+- 3.2.7 [Analysis on Article](#327-analysis-on-article)
 
-3.1 External interfaces
+- 3.2.8 [Trustworthiness Calculation and Breakdown Construction](#328-trustworthiness-calculation-and-breakdown-construction)
 
-3.2 Functions
+- 3.2.9 [View User History](#329-view-user-history)
 
-3.3 Performance Requirements
+- 3.2.10 [Delete User History](#3210-delete-user-history)
 
-3.4 Logical Database Requirements
+- 3.2.11 [Edit User Account](#3211-edit-user-account)
 
-3.5 Design Constraints
+- 3.2.12 [Delete User Account](#3212-delete-user-account)
 
-3.5.1 Standards Compliance
+### 4\. System Architecture
 
-3.6 Software System Attributes
+4.1 [System Architecture Diagram](#41-system-architecture-diagram)
 
-3.6.1 Reliability
+4.2 [Frontend Application](#42-frontend-application)
 
-3.6.2 Availability
+4.3 [Backend Application](#43-backend-application)
 
-3.6.3 Security
+4.4 [Backend Database](#44-backend-database)
 
-3.6.4 Maintainability
+4.5 [Data Extraction and Cleaning](#45-data-extraction-and-cleaning)
 
-3.6.5 Portability
+4.6 [Analysis Program](#46-analysis-program)
 
-3.7 Organizing the Specific Requirements
+### 5\. High-Level Design
 
-3.7.1 System Mode
+5.1 [System Context](#51-system-context)
 
-3.7.2 User Class
+5.2 [System Data Flow](#52-system-data-flow)
 
-3.7.3 Objects
+### 6\. Preliminary Schedule
 
-3.7.4 Feature
-
-3.7.5 Stimulus
-
-3.7.6 Response
-
-3.7.7 Functional Hierarchy
-
-3.8 Additional Comments
-
-4\. Change Management Process
-
-5\. Document Approvals
-
-6\. Supporting Information
+6.1 [Gantt Schedule Explanation](#61-gantt-schedule-explanation)
 
 # 1\. Introduction
 
