@@ -11,95 +11,91 @@
 
 ### 1\. Introduction
 
-1.1 Purpose
+1.1 [Purpose](#11-purpose)
 
-1.2 Scope
+1.2 [Scope](#12-scope)
 
-1.3 Definitions, Acronyms, and Abbreviations
+1.3 [Definitions, Acronyms, and Abbreviations](#13-definitions-acronyms-and-abbreviations)
 
-1.4 References
+1.4 [References](#14-references)
 
-1.5 Overview
+1.5 [Overview](#15-overview)
 
 ### 2\. The Overall Description
 
-2.1 Product Perspective
+2.1 [Product Perspective](#21-product-perspective)
 
-2.1.1 System Interfaces
+2.2 [Product Functions](#22-product-functions)
 
-2.1.2 Interfaces
+2.3 [User Characteristics](#23-user-characteristics)
 
-2.1.3 Hardware Interfaces
+2.4 [Operational Scenarios](#24-operational-scenarios)
 
-2.1.4 Software Interfaces
+2.5 [Constraints](#25-constraints)
 
-2.1.5 Communications Interfaces
+### 3\. Specific Requirements
 
-2.1.6 Memory Constraints
+3.1 [External interfaces](#31-external-interfaces)
 
-2.1.7 Operations
+3.2 [Functional Requirements](#32-functional-requirements)
 
-2.1.8 Site Adaptation Requirements
+- 3.2.1 [User Account Creation](#321-user-account-creation)
 
-2.2 Product Functions
+- 3.2.2 [User Account Login](#322-user-account-login)
 
-2.3 User Characteristics
+- 3.2.3 [URL Article Submission and Extraction](#323-url-article-submission-and-extraction)
 
-2.4 Constraints
+- 3.2.4 [Raw Text Article Submission](#324-raw-text-article-submission)
 
-2.5 Assumptions and Dependencies
+- 3.2.5 [File Article Submission and Extraction](#325-file-article-submission-and-extraction)
 
-2.6 Apportioning of Requirements
+- 3.2.6 [Extracted Article Cleaning](#326-extracted-article-cleaning)
 
-3\. Specific Requirements
+- 3.2.7 [Analysis on Article](#327-analysis-on-article)
 
-3.1 External interfaces
+- 3.2.8 [Trustworthiness Calculation and Breakdown Construction](#328-trustworthiness-calculation-and-breakdown-construction)
 
-3.2 Functions
+- 3.2.9 [View User History](#329-view-user-history)
 
-3.3 Performance Requirements
+- 3.2.10 [Delete User History](#3210-delete-user-history)
 
-3.4 Logical Database Requirements
+- 3.2.11 [Edit User Account](#3211-edit-user-account)
 
-3.5 Design Constraints
+- 3.2.12 [Delete User Account](#3212-delete-user-account)
 
-3.5.1 Standards Compliance
+3.3 [Software System Attributes](#33-software-system-attributes)
 
-3.6 Software System Attributes
+- 3.3.1 [Reliability](#331-reliability)
 
-3.6.1 Reliability
+- 3.3.2 [Availability](#332-availability)
 
-3.6.2 Availability
+- 3.3.3 [Security](#333-security)
 
-3.6.3 Security
+- 3.3.4 [Usability](#334-usability)
 
-3.6.4 Maintainability
+### 4\. System Architecture
 
-3.6.5 Portability
+4.1 [System Architecture Diagram](#41-system-architecture-diagram)
 
-3.7 Organizing the Specific Requirements
+4.2 [Frontend Application](#42-frontend-application)
 
-3.7.1 System Mode
+4.3 [Backend Application](#43-backend-application)
 
-3.7.2 User Class
+4.4 [Backend Database](#44-backend-database)
 
-3.7.3 Objects
+4.5 [Data Extraction and Cleaning](#45-data-extraction-and-cleaning)
 
-3.7.4 Feature
+4.6 [Analysis Program](#46-analysis-program)
 
-3.7.5 Stimulus
+### 5\. High-Level Design
 
-3.7.6 Response
+5.1 [System Context](#51-system-context)
 
-3.7.7 Functional Hierarchy
+5.2 [System Data Flow](#52-system-data-flow)
 
-3.8 Additional Comments
+### 6\. Preliminary Schedule
 
-4\. Change Management Process
-
-5\. Document Approvals
-
-6\. Supporting Information
+6.1 [Gantt Schedule Explanation](#61-gantt-schedule-explanation)
 
 # 1\. Introduction
 
@@ -122,15 +118,14 @@ KeepItREAL will provide an interface for users to upload articles of news via:
 
 These submissions will be analysed for accuracy of information, source reliability, and overall trustworthiness.
 
-The analysis will include metrics which will determine a "trustworthiness score" for the submitted piece of news based on a range of metrics based on fact checking, sentiment analysis, bias analysis, and AI generated content detection, with each metric applied a weight, constructing a part of the resulting trustworthiness score.
+The analysis will include metrics which will determine a “trustworthiness score” for the submitted piece of news based on a range of metrics based on fact checking, sentiment analysis, bias analysis, and AI generated content detection, with each metric applied a weight, constructing a part of the resulting trustworthiness score.
 
-Using these metrics to get this score, KeepItREAL's system constructs a breakdown on the deduction used to come to this score using each metric to allow users to make informed decisions on the information provided in the submitted piece of news.
+Using these metrics to get the trustworthiness score, KeepItREAL’s system provides a breakdown of the specific contribution of each metric to the final score, thus allowing  users to make informed decisions on the information provided in the submitted piece of news.
+The system will also provide a user login system to save previous submissions and resulting analysis’ in a history, allowing them to be accessed at any time.
 
-The system will also provide a user login system to save previous submissions and resulting analysis' in a history, allowing them to be accessed at any time.
+KeepItREAL will only perform ethical collection of news content, and will avoid scraping from  websites which specify they do not consent to having their content taken.
 
-KeepItREAL will only perform ethical collection of news content, and will avoid scraping form submitted websites which specify they do not consent to having their content taken.
-
-The KeepItREAL application is not a "True or False" fake news analysis system and is intended to provide valuable information to allow users to form an individual opinion on the news they digest using the trustworthiness and breakdown the system provides, as the system does not guarantee the absolute accuracy of its results.
+The KeepItREAL application is not a “True or False” fake news analysis system and is intended to provide valuable information to allow users to form an individual opinion on the news they digest using the fine-grained trustworthiness breakdown the system provides, as the system does not guarantee the absolute accuracy of its results.
 
 ## 1.3 Definitions, Acronyms, and Abbreviations
 
@@ -328,6 +323,7 @@ As mentioned in the control functions there will be user authentication and rate
 # 3\. Specific Requirements
 
 ## 3.1 External Interfaces
+<<<<<<< HEAD
 ### newspaper3k: 
 This is one of the Python libraries used for scrapping the metadata and images from URLs. The URLs are given to us from the user through the submission input box where they can copy and paste the URL in. Then take that url and send it to this API which will return the metadata and images it has extracted from the website as raw text. After this send the response to our data cleaning function to later be sent for analysis.
 
@@ -357,6 +353,8 @@ This is a python library that texts in text and performs an analysis of the text
 ### Hello-SimpleAI AI Detector Model: 
 This is another pre-trained model used to detect human vs ChatGPT text with a confidence score of the result. The output will inform us whether or not the text was created by a human. This response will be used for the calculation of the “trustworthiness score”.
 
+=======
+>>>>>>> 0436350eedc113d099ba993dca12b18db1b705fb
 
 ## 3.2 Functional Requirements
 
@@ -577,6 +575,34 @@ For deletion users must login again to verify the deletion, therefore the techni
 #### Dependencies with other requirements
 
 This functional requirement is depended on the "User Account Login" requirement as only logged in users are allowed to delete their account. This therefore also encompasses the "User Account Creation" requirement as the account must exist for it to be deleted.
+
+## 3.3 Software System Attributes
+
+### 3.3.1 Reliability
+
+If a selected 3rd Party Analysis metric fails, the system shall continue to form a partial result based on the successful completion of the remaining analysis metrics. The system shall inform the user, however, of the failing of the specific analysis metric and include in the results breakdown what analysis is missing due to the failure and how this affects the results, while informing the user to attempt again for a full response.
+
+If an external extraction tool fails, the system shall not fail, and instead inform the user of the other possible ways they can still submit the same article through one of our other forms of valid submission.
+
+### 3.3.2 Availability
+
+The system shall be available 24/7, accessible through the web application at any time.
+
+### 3.3.3 Security
+
+Sensitive user details shall be hash encrypted as they are stored in a database in order to ensure security among user accounts. The system shall also restrict access to information based on the user’s validated identity (so no access to other users information).
+
+The system shall require users to authenticate (i.e. login) before being allowed to access user specific features. The system shall validate all authentication attempts to prevent malicious logins.
+
+All user inputs (such as submissions or login attempts) shall be validated and checked to prevent malicious activity such as SQL injection or command injection. Any suspicious inputs shall be rejected by the system.
+
+The system shall be rate limited to prevent brute force attacks to the web application.
+
+### 3.3.4 Usability
+
+The system shall integrate a clear and easy to use user interface, to allow for users of all technological expertise to utilise the system, especially as those less technologically experienced may struggle avoiding fake news sources online.
+
+The system shall use the concept of affordances to make the functionality of the system available to the user, clear and informative.
 
 # 4\. System Architecture
 
