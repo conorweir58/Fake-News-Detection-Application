@@ -693,6 +693,10 @@ The system shall integrate a clear and easy to use user interface, to allow for 
 
 The system shall use the concept of affordances to make the functionality of the system available to the user, clear and informative.
 
+## 3.4 Logical Database Requirments
+
+![Figure 3.4 - Database Structure](diagrams/database_structure.png)
+
 # 4\. System Architecture
 
 ### 4.1 System Architecture Diagram
