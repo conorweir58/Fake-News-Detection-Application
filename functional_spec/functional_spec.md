@@ -152,7 +152,7 @@ For the remainder of the document, the KeepItREAL web application will simply be
 ## 1.5 Overview
 
 ### Section 2
-Section 2 contains 2.1 where we compare our webapp to other existing products such as the DCU Turnitin partner. Then we go into an in-depth description of the product functions such as article submission in section 2.2. Next is the user characteristics where we discuss the ideal characteristics for our users in section 2.3. Then in section 2.4 we talk about different operational scenarios where we have different types of users including unregistered users and registered users who are not logged in. Finally for section 2.5 we show the constraints of our webapp.
+Section 2 contains 2.1 where we compare our webapp to other existing products such as Google Fact Check. Then we go into an in-depth description of the product functions such as article submission in section 2.2. Next is the user characteristics where we discuss the ideal characteristics for our users in section 2.3. Then in section 2.4 we talk about different operational scenarios where we have different types of users including unregistered users and registered users who are not logged in. Finally for section 2.5 we show the constraints of our webapp.
 ### Section 3
 The first sub section of section 3 is section 3.1 External Interfaces. Here we discuss the different APIs and libraries we are planning to use for our webapp along with a general description of the task they perform. Then for section 3.2 we talk about different functional requirements with examples including user account login and article submission. Section 3.3 has the heading Software System Attributes where we discuss the different non-functional requirements.
 ### Section 4
@@ -166,7 +166,7 @@ Then for the final section we have a gantt chart. This outlines our plan of impl
 
 ## 2.1 Product Perspective
 
-This web application system is an independent and self-contained system that provides users an interface to evaluate the credibility and trustworthiness of their user generated content or independent news sources. Although the system forms a complete product on its own, the system utilises external 3rd party tools in order to aid the analysis process, as defined in the below sections.
+This web application system is an independent and self-contained system that provides users an interface to evaluate the credibility and trustworthiness of their user generated content or independent news sources. Although the system forms a complete product on its own, the system utilises external 3rd party tools in order to aid the analysis process, as defined in the below sections. A similar webapp would be Google Fact Check where it determines the validity of news articles through human fact checking. So the webapp differs in that ours is trying to be a bit more automated.
 
 ### 2.1.1 Software Interfaces
 
