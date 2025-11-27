@@ -149,7 +149,20 @@ For the remainder of the document, the KeepItREAL web application will simply be
 
 ## 1.5 Overview
 
+### Section 2
+Section 2 contains 2.1 where we compare our webapp to other existing products such as the DCU Turnitin partner. Then we go into an in-depth description of the product functions such as article submission in section 2.2. Next is the user characteristics where we discuss the ideal characteristics for our users in section 2.3. Then in section 2.4 we talk about different operational scenarios where we have different types of users including unregistered users and registered users who are not logged in. Finally for section 2.5 we show the constraints of our webapp.
+### Section 3
+The first sub section of section 3 is section 3.1 External Interfaces. Here we discuss the different APIs and libraries we are planning to use for our webapp along with a general description of the task they perform. Then for section 3.2 we talk about different functional requirements with examples including user account login and article submission. Section 3.3 has the heading Software System Attributes where we discuss the different non-functional requirements.
+### Section 4
+Section 4.1 we have a diagram that depicts the systems architecture, in the following sub sections we give an in-depth analysis of each section mentioned in the system architecture diagram.
+### Section 5 
+For section 5 we have two separate diagrams. The first one is a context level flow diagram and the following explanation explains how the diagram is similar to the system architecture where it displays the main flow of the system with the external entities. The second diagram depicts a level 1 data flow diagram that depicts the flow of data throughout the internal and external entities.
+### Section 6
+Then for the final section we have a gantt chart. This outlines our plan of implementation and documentation for the next part of the project submission. It starts at the beginning of the second semester and goes all the way up to the submission deadline.
+
+
 # 2\. The Overall Description
+
 
 ## 2.1 Product Perspective
 
