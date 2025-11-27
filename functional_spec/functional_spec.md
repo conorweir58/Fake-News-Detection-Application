@@ -165,73 +165,73 @@ Specify general purpose of the product
 
 - **Name:** React
 - **Version:** latest 19.2
-- **Source:** React
+- **Source:** <https://react.dev/>
 
 #### Tailwind CSS 
 
 - **Name:**  Tailwind CSS
 - **Version:** 4.0
-- **Source:** Tailwind CSS - Rapidly build modern websites without ever leaving your HTML.
+- **Source:** <https://tailwindcss.com/>
 
 #### Django 
 
 - **Name:**  Django
 - **Version:** 5.2.8
-- **Source:** The web framework for perfectionists with deadlines | Django
+- **Source:** <https://www.djangoproject.com/>
 
 #### PostgreSQL
 
 - **Name:**  PostgreSQL
 - **Version:** 18
-- **Source:** PostgreSQL: The world's most advanced open source database
+- **Source:** <https://www.postgresql.org/>
 
 #### Newspaper3k
 
 - **Name:**  Newspaper3k
 - **Version:** pypi package 0.2.8
-- **Source:** newspaper3k · PyPI
+- **Source:** <https://pypi.org/project/newspaper3k/>
 
 #### Pypdf
 
 - **Name:** Pypdf
 - **Version:** N/A
-- **Source:** API reference — PyDPF-Core
+- **Source:** <https://dpf.docs.pyansys.com/version/stable/api/index.html>
 
 #### Docxtract
 
 - **Name:** Docxtract
 - **Version:** v1
-- **Source:** Docxtract
+- **Source:** <https://rapidapi.com/docxtract/api/docxtract1>
 
 #### Pulk17 Pretrained Fake News Detection Model
 
 - **Name:** Pulk17 Pretrained Fake News Detection Model
 - **Version:** v1
-- **Source:** Pulk17/Fake-News-Detection · Hugging Face
+- **Source:** <https://huggingface.co/Pulk17/Fake-News-Detection>
 
 #### Twinword Text Analysis Bundle
 
 - **Name:** Twinword Text Analysis Bundle
 - **Version:** v1
-- **Source:** Twinword Text Analysis Bundle
+- **Source:** <https://rapidapi.com/twinword/api/twinword-text-analysis-bundle>
 
 #### Google Fact Check Tools API
 
 **Name:** Google Fact Check Tools API
 **Version:** v1
-**Source:** About Fact Check Tools
+**Source:** <https://toolbox.google.com/factcheck/about#fce-included>
 
 #### Biaslyze
 
 **Name:** Biaslyze
 **Version:** v1
-**Source:** Overview - Biaslyze
+**Source:** <https://biaslyze.org/api/#concepts>
 
 #### Hello-SimpleAI AI Detector Model
 
 - **Name:** Hello-SimpleAI AI Detector Model
 - **Version:** v1
-- **Source:** Hello-SimpleAI/chatgpt-detector-roberta · Hugging Face
+- **Source:** <https://huggingface.co/Hello-SimpleAI/chatgpt-detector-roberta>
 
 ## 2.2 Product Functions
 
