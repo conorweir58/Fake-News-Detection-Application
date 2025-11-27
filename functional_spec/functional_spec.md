@@ -153,6 +153,8 @@ For the remainder of the document, the KeepItREAL web application will simply be
 
 ## 2.1 Product Perspective
 
+This web application system 
+
 Similar to Turnitin for fake news detection rather than purely Ai detection in the way it gets results. Mention other similar applications that attempt to do similar and how ours differs - mention how as it is becoming a much more important topic, the more similar applications we have seen becoming developed.
 
 Maybe add a diagram but shouldn't be totally necessary.
@@ -436,7 +438,6 @@ This is a python library that texts in text and performs an analysis of the text
 ### Hello-SimpleAI AI Detector Model: 
 This is another pre-trained model used to detect human vs ChatGPT text with a confidence score of the result. The output will inform us whether or not the text was created by a human. This response will be used for the calculation of the “trustworthiness score”.
 
-
 ## 3.2 Functional Requirements
 
 ### 3.2.1 User Account Creation
@@ -515,7 +516,7 @@ The dependencies are similar to the previous requirement in that it is only depe
 
 #### Description
 
-The system shall handle the submission of an article from the user that they wish to check. The system shall extract all the necessary information from the file to send on to the external APIs.
+The system shall handle the submission of an article from the user that they wish to check. The system shall send the necessary information from the file to send on to be extracted.
 
 #### Criticality
 
