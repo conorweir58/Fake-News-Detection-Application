@@ -105,7 +105,7 @@ The following functional specification document presents a detailed description 
 
 ## 1.2 Scope
 
-The KeepItREAl web application will aid users in navigating the modern world of news with its abundance of inaccurate, AI generated, misleading and fake information that has come with 'The Age of Technology".
+The KeepItREAl web application will aid users in navigating the modern world of online news (including user generated content and independent new sources) with its abundance of inaccurate, AI generated, misleading and fake information that has come with 'The Age of Technology".
 
 KeepItREAL will provide an interface for users to upload articles of news via:
 
@@ -331,7 +331,7 @@ As mentioned in the control functions there will be user authentication and rate
 # 3\. Specific Requirements
 
 ## 3.1 External Interfaces
-<<<<<<< HEAD
+
 ### newspaper3k: 
 This is one of the Python libraries used for scrapping the metadata and images from URLs. The URLs are given to us from the user through the submission input box where they can copy and paste the URL in. Then take that url and send it to this API which will return the metadata and images it has extracted from the website as raw text. After this send the response to our data cleaning function to later be sent for analysis.
 
@@ -361,8 +361,6 @@ This is a python library that texts in text and performs an analysis of the text
 ### Hello-SimpleAI AI Detector Model: 
 This is another pre-trained model used to detect human vs ChatGPT text with a confidence score of the result. The output will inform us whether or not the text was created by a human. This response will be used for the calculation of the “trustworthiness score”.
 
-=======
->>>>>>> 0436350eedc113d099ba993dca12b18db1b705fb
 
 ## 3.2 Functional Requirements
 
