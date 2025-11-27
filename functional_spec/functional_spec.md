@@ -35,7 +35,7 @@
 
 ### 3\. Specific Requirements
 
-3.1 [External interfaces](#31)
+3.1 [External interfaces](#31-external-interfaces)
 
 3.2 [Functional Requirements](#32-functional-requirements)
 
@@ -118,15 +118,14 @@ KeepItREAL will provide an interface for users to upload articles of news via:
 
 These submissions will be analysed for accuracy of information, source reliability, and overall trustworthiness.
 
-The analysis will include metrics which will determine a "trustworthiness score" for the submitted piece of news based on a range of metrics based on fact checking, sentiment analysis, bias analysis, and AI generated content detection, with each metric applied a weight, constructing a part of the resulting trustworthiness score.
+The analysis will include metrics which will determine a “trustworthiness score” for the submitted piece of news based on a range of metrics based on fact checking, sentiment analysis, bias analysis, and AI generated content detection, with each metric applied a weight, constructing a part of the resulting trustworthiness score.
 
-Using these metrics to get this score, KeepItREAL's system constructs a breakdown on the deduction used to come to this score using each metric to allow users to make informed decisions on the information provided in the submitted piece of news.
+Using these metrics to get the trustworthiness score, KeepItREAL’s system provides a breakdown of the specific contribution of each metric to the final score, thus allowing  users to make informed decisions on the information provided in the submitted piece of news.
+The system will also provide a user login system to save previous submissions and resulting analysis’ in a history, allowing them to be accessed at any time.
 
-The system will also provide a user login system to save previous submissions and resulting analysis' in a history, allowing them to be accessed at any time.
+KeepItREAL will only perform ethical collection of news content, and will avoid scraping from  websites which specify they do not consent to having their content taken.
 
-KeepItREAL will only perform ethical collection of news content, and will avoid scraping form submitted websites which specify they do not consent to having their content taken.
-
-The KeepItREAL application is not a "True or False" fake news analysis system and is intended to provide valuable information to allow users to form an individual opinion on the news they digest using the trustworthiness and breakdown the system provides, as the system does not guarantee the absolute accuracy of its results.
+The KeepItREAL application is not a “True or False” fake news analysis system and is intended to provide valuable information to allow users to form an individual opinion on the news they digest using the fine-grained trustworthiness breakdown the system provides, as the system does not guarantee the absolute accuracy of its results.
 
 ## 1.3 Definitions, Acronyms, and Abbreviations
 
@@ -322,6 +321,8 @@ The system must therefore provide accurate and consistent results as it will und
 As mentioned in the control functions there will be user authentication and rate limiting for added security. The API keys should also not be able to be accessed by users and must be stored securely.
 
 # 3\. Specific Requirements
+
+## 3.1 External Interfaces
 
 ## 3.2 Functional Requirements
 
