@@ -139,6 +139,14 @@ For the remainder of the document, the KeepItREAL web application will simply be
 
 - Cloudfare, "What is bot traffic? | How to stop bot traffic," _Cloudflare.com_, 2024. Available: [What is bot traffic? | How to stop bot traffic | Cloudflare](https://www.cloudflare.com/en-gb/learning/bots/what-is-bot-traffic/)
 
+- “Blog - How to create data flow diagrams in draw.io,” _drawio.com_, Jul. 27, 2023. <https://www.drawio.com/blog/data-flow-diagrams>
+
+- Lucidchart, “What is a Data Flow Diagram,” _Lucidchart.com_, 2022. <https://www.lucidchart.com/pages/data-flow-diagram>
+
+- “What is a context diagram and how do you use it?,” MiroBlog, May 18, 2022. <https://miro.com/blog/context-diagram/#Header2>
+
+- B. Balter, “Word to Markdown,” Word2md.com, 2025. <https://word2md.com/>
+
 ## 1.5 Overview
 
 # 2\. The Overall Description
