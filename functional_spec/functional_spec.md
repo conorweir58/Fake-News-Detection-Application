@@ -160,19 +160,11 @@ For section 5 we have two separate diagrams. The first one is a context level fl
 ### Section 6
 Then for the final section we have a gantt chart. This outlines our plan of implementation and documentation for the next part of the project submission. It starts at the beginning of the second semester and goes all the way up to the submission deadline.
 
-
 # 2\. The Overall Description
-
 
 ## 2.1 Product Perspective
 
-This web application system 
-
-Similar to Turnitin for fake news detection rather than purely Ai detection in the way it gets results. Mention other similar applications that attempt to do similar and how ours differs - mention how as it is becoming a much more important topic, the more similar applications we have seen becoming developed.
-
-Maybe add a diagram but shouldn't be totally necessary.
-
-Specify general purpose of the product
+This web application system is an independent and self-contained system that provides users an interface to evaluate the credibility and trustworthiness of their user generated content or independent news sources. Although the system forms a complete product on its own, the system utilises external 3rd party tools in order to aid the analysis process, as defined in the below sections.
 
 ### 2.1.1 Software Interfaces
 
@@ -182,7 +174,7 @@ Specify general purpose of the product
 - **Version:** latest 19.2
 - **Source:** <https://react.dev/>
 
-#### Tailwind CSS 
+#### Tailwind CSS
 
 - **Name:**  Tailwind CSS
 - **Version:** 4.0
