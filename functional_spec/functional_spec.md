@@ -63,6 +63,16 @@
 
 - 3.2.12 [Delete User Account](#3212-delete-user-account)
 
+3.3 [Software System Attributes](#33-software-system-attributes)
+
+- 3.3.1 [Reliability](#331-reliability)
+
+- 3.3.2 [Availability](#332-availability)
+
+- 3.3.3 [Security](#333-security)
+
+- 3.3.4 [Usability](#334-usability)
+
 ### 4\. System Architecture
 
 4.1 [System Architecture Diagram](#41-system-architecture-diagram)
@@ -532,6 +542,34 @@ For deletion users must login again to verify the deletion, therefore the techni
 #### Dependencies with other requirements
 
 This functional requirement is depended on the "User Account Login" requirement as only logged in users are allowed to delete their account. This therefore also encompasses the "User Account Creation" requirement as the account must exist for it to be deleted.
+
+## 3.3 Software System Attributes
+
+### 3.3.1 Reliability
+
+If a selected 3rd Party Analysis metric fails, the system shall continue to form a partial result based on the successful completion of the remaining analysis metrics. The system shall inform the user, however, of the failing of the specific analysis metric and include in the results breakdown what analysis is missing due to the failure and how this affects the results, while informing the user to attempt again for a full response.
+
+If an external extraction tool fails, the system shall not fail, and instead inform the user of the other possible ways they can still submit the same article through one of our other forms of valid submission.
+
+### 3.3.2 Availability
+
+The system shall be available 24/7, accessible through the web application at any time.
+
+### 3.3.3 Security
+
+Sensitive user details shall be hash encrypted as they are stored in a database in order to ensure security among user accounts. The system shall also restrict access to information based on the user’s validated identity (so no access to other users information).
+
+The system shall require users to authenticate (i.e. login) before being allowed to access user specific features. The system shall validate all authentication attempts to prevent malicious logins.
+
+All user inputs (such as submissions or login attempts) shall be validated and checked to prevent malicious activity such as SQL injection or command injection. Any suspicious inputs shall be rejected by the system.
+
+The system shall be rate limited to prevent brute force attacks to the web application.
+
+### 3.3.4 Usability
+
+The system shall integrate a clear and easy to use user interface, to allow for users of all technological expertise to utilise the system, especially as those less technologically experienced may struggle avoiding fake news sources online.
+
+The system shall use the concept of affordances to make the functionality of the system available to the user, clear and informative.
 
 # 4\. System Architecture
 
