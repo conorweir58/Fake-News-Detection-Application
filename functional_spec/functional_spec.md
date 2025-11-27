@@ -331,6 +331,38 @@ As mentioned in the control functions there will be user authentication and rate
 # 3\. Specific Requirements
 
 ## 3.1 External Interfaces
+<<<<<<< HEAD
+### newspaper3k: 
+This is one of the Python libraries used for scrapping the metadata and images from URLs. The URLs are given to us from the user through the submission input box where they can copy and paste the URL in. Then take that url and send it to this API which will return the metadata and images it has extracted from the website as raw text. After this send the response to our data cleaning function to later be sent for analysis.
+
+### pypdf: 
+This is another Python library used for extracting articles of texts from pdfs. The pdfs are another form of submission for the user. Once we get all the extracted text we will send it to be cleaned before sending off to the other external analysis APIs
+
+### Docxtract: 
+This is similar to the previous pypdf except this is an API that extracts articles of text from multiple files including:
+-	Doc/docx
+-	.ppt/.pttx
+-	.md
+-	,txt
+Once the data from the files is obtained we once again sent it to be cleaned and then we will send them off to the analysis APIs.
+
+### Pulk17 Pretrained Fake News Detection Model:
+This is a pretrained model API that we found on hugging face which classifies articles of text as real or fake in the form of a confidence score. It will be sent the cleaned data received from our aforementioned extraction tools. The confidence score will then be given a weight upon response to use for our overall “trustworthiness score”.
+
+### Twinword Text Analysis Bundle: 
+This is an API that contains multiple functions around analysing human text, one of which is a Sentiment Analysis. This will be sent the cleaned data from the extraction tools as well. Then in our response we will receive either a “positive”, “neutral” or “negative” with a confidence score. This will then be added to the calculation of the of the “trustworthiness score”.
+
+### Google Fact Check Tools API:
+The Google Fact Check Tools API is given text or a heading that we will extract from the article. It uses this input to search through manually fact checked articles to see if they have fact checked it. It returns a result to us in the format of true/false or needs to be checked. This will probably be a heavily weighted result when it gets sent to calculate the “trustworthiness score”.
+
+### Biaslyze:
+This is a python library that texts in text and performs an analysis of the text for bias using NLP models. The output comes in the form of a JSON-like object that includes the type of bias as well as a confidence score of the bias. This will be extracted and cleaned to then be sent for calulcation of the “trustworthiness score”.
+
+### Hello-SimpleAI AI Detector Model: 
+This is another pre-trained model used to detect human vs ChatGPT text with a confidence score of the result. The output will inform us whether or not the text was created by a human. This response will be used for the calculation of the “trustworthiness score”.
+
+=======
+>>>>>>> 0436350eedc113d099ba993dca12b18db1b705fb
 
 ## 3.2 Functional Requirements
 
