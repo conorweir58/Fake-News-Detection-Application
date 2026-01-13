@@ -1,0 +1,4 @@
+requests
+python-decouple #for protecting keys
+transformers #for pulk model
+torch --index-url https://download.pytorch.org/whl/cpu # got this from pytorch get started locally page using linux as os pip as package and compute platform being CPU
