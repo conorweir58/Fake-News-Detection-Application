@@ -2,12 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>KeepItREAL Development Blog</title>
-    <link>http://localhost:1313/</link>
+    <link>http://localhost:1313/2026-csc1049-bandrew-fakenewsdetection/</link>
     <description>Recent content on KeepItREAL Development Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>© 2026 </copyright>
-    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 12 Jan 2026 12:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/2026-csc1049-bandrew-fakenewsdetection/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Welcome to the KeepItREAL Dev Blog!</title>
+      <link>http://localhost:1313/2026-csc1049-bandrew-fakenewsdetection/posts/post01/</link>
+      <pubDate>Mon, 12 Jan 2026 12:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/2026-csc1049-bandrew-fakenewsdetection/posts/post01/</guid>
+      <description>First post and introduction to the blog</description>
+      
+    </item>
     
   </channel>
 </rss>
