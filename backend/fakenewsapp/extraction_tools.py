@@ -20,8 +20,7 @@ def extract_from_text(text):
 
     return article
 
-
-# TO DO: TAKE IN FILE INPUT AND SET AS CONTENT TO BE SENT TO API
+# TO DO
 def extract_from_file():
     article = Article()
 
@@ -37,3 +36,5 @@ def extract_from_file():
     response = requests.post(url, data=payload, headers=headers)
 
     article.set_text(response.json().get("text"))
+
+    return article
