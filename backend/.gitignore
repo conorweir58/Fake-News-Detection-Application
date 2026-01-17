@@ -13,3 +13,4 @@ venv/
 .safetensors
 
 db.sqlite3
+migrations/
