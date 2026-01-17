@@ -1,9 +1,4 @@
-from django.shortcuts import render
-from django.conf import settings
 from django.http import JsonResponse
-import requests
-from requests.exceptions import HTTPError
-from transformers import pipeline
 from .detection_models import (pulk_pipe, sentiment_pipe, bias_pipe, gpt_pipe, googFactCheckSearch)
 
 def analyse(request):

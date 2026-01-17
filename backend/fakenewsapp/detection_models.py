@@ -1,5 +1,6 @@
 from transformers import pipeline
 from django.conf import settings
+
 import requests
 
 HF_Key = settings.PULK17_HF_KEY
