@@ -31,7 +31,7 @@ def googFactCheckSearch(request):
     else:
         print("success")
         return JsonResponse(response.json())
-    
+
 def pulkDetector(request):
     HF_Key = settings.PULK17_HF_KEY
     pipe = pipeline("text-classification", model="Andrewbrady27/Fake-News-Pulk17", token=HF_Key)
