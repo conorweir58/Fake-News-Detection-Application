@@ -1,55 +1,24 @@
-from django.shortcuts import render
-from django.conf import settings
 from django.http import JsonResponse
-import requests
-from requests.exceptions import HTTPError
-from transformers import pipeline
+from .detection_models import (pulk_pipe, sentiment_pipe, bias_pipe, gpt_pipe, googFactCheckSearch)
 
-def googFactCheckSearch(request):
+# The main function for running the detection models
+def analyse(request):
 
-    query = "Muhammad Ali killed George Foreman"
-    api_key = settings.GOOGLE_FACTCHECK_API_KEY
-    factcheck_url = "https://factchecktools.googleapis.com/v1alpha1/claims:search"
+    #For now i just have the text hardcoded while i test the models 
+    text = "In yet another tone-deaf decision that ignores the needs of ordinary citizens, the City Council has rushed through an aggressive bike lane expansion plan that will punish hardworking commuters while catering to a small, vocal minority of cyclists. Framed as a “green initiative,” the proposal is little more than an ideological vanity project that prioritizes optics over practicality. According to city officials, the plan will remove two lanes of traffic from several major roads to make space for protected bike lanes. Supporters claim this will reduce congestion and improve air quality. However, anyone who actually drives these roads knows the reality: traffic is already unbearable, public transport is unreliable, and most residents depend on cars to get to work, school, and essential services. Removing lanes will only make daily commutes longer and more stressful. Despite repeated warnings from residents and small business owners, the council pushed the plan forward with minimal public consultation. Many locals feel the decision was made long before public meetings were held, turning community engagement into nothing more than a box-ticking exercise. Speakers who raised concerns about emergency vehicle access, delivery delays, and parking shortages were brushed aside, while pro-bike activists were given ample time to praise the proposal. The economic consequences of the plan are being conveniently ignored. Local shop owners along the affected routes are already struggling with rising rents and declining foot traffic. By removing parking spaces and slowing traffic, the city is effectively driving customers away. Council members insist that cyclists will replace car-driving shoppers, a claim that has little evidence to support it. Families running errands, elderly residents, and people with disabilities are far more likely to rely on cars than bicycles, yet their needs appear to be an afterthought."
 
-    params = {
-        "query" : query,
-        "key" : api_key,
-    }
+    # here i call all the models with the given text
+    pulk_result = pulk_pipe(text)
+    sentiment_result = sentiment_pipe(text)
+    bias_result = bias_pipe(text)
+    gpt_result = gpt_pipe(text)
+    fact_check_result = googFactCheckSearch(text)
 
-    try:
-        response = requests.get(factcheck_url, params=params)
-        response.raise_for_status()
-    except requests.exceptions.HTTPError as errh:
-        print("HTTP Error")
-        print(errh.args[0])
-    except requests.exceptions.ReadTimeout as errrt:
-        print("Time out")
-    except requests.exceptions.ConnectionError as conerr:
-        print("Connection error")
-    except requests.exceptions.RequestException as errex:
-        print("Exception request")
-    else:
-        print("success")
-        return JsonResponse(response.json())
-
-def pulkDetector(request):
-    HF_Key = settings.PULK17_HF_KEY
-    pipe = pipeline("text-classification", model="Andrewbrady27/Fake-News-Pulk17", token=HF_Key)
-    text = "Barack Obama recently went on a jet ski when visiting mike tysons mansion"
-
-    try:
-        result = pipe(text)
-        return JsonResponse({"result": result})
-    except Exception as e:
-        return JsonResponse({"error": str(e)}, status=500)
-
-def gptDetector(request):
-    text = "Failure is often viewed as something to be avoided at all costs. From an early age, people are taught to strive for success, earn high grades, secure stable careers, and meet societal expectations. In this mindset, failure is associated with weakness, disappointment, or lack of ability. However, this perception overlooks one of the most important truths about human development: failure is not only inevitable, but essential for personal growth. Without failure, individuals miss valuable opportunities to learn, adapt, and build resilience. Rather than being an endpoint, failure is a powerful teacher that shapes character and strengthens determination. One of the most significant benefits of failure is the lesson it provides. Success often tells us what we did right, but failure reveals what we did wrong. When a person fails an exam, loses a competition, or makes a poor decision, they are forced to reflect on their actions. This reflection encourages critical thinking and self-awareness. For example, a student who performs poorly on a test may realize they need to change their study habits, manage time better, or ask for help. These insights rarely come from success alone. Failure exposes weaknesses that would otherwise remain hidden, allowing individuals to address them directly. Failure also plays a crucial role in developing resilience. Life is unpredictable, and challenges are unavoidable. People who have never experienced failure often struggle to cope when difficulties arise. In contrast, those who have faced setbacks learn how to recover, adapt, and keep moving forward. Each failure builds emotional strength, teaching individuals that disappointment is temporary and survivable. Over time, this resilience becomes a valuable asset, enabling people to face future challenges with confidence rather than fear. The ability to bounce back is often more important than talent or intelligence in achieving long-term success."
-    pipe = pipeline("text-classification", model="Hello-SimpleAI/chatgpt-detector-roberta")
-
-    try:
-        result = pipe(text)
-        return JsonResponse({"result": result})
-    except Exception as e:
-        return JsonResponse({"error": str(e)}, status=500)
-
+    #this is how i return the results as JSON
+    return JsonResponse({
+        "fake_news" : pulk_result,
+        "sentiment" : sentiment_result,
+        "bias" : bias_result,
+        "AI_created" : gpt_result,
+        "True or false" : fact_check_result,
+    })
