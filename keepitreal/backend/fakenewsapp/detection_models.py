@@ -54,6 +54,5 @@ def googFactCheckSearch(query):
     except requests.exceptions.RequestException as errex:
         print("Exception request")
     else:
-        print("success")
         return response.json()
     

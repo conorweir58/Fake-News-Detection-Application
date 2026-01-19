@@ -1,24 +1,25 @@
 from django.http import JsonResponse
 from .detection_models import (pulk_pipe, sentiment_pipe, bias_pipe, gpt_pipe, googFactCheckSearch)
+from .compute_trustworthiness import computation
 
 # The main function for running the detection models
 def analyse(request):
 
     #For now i just have the text hardcoded while i test the models 
-    text = "In yet another tone-deaf decision that ignores the needs of ordinary citizens, the City Council has rushed through an aggressive bike lane expansion plan that will punish hardworking commuters while catering to a small, vocal minority of cyclists. Framed as a “green initiative,” the proposal is little more than an ideological vanity project that prioritizes optics over practicality. According to city officials, the plan will remove two lanes of traffic from several major roads to make space for protected bike lanes. Supporters claim this will reduce congestion and improve air quality. However, anyone who actually drives these roads knows the reality: traffic is already unbearable, public transport is unreliable, and most residents depend on cars to get to work, school, and essential services. Removing lanes will only make daily commutes longer and more stressful. Despite repeated warnings from residents and small business owners, the council pushed the plan forward with minimal public consultation. Many locals feel the decision was made long before public meetings were held, turning community engagement into nothing more than a box-ticking exercise. Speakers who raised concerns about emergency vehicle access, delivery delays, and parking shortages were brushed aside, while pro-bike activists were given ample time to praise the proposal. The economic consequences of the plan are being conveniently ignored. Local shop owners along the affected routes are already struggling with rising rents and declining foot traffic. By removing parking spaces and slowing traffic, the city is effectively driving customers away. Council members insist that cyclists will replace car-driving shoppers, a claim that has little evidence to support it. Families running errands, elderly residents, and people with disabilities are far more likely to rely on cars than bicycles, yet their needs appear to be an afterthought."
+    text = "A Dublin‑based climate‑tech startup, TideSignal, has announced a major breakthrough in early‑warning systems for coastal flooding, unveiling an AI model capable of predicting high‑risk surge events up to five days earlier than current national systems. The company, founded in 2023 by a team of oceanographers and machine‑learning engineers, says the technology could transform how coastal communities prepare for extreme weather. Ireland has experienced a rise in severe storm surges over the past decade, with local councils repeatedly calling for more accurate forecasting tools. “Our model ingests satellite data, tidal patterns, atmospheric pressure changes, and historical surge events,” said TideSignal CEO Maeve O’Donnell during a press briefing at the Docklands Innovation Hub. “The system doesn’t just forecast water levels — it identifies risk windows before they form.” Early trials conducted in partnership with the Marine Institute showed a 92% accuracy rate in predicting surge‑related flooding along the west coast. Local authorities in Galway and Clare have already expressed interest in piloting the system during the upcoming storm season."
 
     # here i call all the models with the given text
     pulk_result = pulk_pipe(text)
+    print(pulk_result)
     sentiment_result = sentiment_pipe(text)
+    print(sentiment_result)
     bias_result = bias_pipe(text)
+    print(bias_result)
     gpt_result = gpt_pipe(text)
+    print(gpt_result)
     fact_check_result = googFactCheckSearch(text)
 
+    result = computation(pulk_result, sentiment_result, bias_result, gpt_result)
+
     #this is how i return the results as JSON
-    return JsonResponse({
-        "fake_news" : pulk_result,
-        "sentiment" : sentiment_result,
-        "bias" : bias_result,
-        "AI_created" : gpt_result,
-        "True or false" : fact_check_result,
-    })
+    return JsonResponse({"result": result, "True or False": pulk_result, "bias": bias_result, "AI or Human": gpt_result})
