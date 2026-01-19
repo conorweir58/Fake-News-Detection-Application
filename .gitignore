@@ -4,6 +4,7 @@ node_modules/
 #Python Project
 __pycache__/
 *.pyc
+migrations/
 
 # Ignore virtual environments
 venv/
