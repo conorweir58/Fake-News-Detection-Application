@@ -1,5 +1,6 @@
 from newspaper import Article
 import requests
+from django.conf import settings
 
 # Extracting article from url using newspaper3k
 def extract_from_url(url):
@@ -28,7 +29,7 @@ def extract_from_file():
 
     payload = {}
     headers = {
-        "x-rapidapi-key": "REMOVED",
+        "x-rapidapi-key": settings.RAPIDAPI_KEY_DOCXTRACT,
         "x-rapidapi-host": "docxtract1.p.rapidapi.com",
         "Content-Type": "application/x-www-form-urlencoded"
     }
