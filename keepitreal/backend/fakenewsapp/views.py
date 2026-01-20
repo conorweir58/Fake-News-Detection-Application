@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from .extraction_tools import (extract_from_file, extract_from_url, extract_from_text)
 
 # The main function for running the detection models
-@api_view['POST']
+@api_view(['POST'])
 def analyse(request):
 
     url = request.data.get("url")
