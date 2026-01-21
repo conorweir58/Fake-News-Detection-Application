@@ -1,6 +1,23 @@
 from django.http import JsonResponse
 from .detection_models import (pulk_pipe, sentiment_pipe, bias_pipe, gpt_pipe, googFactCheckSearch)
+from .extraction_tools import extract_from_url, extract_from_text, extract_from_file
 from .compute_trustworthiness import computation
+
+# EXTRACTION VIEWS - havent added text yet bc no real reason to test it bc its just setting text
+
+def extract_url(request):
+
+    article = extract_from_url("https://www.politifact.com/article/2024/aug/06/in-context-why-did-harris-vp-pick-gov-tim-walz-say/") # hardcode for now
+
+    return JsonResponse({"title": article.title, "authors": article.authors, "publish_date": str(article.publish_date), "text": article.text}) # just return json for testing
+
+def extract_file(request):
+
+    article = extract_from_file()
+
+    return JsonResponse({"title": article.title, "authors": article.authors, "publish_date": str(article.publish_date), "text": article.text}) # just return json for testing
+
+# ANALYSIS VIEWS
 
 # The main function for running the detection models
 def analyse(request):

@@ -1,6 +1,7 @@
 from newspaper import Article
 import requests
 from django.conf import settings
+from decouple import config
 
 # Extracting article from url using newspaper3k
 def extract_from_url(url):
@@ -13,7 +14,7 @@ def extract_from_url(url):
 
 # Lets us use newspaper3k to extract article and use its nlp from raw text input
 def extract_from_text(text):
-    article = Article()
+    article = Article("") # Article object with empty url
 
     article.set_text(text) # Set the text of the article as inputted text
 
@@ -22,20 +23,33 @@ def extract_from_text(text):
     return article
 
 # TO DO
-def extract_from_file():
-    article = Article()
+def extract_from_file(uploaded_file):
+    article = Article("")
+
+    file_path = "C:\\Users\\Conor\\DCU\\yr1\\CA169 - N&I\\Notes\\The Internet.pptx"
 
     url = "https://docxtract1.p.rapidapi.com/extract"
 
-    payload = {}
+    docxtract_key = config("X_RAPIDAPI_KEY_DOCXTRACT")
+
     headers = {
-        "x-rapidapi-key": settings.RAPIDAPI_KEY_DOCXTRACT,
+        "x-rapidapi-key": docxtract_key,
         "x-rapidapi-host": "docxtract1.p.rapidapi.com",
-        "Content-Type": "application/x-www-form-urlencoded"
     }
 
-    response = requests.post(url, data=payload, headers=headers)
+    with open(file_path, "rb") as f:
+        files = {
+            "file": (file_path, f)
+        }
 
-    article.set_text(response.json().get("text"))
+        response = requests.post(url, headers=headers, files=files)
 
-    return article
+    print(response.json())
+
+    # article.set_text(response.json().get("text"))
+
+    # return article
+
+if __name__ == "__main__":
+
+    extract_from_file()
