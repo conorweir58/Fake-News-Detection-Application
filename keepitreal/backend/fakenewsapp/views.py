@@ -18,7 +18,7 @@ def analyse(request):
     elif files:
         text = extract_from_file(files)
     elif article_text:
-        text = extract_from_text(text)
+        text = article_text
 
     # here i call all the models with the given text
     pulk_result = pulk_pipe(text)
