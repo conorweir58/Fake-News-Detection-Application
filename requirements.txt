@@ -6,3 +6,7 @@ newspaper3k # must be newspaper3k, newspaper is the python2 library
 huggingface_hub[hf_xet]
 tokenizers
 django
+-D vite
+react-router-dom
+"lxml[html_clean]"
+django-cors-headers
