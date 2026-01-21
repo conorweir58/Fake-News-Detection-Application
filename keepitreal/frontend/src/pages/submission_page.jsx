@@ -22,7 +22,7 @@ function Submission(){
             headers["Content-Type"] = "application/json"
         }
 
-        fetch("http://127.0.0.1:8000/api/analyse/", {
+        fetch("http://127.0.0.1:8000/api/analysis/", {
             method: "POST",
             headers,
             body
