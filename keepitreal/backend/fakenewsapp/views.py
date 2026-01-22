@@ -32,24 +32,20 @@ def analyse(request):
     files = request.FILES.get("file")
 
     if url:
-        text = extract_from_url(url)
+        article = extract_from_url(url)
     elif files:
-        text = extract_from_file(files)
+        article = extract_from_file(files)
     elif article_text:
-<<<<<<< HEAD
-        text = article_text
-=======
-        text = extract_from_text(article_text)
->>>>>>> development
+        article = extract_from_text(article_text)
 
     # here i call all the models with the given text
-    pulk_result = pulk_pipe(text)
+    pulk_result = pulk_pipe(article.text[:1900])
     print(pulk_result)
-    sentiment_result = sentiment_pipe(text)
+    sentiment_result = sentiment_pipe(article.text[:1900])
     print(sentiment_result)
-    bias_result = bias_pipe(text)
+    bias_result = bias_pipe(article.text[:1900])
     print(bias_result)
-    gpt_result = gpt_pipe(text)
+    gpt_result = gpt_pipe(article.text[:1900])
     print(gpt_result)
     #
     # fact_check_result = googFactCheckSearch(text)
@@ -57,7 +53,7 @@ def analyse(request):
 
     result = computation(pulk_result, sentiment_result, bias_result, gpt_result)
 
-    info_obj = DetectionResults(pulk=pulk_result, bias=bias_result, sentiment=sentiment_result, gpt=gpt_result, text=text, result=result)
+    info_obj = DetectionResults(pulk=pulk_result, bias=bias_result, sentiment=sentiment_result, gpt=gpt_result, text=article.text[:1900], result=result)
     info_obj.save()
 
     return JsonResponse({ "id": info_obj.id, "result": result, "True or False": pulk_result, "bias": bias_result, "AI or Human": gpt_result})
