@@ -9,3 +9,4 @@ django
 pypdf
 lxml[html_clean]
 django-cors-headers
+djangorestframework
