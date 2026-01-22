@@ -2,6 +2,7 @@ from newspaper import Article
 import requests
 from django.conf import settings
 from decouple import config
+from pypdf import PdfReader
 
 # Extracting article from url using newspaper3k
 def extract_from_url(url):
@@ -22,34 +23,51 @@ def extract_from_text(text):
 
     return article
 
-# TO DO
 def extract_from_file(uploaded_file):
     article = Article("")
 
-    file_path = "C:\\Users\\Conor\\DCU\\yr1\\CA169 - N&I\\Notes\\The Internet.pptx"
+    # Hardcoded file path for testing
+    file_path = "C:\\Users\\Conor\\DCU\\yr1\\CA169 - N&I\\Notes\\The Internet.docx"
 
-    url = "https://docxtract1.p.rapidapi.com/extract"
+    reader = PdfReader(file_path)
+    
 
-    docxtract_key = config("X_RAPIDAPI_KEY_DOCXTRACT")
+    article.set_text()
 
-    headers = {
-        "x-rapidapi-key": docxtract_key,
-        "x-rapidapi-host": "docxtract1.p.rapidapi.com",
-    }
+    article.parse()
 
-    with open(file_path, "rb") as f:
-        files = {
-            "file": (file_path, f)
-        }
+    return article
 
-        response = requests.post(url, headers=headers, files=files)
+# USING DOCXTRACT - NOT WORKING BECAUSE OF ISSUES WITH SENDING FILES TO API - MAY WORK WITHOUT HARDCODED FILES BUT FOR NOW GONNA TRY DIFFERENT LIBRARY
+# def extract_from_file(uploaded_file):
+#     article = Article("")
 
-    print(response.json())
+#     file_path = "C:\\Users\\Conor\\DCU\\yr1\\CA169 - N&I\\Notes\\The Internet.pptx"
 
-    # article.set_text(response.json().get("text"))
+#     url = "https://docxtract1.p.rapidapi.com/extract"
 
-    # return article
+#     docxtract_key = config("X_RAPIDAPI_KEY_DOCXTRACT")
+
+#     headers = {
+#         "x-rapidapi-key": docxtract_key,
+#         "x-rapidapi-host": "docxtract1.p.rapidapi.com",
+#     }
+
+#     with open(file_path, "rb") as f:
+#         files = {
+#             "file": (os.path.basename(file_path), f)
+#         }
+
+#         response = requests.post(url, headers=headers, files=files)
+
+#     response.raise_for_status()
+#     data = response.json()
+#     print(data)
+
+#     # article.set_text(response.json().get("text"))
+
+#     # return article
 
 if __name__ == "__main__":
 
-    extract_from_file()
+    extract_from_file(None)
