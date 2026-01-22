@@ -7,6 +7,5 @@ huggingface_hub[hf_xet]
 tokenizers
 django
 pypdf
-react-router-dom
 lxml[html_clean]
 django-cors-headers
