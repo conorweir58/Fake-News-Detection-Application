@@ -24,7 +24,7 @@ sentiment_pipe = pipeline("sentiment-analysis", model="mervp/SentimentBERT")
 #----------------------------
 
 #This model is also hosted on hugging face, it searches for multiple types of bias within the text
-bias_pipe = pipeline("text-classification", model="cirimus/modernbert-large-bias-type-classifier", return_all_scores=True)
+bias_pipe = pipeline("text-classification", model="cirimus/modernbert-large-bias-type-classifier", top_k=True)
 
 #----------------------------
 

@@ -19,4 +19,6 @@ def computation(pulk_result, sentiment_result, bias_result, gpt_result):
 
     overall = (pulk_num * pulk_weight) + (sentiment_num * sentiment_weight) + (bias_num * bias_weight) + (gpt_num * gpt_weight)
 
+    print(overall)
+
     return overall

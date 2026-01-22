@@ -1,10 +1,14 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
+
 
 function Submission(){
 
-    const [text, setText] = useState("")
-    const [url, setUrl] = useState("")
-    const [file, setFile] = useState(null)
+    const [text, setText] = useState("");
+    const [url, setUrl] = useState("");
+    const [file, setFile] = useState(null);
+    let [results, SetResults] = useState(null);
+    let [submitted, SetSubmitted] = useState(null);
+
 
 
     const SubmitData = (e) => {
@@ -30,10 +34,25 @@ function Submission(){
         .then(res => res.json())
         .then(data => {
             console.log("Backend response:", data);
+            SetSubmitted(data.id);
         })
+        
 
 
     }
+
+    
+    useEffect(() => {
+            if (!submitted) return;
+            fetch(`http://127.0.0.1:8000/api/analysis/${submitted}/`)
+            .then(response => response.json())
+            .then(data => {
+                console.log("API Response:", data);
+                SetResults(data);
+                })
+                .catch(error => console.error("API Error fetching results:", error))
+        }, [submitted])
+    
 
     return(
         <div>
@@ -43,6 +62,14 @@ function Submission(){
                 <input type="file" onChange = {(e) => setFile(e.target.files[0])}></input>
                 <button type="submit">Send Article</button>
             </form>
+            <h1>Results</h1>
+            <div>
+                {results && (
+                    <div>
+                        <pre>{JSON.stringify(results, null, 2)}</pre>
+                    </div>
+                )}
+            </div>
         </div>
     );
 };

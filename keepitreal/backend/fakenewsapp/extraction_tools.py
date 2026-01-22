@@ -7,21 +7,21 @@ from pypdf import PdfReader
 # Extracting article from url using newspaper3k
 def extract_from_url(url):
     article = Article(url) # Article object composes newspaper object
-
     article.download() # Articles html content must be downloaded before being accessed
     article.parse() # Parses article html content into meaninful content
-
-    return article # return entire Article object so content can be accessed as needed later
+    return article.text[:1900] # return entire Article object so content can be accessed as needed later
 
 # Lets us use newspaper3k to extract article and use its nlp from raw text input
 def extract_from_text(text):
+<<<<<<< HEAD
     article = Article("") # Article object with empty url
 
+=======
+    article = Article()
+>>>>>>> development
     article.set_text(text) # Set the text of the article as inputted text
-
     article.parse()
-
-    return article
+    return article.text[:1900]
 
 def extract_from_file(uploaded_file):
     article = Article("")
