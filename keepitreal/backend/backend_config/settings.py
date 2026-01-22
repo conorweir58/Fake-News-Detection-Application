@@ -27,7 +27,6 @@ PULK17_HF_KEY = config("PULK17_HF_KEY")
 X_RAPIDAPI_KEY_DOCXTRACT = config("X_RAPIDAPI_KEY_DOCXTRACT")
 DEBUG = config("DEBUG", default=False, cast=bool)
 
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
