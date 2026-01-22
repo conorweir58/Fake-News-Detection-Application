@@ -1,8 +1,12 @@
+from unittest import case
 from newspaper import Article
 import requests
+import os
 from django.conf import settings
 from decouple import config
 from pypdf import PdfReader
+from spire.doc import Document
+from spire.presentation import Presentation
 
 # Extracting article from url using newspaper3k
 def extract_from_url(url):
@@ -18,7 +22,6 @@ def extract_from_text(text):
     article = Article("") # Article object with empty url
 
     article.set_text(text) # Set the text of the article as inputted text
-    article.parse()
 
     return article
 
@@ -26,14 +29,39 @@ def extract_from_file(uploaded_file):
     article = Article("")
 
     # Hardcoded file path for testing
-    file_path = "C:\\Users\\Conor\\DCU\\yr1\\CA169 - N&I\\Notes\\The Internet.docx"
+    uploaded_file = "C:\\Users\\Conor\\DCU\\yr2\\sem2\\CSC1022\\CSC1022_CA1_2025_Group6.pdf"
 
-    reader = PdfReader(file_path)
-    
+    file_type = os.path.splitext(uploaded_file)[1].lower()
 
-    article.set_text()
+    if file_type == ".pdf":
 
-    article.parse()
+        reader = PdfReader(uploaded_file)
+        article.set_text("".join([page.extract_text() for page in reader.pages]))
+
+    elif file_type in [".doc", ".docx", ".docm", ".dot", ".dotx", ".dotm"]:
+
+        document = Document()
+        document.LoadFromFile(uploaded_file)
+
+        article.set_text(document.GetText())
+
+        document.Close()
+
+    elif file_type in [".ppt", ".pptx", ".pps", ".ppsx"]:
+
+        presentation = Presentation()
+        presentation.LoadFromFile(uploaded_file)
+
+        
+
+
+    print(article.text)
+
+    # article.download_state = 2
+    # article.is_parsed = True
+    # article.nlp()
+
+    # print("\nKeywords:", article.keywords)
 
     return article
 
