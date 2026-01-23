@@ -87,6 +87,15 @@ def login(request):
         if not email or not password:
             return JsonResponse({"error":"Need both password and email for login"})
         
+        user = authenticate(request, username=email, password=password)
+
+        if user:
+            login(request, user)
+            return JsonResponse({"message": "Login Successful"})
+        
+        return JsonResponse({"error":"Invalid creditionals"})
+    
+    return JsonResponse({"error":"POST required"})
 
 
 
