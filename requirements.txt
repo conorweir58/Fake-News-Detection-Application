@@ -10,3 +10,5 @@ pypdf
 lxml[html_clean]
 django-cors-headers
 djangorestframework
+spire.doc
+spire.presentation

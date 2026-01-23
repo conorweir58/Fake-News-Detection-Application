@@ -29,7 +29,7 @@ def extract_from_file(uploaded_file):
     article = Article("")
 
     # Hardcoded file path for testing
-    uploaded_file = "C:\\Users\\Conor\\DCU\\yr2\\sem2\\CSC1022\\CSC1022_CA1_2025_Group6.pdf"
+    #uploaded_file = "C:\\Users\\Conor\\DCU\\yr2\\sem2\\CSC1022\\CSC1022_CA1_2025_Group6.pdf"
 
     file_type = os.path.splitext(uploaded_file)[1].lower()
 
@@ -95,6 +95,6 @@ def extract_from_file(uploaded_file):
 
 #     # return article
 
-if __name__ == "__main__":
+#if __name__ == "__main__":
 
-    extract_from_file(None)
+#    extract_from_file(None)

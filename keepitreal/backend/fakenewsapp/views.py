@@ -1,4 +1,5 @@
 from django.http import JsonResponse
+from django.contrib.auth import authenticate, login, logout
 from .detection_models import (pulk_pipe, sentiment_pipe, bias_pipe, gpt_pipe, googFactCheckSearch)
 from .extraction_tools import extract_from_url, extract_from_text, extract_from_file
 from .compute_trustworthiness import computation
@@ -6,6 +7,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .extraction_tools import (extract_from_file, extract_from_url, extract_from_text)
 from .models import DetectionResults
+from .forms import RegistrationForm
 
 # EXTRACTION VIEWS - havent added text yet bc no real reason to test it bc its just setting text
 
@@ -68,3 +70,23 @@ def get_analysis(request, id):
         }, status=404)
 
     return JsonResponse({"id": analysis_result.id, "result": analysis_result.result, "True or False": analysis_result.pulk, "bias": analysis_result.bias, "AI or Human": analysis_result.gpt})
+
+def register(request):
+    if request.method == "POST":
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return JsonResponse({"message" : "New user registered"})
+    return JsonResponse({"error" : "POST required"})
+
+def login(request):
+    if request.method == "POST":
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+
+        if not email or not password:
+            return JsonResponse({"error":"Need both password and email for login"})
+        
+
+
+

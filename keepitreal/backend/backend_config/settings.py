@@ -148,3 +148,9 @@ ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1"
 ]
+
+AUTH_USER_MODEL = 'fakenewsapp.CustomUser'
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'fakenewsapp.backends.CustomBackend',
+]
