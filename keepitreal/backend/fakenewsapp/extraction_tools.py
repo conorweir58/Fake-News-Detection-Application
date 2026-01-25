@@ -41,7 +41,7 @@ def extract_from_file(uploaded_file):
     file_type = os.path.splitext(uploaded_file)[1].lower()
 
     if file_type == ".pdf":
-
+        
         reader = PdfReader(uploaded_file)
         article.set_text("".join([page.extract_text() for page in reader.pages]))
 
@@ -82,15 +82,13 @@ def extract_from_file(uploaded_file):
         
         soup = BeautifulSoup(file_content, "html.parser")
         article.set_text("".join(soup.find_all(string=True)))
-        
+
     elif file_type == ".txt":
 
         with open(uploaded_file, "r", encoding="utf-8") as f:
             article.set_text(f.read())
-        
-
-
-
+    else:
+        raise ValueError("Unsupported file type: " + file_type)
 
     print(article.text)
 
