@@ -6,7 +6,9 @@ from django.conf import settings
 from decouple import config
 from pypdf import PdfReader
 from spire.doc import Document
-from spire.presentation import Presentation
+from spire.presentation import Presentation, IAutoShape
+from markdown import markdown
+from bs4 import BeautifulSoup
 
 # Extracting article from url using newspaper3k
 def extract_from_url(url):
@@ -29,7 +31,12 @@ def extract_from_file(uploaded_file):
     article = Article("")
 
     # Hardcoded file path for testing
-    uploaded_file = "C:\\Users\\Conor\\DCU\\yr2\\sem2\\CSC1022\\CSC1022_CA1_2025_Group6.pdf"
+    # uploaded_file = "C:\\Users\\Conor\\DCU\\yr2\\sem2\\CSC1022\\CSC1022_CA1_2025_Group6.pdf" # pdf test
+    # uploaded_file = "C:\\Users\\Conor\\DCU\\yr2\\sem2\\CSC1022\\CSC1022_CA1_2025_Group9.docx" # docx test
+    # uploaded_file = "C:\\Users\\Conor\\DCU\\yr2\\sem2\\CSC1029\\wk05\\Psychology of Testing .pptx" # pptx test
+    # uploaded_file = "C:\\Users\\Conor\\DCU\\yr3\\yr3_project\\2026-csc1049-bandrew-fakenewsdetection\\README.md"
+    # uploaded_file = "C:\\Users\\Conor\\DCU\\yr3\\yr3_project\\testing_area\\testing_html_extract.html"
+    uploaded_file = "C:\\Users\\Conor\\DCU\\yr3\\yr3_project\\testing_area\\testing_txt_extract.txt"
 
     file_type = os.path.splitext(uploaded_file)[1].lower()
 
@@ -45,55 +52,49 @@ def extract_from_file(uploaded_file):
 
         article.set_text(document.GetText())
 
-        document.Close()
+        document.Close() 
 
     elif file_type in [".ppt", ".pptx", ".pps", ".ppsx"]:
 
         presentation = Presentation()
         presentation.LoadFromFile(uploaded_file)
 
+        sb = []
         
+        # Loop through all slides and extract test to sb list - O(n^3) - maybe better way to do later? - quite slow
+        # based on https://github.com/eiceblue/Spire.Presentation-for-Python/blob/main/Python%20Examples/02_ParagraphAndText/ExtractText.py
+        for slide in presentation.Slides:
+            for shape in slide.Shapes:
+                if isinstance(shape, IAutoShape):
+                    for tp in ( shape if isinstance(shape, IAutoShape) else None).TextFrame.Paragraphs:
+                        sb.append (tp.Text)
+        
+        article.set_text("\n".join(sb))
+        presentation.Dispose() # Releases all resources used by presentation object
+
+    elif file_type in [".md", ".html", ".htm"]:
+
+        with open(uploaded_file, "r", encoding="utf-8") as f:
+            file_content = f.read()
+        
+        if file_type == ".md":
+            file_content = markdown(file_content)
+        
+        soup = BeautifulSoup(file_content, "html.parser")
+        article.set_text("".join(soup.find_all(string=True)))
+        
+    elif file_type == ".txt":
+
+        with open(uploaded_file, "r", encoding="utf-8") as f:
+            article.set_text(f.read())
+        
+
+
 
 
     print(article.text)
 
-    # article.download_state = 2
-    # article.is_parsed = True
-    # article.nlp()
-
-    # print("\nKeywords:", article.keywords)
-
     return article
-
-# USING DOCXTRACT - NOT WORKING BECAUSE OF ISSUES WITH SENDING FILES TO API - MAY WORK WITHOUT HARDCODED FILES BUT FOR NOW GONNA TRY DIFFERENT LIBRARY
-# def extract_from_file(uploaded_file):
-#     article = Article("")
-
-#     file_path = "C:\\Users\\Conor\\DCU\\yr1\\CA169 - N&I\\Notes\\The Internet.pptx"
-
-#     url = "https://docxtract1.p.rapidapi.com/extract"
-
-#     docxtract_key = config("X_RAPIDAPI_KEY_DOCXTRACT")
-
-#     headers = {
-#         "x-rapidapi-key": docxtract_key,
-#         "x-rapidapi-host": "docxtract1.p.rapidapi.com",
-#     }
-
-#     with open(file_path, "rb") as f:
-#         files = {
-#             "file": (os.path.basename(file_path), f)
-#         }
-
-#         response = requests.post(url, headers=headers, files=files)
-
-#     response.raise_for_status()
-#     data = response.json()
-#     print(data)
-
-#     # article.set_text(response.json().get("text"))
-
-#     # return article
 
 if __name__ == "__main__":
 
