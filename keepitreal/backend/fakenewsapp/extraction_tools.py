@@ -100,11 +100,13 @@ def extract_from_file(uploaded_file):
         if file_type == ".md":
             file_content = markdown(file_content)
 
+        # from https://gist.github.com/lorey/eb15a7f3338f959a78cc3661fbc255fe
         soup = BeautifulSoup(file_content, "html.parser")
         article = article_from_text("\n".join(soup.find_all(string=True)))
 
     elif file_type == ".txt":
 
+        # adapted from https://www.geeksforgeeks.org/pandas/read-html-file-in-python-using-pandas/
         with open(uploaded_file, "r", encoding="utf-8") as f:
             article = article_from_text(f.read())
     else:
