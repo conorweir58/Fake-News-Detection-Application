@@ -36,8 +36,8 @@ def article_from_text(text):
 
     article = Article("https://user.upload") # Dummy url so it passes url check inside newspaper3k
 
-    article.set_title(text.split("\n")[0]) # In order to get the article summary - it requires a title - set first line as title - COULD THIS BE SLOW, CHECK IF THIS MEANS IT WILL GO THROUGH ALL TEXT TO SLICE
-    article.set_text(text)
+    article.title = text.split("\n")[0] # In order to get the article summary - it requires a title - set first line as title - COULD THIS BE SLOW, CHECK IF THIS MEANS IT WILL GO THROUGH ALL TEXT TO SLICE
+    article.text = text
 
     article.download_state = 2 # Set the download state as downloaded - allows us to parse
     article.is_parsed = True # set is parsed to true to allow nlp
@@ -63,17 +63,19 @@ def extract_from_file(uploaded_file):
     # uploaded_file = "C:\\Users\\Conor\\DCU\\yr3\\yr3_project\\testing_area\\test_html.htm"
     # uploaded_file = "C:\\Users\\Conor\\DCU\\yr3\\yr3_project\\testing_area\\testing_txt_extract.txt"
 
-    file_type = os.path.splitext(uploaded_file)[1].lower()
+    print(uploaded_file)
+
+    file_type = os.path.splitext(uploaded_file.name)[1].lower()
 
     if file_type == ".pdf":
 
-        reader = PdfReader(uploaded_file)
+        reader = PdfReader(uploaded_file.file)
         article = article_from_text("".join([page.extract_text() for page in reader.pages]))
 
     elif file_type in [".doc", ".docx", ".docm", ".dot", ".dotx", ".dotm"]:
 
         document = Document()
-        document.LoadFromFile(uploaded_file)
+        document.LoadFromFile(uploaded_file.file)
 
         article = article_from_text(document.GetText())
 
@@ -82,7 +84,7 @@ def extract_from_file(uploaded_file):
     elif file_type in [".ppt", ".pptx", ".pps", ".ppsx"]:
 
         presentation = Presentation()
-        presentation.LoadFromFile(uploaded_file)
+        presentation.LoadFromFile(uploaded_file.file)
 
         sb = []
 
@@ -99,7 +101,7 @@ def extract_from_file(uploaded_file):
 
     elif file_type in [".md", ".html", ".htm"]:
 
-        with open(uploaded_file, "r", encoding="utf-8") as f:
+        with open(uploaded_file.name, "r", encoding="utf-8") as f:
             file_content = f.read()
         
         if file_type == ".md":
@@ -112,24 +114,9 @@ def extract_from_file(uploaded_file):
     elif file_type == ".txt":
 
         # adapted from https://www.geeksforgeeks.org/pandas/read-html-file-in-python-using-pandas/
-        with open(uploaded_file, "r", encoding="utf-8") as f:
+        with open(uploaded_file.name, "r", encoding="utf-8") as f:
             article = article_from_text(f.read())
     else:
         raise ValueError("Unsupported file type: " + file_type)
 
     return article
-
-# if __name__ == "__main__":
-
-#     # article = extract_from_file(None)
-#     article = extract_from_url("https://edition.cnn.com/2026/01/25/europe/latest-on-ukraine-russia-trilateral-talks-latam-intl")
-
-#     print(article.text)
-#     print("-----------------------")
-#     print(article.summary)
-#     print(article.keywords)
-#     print("-----------------------")
-
-#     print(article.title)
-#     print(article.authors)
-#     print(article.publish_date)
