@@ -18,6 +18,10 @@ def extract_from_url(url):
     article.download() # Articles html content must be downloaded before being accessed
     article.parse() # Parses article html content into meaninful content
 
+    article.config.MAX_SUMMARY_SENT = 10 # Increase the maximum sentences of summary in the articles config before nlp - just gives better summary results
+
+    article.nlp() # Performs nlp on article to extract keywords, summary, etc.
+
     return article # return entire Article object so content can be accessed as needed later
 
 #
@@ -37,6 +41,7 @@ def article_from_text(text):
 
     article.download_state = 2 # Set the download state as downloaded - allows us to parse
     article.is_parsed = True # set is parsed to true to allow nlp
+    article.config.MAX_SUMMARY_SENT = 10 # Increase the maximum sentences of summary in the articles config before nlp - just gives better summary results
 
     article.nlp()
 
@@ -50,7 +55,7 @@ def extract_from_text(text):
 def extract_from_file(uploaded_file):
 
     # Hardcoded file paths for testing
-    uploaded_file = "C:\\Users\\Conor\\DCU\\yr2\\sem2\\CSC1022\\CSC1022_CA1_2025_Group6.pdf" # pdf test
+    # uploaded_file = "C:\\Users\\Conor\\DCU\\yr2\\sem2\\CSC1022\\CSC1022_CA1_2025_Group6.pdf" # pdf test
     # uploaded_file = "C:\\Users\\Conor\\DCU\\yr2\\sem2\\CSC1022\\CSC1022_CA1_2025_Group9.docx" # docx test
     # uploaded_file = "C:\\Users\\Conor\\DCU\\yr2\\sem2\\CSC1029\\wk05\\Psychology of Testing .pptx" # pptx test
     # uploaded_file = "C:\\Users\\Conor\\DCU\\yr3\\yr3_project\\2026-csc1049-bandrew-fakenewsdetection\\README.md"
@@ -80,7 +85,7 @@ def extract_from_file(uploaded_file):
         presentation.LoadFromFile(uploaded_file)
 
         sb = []
-        
+
         # Loop through all slides and extract test to sb list - O(n^3) - maybe better way to do later? - quite slow
         # based on https://github.com/eiceblue/Spire.Presentation-for-Python/blob/main/Python%20Examples/02_ParagraphAndText/ExtractText.py
         for slide in presentation.Slides:
@@ -114,16 +119,17 @@ def extract_from_file(uploaded_file):
 
     return article
 
-if __name__ == "__main__":
+# if __name__ == "__main__":
 
-    article = extract_from_file(None)
+#     # article = extract_from_file(None)
+#     article = extract_from_url("https://edition.cnn.com/2026/01/25/europe/latest-on-ukraine-russia-trilateral-talks-latam-intl")
 
-    print(article.text)
-    print(article.summary)
-    print(article.keywords)
-    print("-----------------------")
+#     print(article.text)
+#     print("-----------------------")
+#     print(article.summary)
+#     print(article.keywords)
+#     print("-----------------------")
 
-    print(article.title)
-    print(article.authors)
-    print(article.publish_date)
-
+#     print(article.title)
+#     print(article.authors)
+#     print(article.publish_date)
