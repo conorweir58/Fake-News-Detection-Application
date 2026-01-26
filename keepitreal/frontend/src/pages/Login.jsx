@@ -31,8 +31,8 @@ function Login () {
     }
     return (
          <form onSubmit={SubmitData}>
-            <input type="text" placeholder="Enter your email" value = {email} onChange = {(e) => setEmail(e.target.value)}></input>
-            <input type="text" placeholder="Enter your password" value = {password} onChange = {(e) => setPassword(e.target.value)}></input>
+            <input type="email" placeholder="Enter your email" value={email} onChange = {(e) => setEmail(e.target.value)}></input>
+            <input type="password" placeholder="Enter your password" value={password} onChange = {(e) => setPassword(e.target.value)}></input>
             <button type="submit">Login</button>
 
             {message &&
