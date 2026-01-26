@@ -13,4 +13,4 @@ djangorestframework
 Spire.Doc
 Spire.Presentation
 markdown
-bs4
+beautifulsoup4
