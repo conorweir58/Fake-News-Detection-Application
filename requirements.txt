@@ -12,3 +12,5 @@ django-cors-headers
 djangorestframework
 Spire.Doc
 Spire.Presentation
+markdown
+bs4
