@@ -6,6 +6,9 @@ from rest_framework.decorators import api_view
 from .extraction_tools import (extract_from_file, extract_from_url, extract_from_text)
 from .models import DetectionResults
 from .forms import RegistrationForm
+from django.shortcuts import render
+from django.views.decorators.csrf import ensure_csrf_cookie
+import json
 
 # EXTRACTION VIEWS - havent added text yet bc no real reason to test it bc its just setting text
 
@@ -71,16 +74,29 @@ def get_analysis(request, id):
 
 def register(request):
     if request.method == "POST":
-        form = RegistrationForm(request.POST)
+        try:
+            data = json.loads(request.body)
+        except:
+            return JsonResponse({"error":"invalid JSON post"})
+
+        form = RegistrationForm(data)
         if form.is_valid():
             form.save()
             return JsonResponse({"message" : "New user registered"})
+        else:
+            return JsonResponse({"errors": form.errors}, status=400)
+        
     return JsonResponse({"error" : "POST required"})
 
-def login(request):
+def login_to_account(request):
     if request.method == "POST":
-        email = request.POST.get("email")
-        password = request.POST.get("password")
+        try:
+            data = json.loads(request.body)
+        except:
+            return JsonResponse({"error":"invalid JSON post"})
+
+        email = data.get("email")
+        password = data.get("password")
 
         if not email or not password:
             return JsonResponse({"error":"Need both password and email for login"})
@@ -95,5 +111,6 @@ def login(request):
     
     return JsonResponse({"error":"POST required"})
 
-
-
+@ensure_csrf_cookie
+def get_csrf(request):
+    return JsonResponse({"message":"CSRF set"})

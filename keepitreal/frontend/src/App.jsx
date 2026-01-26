@@ -1,14 +1,18 @@
-import { useState } from 'react'
+import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import './App.css'
 import SubmitData from "./pages/submission_page"
+import Register from './pages/register';
+import Login from './pages/login';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <div>
-      <SubmitData />
-    </div>
+<BrowserRouter>
+      <Routes>
+        <Route path="/" element={<SubmitData />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 

@@ -30,9 +30,6 @@ DEBUG = config("DEBUG", default=False, cast=bool)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -131,7 +128,7 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CORS_ALLOW_ALL_ORIGINS = True
+
 
 
 
@@ -139,10 +136,33 @@ CORS_ALLOW_ALL_ORIGINS = True
 # Posted by Jaime Ortiz
 # Retrieved 2026-01-21, License - CC BY-SA 4.0
 
+CSRF_COOKIE_SECURE = False
+CSRF_COOKIE_HTTPONLY = False
+SESSION_COOKIE_SECURE = False
+
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173"
+]
+
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOW_HEADERS = [
+    "accept",
+    "accept-encoding",
+    "authorization",
+    "content-type",
+    "origin",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+]
+
+
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173"
-
 ]
 ALLOWED_HOSTS = [
     "localhost",

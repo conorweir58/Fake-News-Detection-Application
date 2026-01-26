@@ -1,12 +1,14 @@
+# Create your models here.
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from .managers import CustomUserManager
 
-class CustomUser(AbstractBaseUser):
+class CustomUser(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=20, unique=True)
     email = models.EmailField(max_length=80, unique=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
     date_joined = models.DateTimeField(auto_now_add=True)
 
     USERNAME_FIELD = 'email' # this makes it so the email field is used as the unique identifier for login instead of username
@@ -29,6 +31,3 @@ class DetectionResults(models.Model):
     bias = models.JSONField()
     gpt = models.JSONField()
     created_at = models.DateField(auto_now_add=True)
-
-    
-# Create your models here.
