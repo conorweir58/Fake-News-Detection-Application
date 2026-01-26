@@ -1,10 +1,8 @@
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login, logout
 from .detection_models import (pulk_pipe, sentiment_pipe, bias_pipe, gpt_pipe, googFactCheckSearch)
-from .extraction_tools import extract_from_url, extract_from_text, extract_from_file
 from .compute_trustworthiness import computation
 from rest_framework.decorators import api_view
-from rest_framework.response import Response
 from .extraction_tools import (extract_from_file, extract_from_url, extract_from_text)
 from .models import DetectionResults
 from .forms import RegistrationForm

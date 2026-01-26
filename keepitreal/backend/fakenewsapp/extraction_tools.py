@@ -1,12 +1,15 @@
+# THIS CODE NEEDS CLEAN UP - POTENTIALLY MOVE SOME THINGS TO ANOTHER UTIL FILE
+# HTML EXTRACTION NEEDS TO REMOVE THE 'html' IDENTIFIER BEFORE THE TEXT
+# HTML EXTRACTION MAY ALSO NEED TO ALTER HOW IT IS SEPERATED
+
 from unittest import case
 from newspaper import Article
-import requests
 import os
-from django.conf import settings
-from decouple import config
 from pypdf import PdfReader
 from spire.doc import Document
-from spire.presentation import Presentation
+from spire.presentation import Presentation, IAutoShape
+from markdown import markdown
+from bs4 import BeautifulSoup
 
 # Extracting article from url using newspaper3k
 def extract_from_url(url):
@@ -15,86 +18,118 @@ def extract_from_url(url):
     article.download() # Articles html content must be downloaded before being accessed
     article.parse() # Parses article html content into meaninful content
 
+    article.config.MAX_SUMMARY_SENT = 10 # Increase the maximum sentences of summary in the articles config before nlp - just gives better summary results
+
+    article.nlp() # Performs nlp on article to extract keywords, summary, etc.
+
     return article # return entire Article object so content can be accessed as needed later
 
-# Lets us use newspaper3k to extract article and use its nlp from raw text input
-def extract_from_text(text):
-    article = Article("") # Article object with empty url
+#
+# In order to be able to perform NLP on an article object, the article must be downloaded and then parsed.
+# Without a valid article URL, an article cannot be downloaded and therefore cannot be parsed or have nlp performed
+# To try and have a uniform return type and to avail of newspaper3k's NLP - the source code provides some values and methods we can use to workaround
+# We can manually alter some values to allow our non-url article object to be able to be nlp'd
+#
 
-    article.set_text(text) # Set the text of the article as inputted text
+# Converts extracted text into a newspaper3k Article object
+def article_from_text(text):
+
+    article = Article("https://user.upload") # Dummy url so it passes url check inside newspaper3k
+
+    article.set_title(text.split("\n")[0]) # In order to get the article summary - it requires a title - set first line as title - COULD THIS BE SLOW, CHECK IF THIS MEANS IT WILL GO THROUGH ALL TEXT TO SLICE
+    article.set_text(text)
+
+    article.download_state = 2 # Set the download state as downloaded - allows us to parse
+    article.is_parsed = True # set is parsed to true to allow nlp
+    article.config.MAX_SUMMARY_SENT = 10 # Increase the maximum sentences of summary in the articles config before nlp - just gives better summary results
+
+    article.nlp()
 
     return article
 
-def extract_from_file(uploaded_file):
-    article = Article("")
+# Lets us use newspaper3k to extract article and use its nlp from raw text input
+def extract_from_text(text):
 
-    # Hardcoded file path for testing
-    #uploaded_file = "C:\\Users\\Conor\\DCU\\yr2\\sem2\\CSC1022\\CSC1022_CA1_2025_Group6.pdf"
+    return article_from_text(text) # just return the article set to the given text
+
+def extract_from_file(uploaded_file):
+
+    # Hardcoded file paths for testing
+    # uploaded_file = "C:\\Users\\Conor\\DCU\\yr2\\sem2\\CSC1022\\CSC1022_CA1_2025_Group6.pdf" # pdf test
+    # uploaded_file = "C:\\Users\\Conor\\DCU\\yr2\\sem2\\CSC1022\\CSC1022_CA1_2025_Group9.docx" # docx test
+    # uploaded_file = "C:\\Users\\Conor\\DCU\\yr2\\sem2\\CSC1029\\wk05\\Psychology of Testing .pptx" # pptx test
+    # uploaded_file = "C:\\Users\\Conor\\DCU\\yr3\\yr3_project\\2026-csc1049-bandrew-fakenewsdetection\\README.md"
+    # uploaded_file = "C:\\Users\\Conor\\DCU\\yr3\\yr3_project\\testing_area\\testing_html_extract.html"
+    # uploaded_file = "C:\\Users\\Conor\\DCU\\yr3\\yr3_project\\testing_area\\test_html.htm"
+    # uploaded_file = "C:\\Users\\Conor\\DCU\\yr3\\yr3_project\\testing_area\\testing_txt_extract.txt"
 
     file_type = os.path.splitext(uploaded_file)[1].lower()
 
     if file_type == ".pdf":
 
         reader = PdfReader(uploaded_file)
-        article.set_text("".join([page.extract_text() for page in reader.pages]))
+        article = article_from_text("".join([page.extract_text() for page in reader.pages]))
 
     elif file_type in [".doc", ".docx", ".docm", ".dot", ".dotx", ".dotm"]:
 
         document = Document()
         document.LoadFromFile(uploaded_file)
 
-        article.set_text(document.GetText())
+        article = article_from_text(document.GetText())
 
-        document.Close()
+        document.Close() 
 
     elif file_type in [".ppt", ".pptx", ".pps", ".ppsx"]:
 
         presentation = Presentation()
         presentation.LoadFromFile(uploaded_file)
 
+        sb = []
+
+        # Loop through all slides and extract test to sb list - O(n^3) - maybe better way to do later? - quite slow
+        # based on https://github.com/eiceblue/Spire.Presentation-for-Python/blob/main/Python%20Examples/02_ParagraphAndText/ExtractText.py
+        for slide in presentation.Slides:
+            for shape in slide.Shapes:
+                if isinstance(shape, IAutoShape):
+                    for tp in ( shape if isinstance(shape, IAutoShape) else None).TextFrame.Paragraphs:
+                        sb.append (tp.Text)
         
+        article = article_from_text("\n".join(sb))
+        presentation.Dispose() # Releases all resources used by presentation object
 
+    elif file_type in [".md", ".html", ".htm"]:
 
-    print(article.text)
+        with open(uploaded_file, "r", encoding="utf-8") as f:
+            file_content = f.read()
+        
+        if file_type == ".md":
+            file_content = markdown(file_content)
 
-    # article.download_state = 2
-    # article.is_parsed = True
-    # article.nlp()
+        # from https://gist.github.com/lorey/eb15a7f3338f959a78cc3661fbc255fe
+        soup = BeautifulSoup(file_content, "html.parser")
+        article = article_from_text("\n".join(soup.find_all(string=True)))
 
-    # print("\nKeywords:", article.keywords)
+    elif file_type == ".txt":
+
+        # adapted from https://www.geeksforgeeks.org/pandas/read-html-file-in-python-using-pandas/
+        with open(uploaded_file, "r", encoding="utf-8") as f:
+            article = article_from_text(f.read())
+    else:
+        raise ValueError("Unsupported file type: " + file_type)
 
     return article
 
-# USING DOCXTRACT - NOT WORKING BECAUSE OF ISSUES WITH SENDING FILES TO API - MAY WORK WITHOUT HARDCODED FILES BUT FOR NOW GONNA TRY DIFFERENT LIBRARY
-# def extract_from_file(uploaded_file):
-#     article = Article("")
+# if __name__ == "__main__":
 
-#     file_path = "C:\\Users\\Conor\\DCU\\yr1\\CA169 - N&I\\Notes\\The Internet.pptx"
+#     # article = extract_from_file(None)
+#     article = extract_from_url("https://edition.cnn.com/2026/01/25/europe/latest-on-ukraine-russia-trilateral-talks-latam-intl")
 
-#     url = "https://docxtract1.p.rapidapi.com/extract"
+#     print(article.text)
+#     print("-----------------------")
+#     print(article.summary)
+#     print(article.keywords)
+#     print("-----------------------")
 
-#     docxtract_key = config("X_RAPIDAPI_KEY_DOCXTRACT")
-
-#     headers = {
-#         "x-rapidapi-key": docxtract_key,
-#         "x-rapidapi-host": "docxtract1.p.rapidapi.com",
-#     }
-
-#     with open(file_path, "rb") as f:
-#         files = {
-#             "file": (os.path.basename(file_path), f)
-#         }
-
-#         response = requests.post(url, headers=headers, files=files)
-
-#     response.raise_for_status()
-#     data = response.json()
-#     print(data)
-
-#     # article.set_text(response.json().get("text"))
-
-#     # return article
-
-#if __name__ == "__main__":
-
-#    extract_from_file(None)
+#     print(article.title)
+#     print(article.authors)
+#     print(article.publish_date)
