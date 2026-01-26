@@ -14,13 +14,33 @@ import json
 
 def extract_url(request):
 
-    article = extract_from_url("https://www.politifact.com/article/2024/aug/06/in-context-why-did-harris-vp-pick-gov-tim-walz-say/") # hardcode for now
+    url = request.data.get("url")
+
+    if not url:
+        return JsonResponse({"error": "No URL provided."}, status=400)
+
+    article = extract_from_url()
+
+    return JsonResponse({"title": article.title, "authors": article.authors, "publish_date": str(article.publish_date), "text": article.text}) # just return json for testing
+
+def extract_text(request):
+    text = request.data.get("text")
+
+    if not text:
+        return JsonResponse({"error": "No text provided."}, status=400)
+
+    article = extract_from_text(text)
 
     return JsonResponse({"title": article.title, "authors": article.authors, "publish_date": str(article.publish_date), "text": article.text}) # just return json for testing
 
 def extract_file(request):
 
-    article = extract_from_file()
+    file = request.FILES.get("file")
+
+    if not file:
+        return JsonResponse({"error": "No file uploaded."}, status=400)
+    
+    article = extract_from_file(file)
 
     return JsonResponse({"title": article.title, "authors": article.authors, "publish_date": str(article.publish_date), "text": article.text}) # just return json for testing
 
