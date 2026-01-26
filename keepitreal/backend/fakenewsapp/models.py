@@ -24,6 +24,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
 class DetectionResults(models.Model):
     id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True)
     text = models.TextField()
     result = models.FloatField()
     pulk = models.JSONField()

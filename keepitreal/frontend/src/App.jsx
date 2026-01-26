@@ -6,7 +6,7 @@ import Login from './pages/login';
 
 function App() {
   return (
-<BrowserRouter>
+    <BrowserRouter>
       <Routes>
         <Route path="/" element={<SubmitData />} />
         <Route path="/login" element={<Login />} />

@@ -12,4 +12,3 @@ urlpatterns = [
     path('logout/', views.logout),
     path('csrf/', views.get_csrf),
 ]
-

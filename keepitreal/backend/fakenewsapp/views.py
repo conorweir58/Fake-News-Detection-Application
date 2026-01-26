@@ -14,13 +14,13 @@ import json
 
 def extract_url(request):
 
-    article = extract_from_url("https://www.politifact.com/article/2024/aug/06/in-context-why-did-harris-vp-pick-gov-tim-walz-say/") # hardcode for now
+    article = extract_from_url(request) # hardcode for now
 
     return JsonResponse({"title": article.title, "authors": article.authors, "publish_date": str(article.publish_date), "text": article.text}) # just return json for testing
 
 def extract_file(request):
 
-    article = extract_from_file()
+    article = extract_from_file(request)
 
     return JsonResponse({"title": article.title, "authors": article.authors, "publish_date": str(article.publish_date), "text": article.text}) # just return json for testing
 
@@ -56,10 +56,13 @@ def analyse(request):
 
     result = computation(pulk_result, sentiment_result, bias_result, gpt_result)
 
-    info_obj = DetectionResults(pulk=pulk_result, bias=bias_result, sentiment=sentiment_result, gpt=gpt_result, text=article.text[:1900], result=result)
-    info_obj.save()
+    if request.user.is_authenticated:
+        info_obj = DetectionResults.objects.create(pulk=pulk_result, bias=bias_result, sentiment=sentiment_result, gpt=gpt_result, text=article.text[:1900], result=result)
+        info_obj.save()
 
-    return JsonResponse({ "id": info_obj.id, "result": result, "True or False": pulk_result, "bias": bias_result, "AI or Human": gpt_result})
+
+
+    return JsonResponse({ "result": result, "True or False": pulk_result, "bias": bias_result, "AI or Human": gpt_result})
 
 @api_view(['GET'])
 def get_analysis(request, id):
