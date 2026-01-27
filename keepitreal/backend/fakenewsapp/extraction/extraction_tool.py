@@ -6,7 +6,7 @@ from newspaper import Article
 import os
 from .extraction_helper import *
 
-# Extracting article from url using newspaper3k
+# Extracting article from url using newspaper4k
 def extract_from_url(url):
     article = Article(url) # Article object composes newspaper object
 
@@ -19,7 +19,7 @@ def extract_from_url(url):
 
     return article # return entire Article object so content can be accessed as needed later
 
-# Lets us use newspaper3k to extract article and use its nlp from raw text input
+# Lets us use newspaper4k to extract article and use its nlp from raw text input
 def extract_from_text(text):
 
     return article_from_text(text) # just return the article set to the given text
@@ -29,22 +29,26 @@ def extract_from_file(uploaded_file):
     file_type = os.path.splitext(uploaded_file.name)[1].lower()
 
     if file_type == ".pdf":
-        return pdf_to_article(uploaded_file)
+        text = pdf_to_text(uploaded_file)
     
     elif file_type in [".doc", ".docx", ".docm", ".dot", ".dotx", ".dotm"]:
-        return doc_to_article(uploaded_file)
+        text = doc_to_text(uploaded_file)
     
     elif file_type in [".ppt", ".pptx", ".pps", ".ppsx"]:
-        return ppt_to_article(uploaded_file)
+        text = ppt_to_text(uploaded_file)
     
     elif file_type in [".md", ".html", ".htm"]:
-        return html_to_article(uploaded_file, file_type)
-    
+        text = html_to_text(uploaded_file, file_type)
+
     elif file_type == ".txt":
         # adapted from https://www.geeksforgeeks.org/pandas/read-html-file-in-python-using-pandas/
         with open(uploaded_file, "r", encoding="utf-8") as f:
-            article = article_from_text(f.read())
+            text = f.read()
 
-        return article
     else:
         raise ValueError("Unsupported file type: " + file_type)
+
+    if text:
+        return article_from_text(text)
+    else:
+        raise ValueError("No text could be extracted from the file.")
