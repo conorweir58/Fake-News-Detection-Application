@@ -1,4 +1,5 @@
 import {useState, useEffect} from 'react';
+import Cookies from 'js-cookie'
 
 
 function Submission(){
@@ -14,8 +15,10 @@ function Submission(){
     const SubmitData = (e) => {
         e.preventDefault();
 
+        const csrftoken = Cookies.get("csrftoken")
+
         let body;
-        let headers = {}
+        let headers = {"X-CSRFToken": csrftoken}
 
         if (file) {
             body = new FormData()
@@ -28,13 +31,18 @@ function Submission(){
 
         fetch("http://127.0.0.1:8000/api/analysis/", {
             method: "POST",
+            credentials: "include",
             headers,
             body
         })
         .then(res => res.json())
         .then(data => {
             console.log("Backend response:", data);
-            SetSubmitted(data.id);
+            if (data.id == null){
+                SetResults(data)
+            }else{
+                SetSubmitted(data.id);
+            }
         })
         
 
