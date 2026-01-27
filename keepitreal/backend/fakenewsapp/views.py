@@ -50,16 +50,23 @@ def extract_file(request):
 @api_view(['POST'])
 def analyse(request):       
 
+    print("User:", request.user)
+    print("Authenticated:", request.user.is_authenticated)
+
     url = request.data.get("url")
     article_text = request.data.get("text")
     files = request.FILES.get("file")
 
     if url:
         article = extract_from_url(url)
+        article_info = url
     elif files:
         article = extract_from_file(files)
+        article_info = article.text
     elif article_text:
         article = extract_from_text(article_text)
+        article_info = article.text
+
 
     # here i call all the models with the given text
     pulk_result = pulk_pipe(article.text[:1900])
@@ -77,7 +84,7 @@ def analyse(request):
     result = computation(pulk_result, sentiment_result, bias_result, gpt_result)
 
     if request.user.is_authenticated:
-        info_obj = DetectionResults.objects.create(pulk=pulk_result, bias=bias_result, sentiment=sentiment_result, gpt=gpt_result, text=article.text[:1900], result=result)
+        info_obj = DetectionResults.objects.create(user=request.user, text=article_info, pulk=pulk_result, bias=bias_result, sentiment=sentiment_result, gpt=gpt_result, result=result)
         info_obj.save()
 
 
