@@ -1,6 +1,4 @@
-from unittest import case
 from newspaper import Article
-import os
 from pypdf import PdfReader
 from spire.doc import Document
 from spire.presentation import Presentation, IAutoShape
