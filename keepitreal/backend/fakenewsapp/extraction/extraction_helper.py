@@ -30,23 +30,23 @@ def article_from_text(text):
 
 # FILE EXTRACTORS
 
-def pdf_to_article(file):
+def pdf_to_text(file):
 
     reader = PdfReader(file.file)
-    return article_from_text("".join([page.extract_text() for page in reader.pages]))
+    return "".join([page.extract_text() for page in reader.pages])
 
-def doc_to_article(file):
+def doc_to_text(file):
 
     document = Document()
     document.LoadFromFile(file)
 
-    article = article_from_text(document.GetText())
+    text = document.GetText()
 
     document.Close()
 
-    return article
+    return text
 
-def ppt_to_article(file):
+def ppt_to_text(file):
 
     presentation = Presentation()
     presentation.LoadFromFile(file)
@@ -61,20 +61,20 @@ def ppt_to_article(file):
                 for tp in ( shape if isinstance(shape, IAutoShape) else None).TextFrame.Paragraphs:
                     sb.append (tp.Text)
     
-    article = article_from_text("\n".join(sb))
+    text = "\n".join(sb)
     presentation.Dispose() # Releases all resources used by presentation object
 
-    return article
+    return text
 
-def html_to_article(file, typ):
+def html_to_text(file, type):
 
     with open(file, "r", encoding="utf-8") as f:
         file_content = f.read()
 
     # Convert markdown to html if needed
-    if typ == ".md":
+    if type == ".md":
         file_content = markdown(file_content)
 
     # from https://gist.github.com/lorey/eb15a7f3338f959a78cc3661fbc255fe
     soup = BeautifulSoup(file_content, "html.parser")
-    return article_from_text("\n".join(soup.find_all(string=True)))
+    return "\n".join(soup.find_all(string=True))
