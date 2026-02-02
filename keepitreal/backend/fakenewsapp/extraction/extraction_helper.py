@@ -1,7 +1,7 @@
 from newspaper import Article
 from pypdf import PdfReader
-from spire.doc import Document
-from spire.presentation import Presentation, IAutoShape
+from docx import Document
+from pptx import Presentation
 from markdown import markdown
 from bs4 import BeautifulSoup
 
@@ -18,6 +18,7 @@ def article_from_text(text):
     article = Article("https://user.upload") # Dummy url so it passes url check inside newspaper4k
 
     article.title = text.split("\n")[0] # In order to get the article summary - it requires a title - set first line as title - COULD THIS BE SLOW, CHECK IF THIS MEANS IT WILL GO THROUGH ALL TEXT TO SLICE
+    print("TITLE: " + article.title)
     article.text = text
 
     article.download_state = 2 # Set the download state as downloaded - allows us to parse
@@ -32,44 +33,43 @@ def article_from_text(text):
 
 def pdf_to_text(file):
 
-    reader = PdfReader(file.file)
+    reader = PdfReader(file)
     return "".join([page.extract_text() for page in reader.pages])
 
+# Will no longer work for anything other than .docx files (i.e. word doc file older than 2007)
 def doc_to_text(file):
 
-    document = Document()
-    document.LoadFromFile(file)
+    document = Document(file) # not sure if for security or for potential error pervention if somehting must be done with file before giving to Document
 
-    text = document.GetText()
+    text = "\n".join([para.text for para in document.paragraphs]) # https://python-docx.readthedocs.io/en/latest/api/text.html#docx.text.paragraph.Paragraph.text
 
-    document.Close()
-
+    print(text)
     return text
 
 def ppt_to_text(file):
 
-    presentation = Presentation()
-    presentation.LoadFromFile(file)
-
-    sb = []
-
-    # Loop through all slides and extract test to sb list - O(n^3) - maybe better way to do later? - quite slow
-    # based on https://github.com/eiceblue/Spire.Presentation-for-Python/blob/main/Python%20Examples/02_ParagraphAndText/ExtractText.py
-    for slide in presentation.Slides:
-        for shape in slide.Shapes:
-            if isinstance(shape, IAutoShape):
-                for tp in ( shape if isinstance(shape, IAutoShape) else None).TextFrame.Paragraphs:
-                    sb.append (tp.Text)
+    ppt = Presentation(file)
     
-    text = "\n".join(sb)
-    presentation.Dispose() # Releases all resources used by presentation object
+    # based on https://python-pptx.readthedocs.io/en/latest/user/quickstart.html#extract-all-text-from-slides-in-presentation and https://github.com/eiceblue/Spire.Presentation-for-Python/blob/main/Python%20Examples/02_ParagraphAndText/ExtractText.py
+    content = []
 
+    # Seems to be faster than Spire's ppt extraction but has worse time complex at O(n^4)
+    for slide in ppt.slides:
+        for shape in slide.shapes:
+            if not shape.has_text_frame:
+                continue
+            for pg in shape.text_frame.paragraphs:
+                for run in pg.runs:
+                    content.append(run.text)
+    
+    text = "\n".join(content)
+    print(text)
     return text
 
 def html_to_text(file, type):
 
-    with open(file, "r", encoding="utf-8") as f:
-        file_content = f.read()
+    raw = file.read() # think django InMemoryUploadedFile object would handles closing itself
+    file_content = raw.decode("utf-8", errors="replace")
 
     # Convert markdown to html if needed
     if type == ".md":
@@ -77,4 +77,11 @@ def html_to_text(file, type):
 
     # from https://gist.github.com/lorey/eb15a7f3338f959a78cc3661fbc255fe
     soup = BeautifulSoup(file_content, "html.parser")
-    return "\n".join(soup.find_all(string=True))
+
+    # based on https://www.scrapingbee.com/blog/parsel-python/
+    for tag in soup(["script", "style", "nav", "footer", "header", "aside", "noscript"]):
+        tag.decompose()
+
+    # print(soup.get_text(separator=" ", strip=True))
+
+    return soup.get_text(separator=" ", strip=True) # potentially alter so that h1 tag becomes title or somehting

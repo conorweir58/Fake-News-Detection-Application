@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from .detection_models import (pulk_pipe, sentiment_pipe, bias_pipe, gpt_pipe, googFactCheckSearch)
 from .compute_trustworthiness import computation
 from rest_framework.decorators import api_view
-from .extraction_tools import (extract_from_file, extract_from_url, extract_from_text)
+from .extraction.extraction_tool import (extract_from_file, extract_from_url, extract_from_text)
 from .models import DetectionResults
 from .forms import RegistrationForm
 from django.shortcuts import render
@@ -70,7 +70,7 @@ def analyse(request):
     print(bias_result)
     gpt_result = gpt_pipe(article.text[:1900])
     print(gpt_result)
-    #
+    # #
     # fact_check_result = googFactCheckSearch(text)
 
 

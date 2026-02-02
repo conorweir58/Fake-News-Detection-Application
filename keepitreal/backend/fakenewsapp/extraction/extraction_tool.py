@@ -30,20 +30,18 @@ def extract_from_file(uploaded_file):
 
     if file_type == ".pdf":
         text = pdf_to_text(uploaded_file)
-    
-    elif file_type in [".doc", ".docx", ".docm", ".dot", ".dotx", ".dotm"]:
+
+    elif file_type == ".docx":
         text = doc_to_text(uploaded_file)
-    
-    elif file_type in [".ppt", ".pptx", ".pps", ".ppsx"]:
+
+    elif file_type == ".pptx":
         text = ppt_to_text(uploaded_file)
-    
+
     elif file_type in [".md", ".html", ".htm"]:
         text = html_to_text(uploaded_file, file_type)
 
     elif file_type == ".txt":
-        # adapted from https://www.geeksforgeeks.org/pandas/read-html-file-in-python-using-pandas/
-        with open(uploaded_file, "r", encoding="utf-8") as f:
-            text = f.read()
+        text = "".join([line.decode("utf-8", errors="replace") for line in uploaded_file]) # dunno if this works 100% of time
 
     else:
         raise ValueError("Unsupported file type: " + file_type)
