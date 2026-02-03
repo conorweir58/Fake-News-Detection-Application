@@ -52,72 +52,76 @@ def extract_from_text(text):
 
     return article_from_text(text) # just return the article set to the given text
 
-def extract_from_file(uploaded_file):
+def extract_from_file(file):
+    return None
 
-    # Hardcoded file paths for testing
-    # uploaded_file = "C:\\Users\\Conor\\DCU\\yr2\\sem2\\CSC1022\\CSC1022_CA1_2025_Group6.pdf" # pdf test
-    # uploaded_file = "C:\\Users\\Conor\\DCU\\yr2\\sem2\\CSC1022\\CSC1022_CA1_2025_Group9.docx" # docx test
-    # uploaded_file = "C:\\Users\\Conor\\DCU\\yr2\\sem2\\CSC1029\\wk05\\Psychology of Testing .pptx" # pptx test
-    # uploaded_file = "C:\\Users\\Conor\\DCU\\yr3\\yr3_project\\2026-csc1049-bandrew-fakenewsdetection\\README.md"
-    # uploaded_file = "C:\\Users\\Conor\\DCU\\yr3\\yr3_project\\testing_area\\testing_html_extract.html"
-    # uploaded_file = "C:\\Users\\Conor\\DCU\\yr3\\yr3_project\\testing_area\\test_html.htm"
-    # uploaded_file = "C:\\Users\\Conor\\DCU\\yr3\\yr3_project\\testing_area\\testing_txt_extract.txt"
+# def extract_from_file(uploaded_file):
 
-    file_type = os.path.splitext(uploaded_file)[1].lower()
+    # # Hardcoded file paths for testing
+    # # uploaded_file = "C:\\Users\\Conor\\DCU\\yr2\\sem2\\CSC1022\\CSC1022_CA1_2025_Group6.pdf" # pdf test
+    # # uploaded_file = "C:\\Users\\Conor\\DCU\\yr2\\sem2\\CSC1022\\CSC1022_CA1_2025_Group9.docx" # docx test
+    # # uploaded_file = "C:\\Users\\Conor\\DCU\\yr2\\sem2\\CSC1029\\wk05\\Psychology of Testing .pptx" # pptx test
+    # # uploaded_file = "C:\\Users\\Conor\\DCU\\yr3\\yr3_project\\2026-csc1049-bandrew-fakenewsdetection\\README.md"
+    # # uploaded_file = "C:\\Users\\Conor\\DCU\\yr3\\yr3_project\\testing_area\\testing_html_extract.html"
+    # # uploaded_file = "C:\\Users\\Conor\\DCU\\yr3\\yr3_project\\testing_area\\test_html.htm"
+    # # uploaded_file = "C:\\Users\\Conor\\DCU\\yr3\\yr3_project\\testing_area\\testing_txt_extract.txt"
 
-    if file_type == ".pdf":
+    # file_type = os.path.splitext(uploaded_file)[1].lower()
 
-        reader = PdfReader(uploaded_file)
-        article = article_from_text("".join([page.extract_text() for page in reader.pages]))
+    # if file_type == ".pdf":
 
-    elif file_type in [".doc", ".docx", ".docm", ".dot", ".dotx", ".dotm"]:
+    #     reader = PdfReader(uploaded_file)
+    #     article = article_from_text("".join([page.extract_text() for page in reader.pages]))
 
-        document = Document()
-        document.LoadFromFile(uploaded_file)
+    # elif file_type in [".doc", ".docx", ".docm", ".dot", ".dotx", ".dotm"]:
 
-        article = article_from_text(document.GetText())
+    #     document = Document()
+    #     document.LoadFromFile(uploaded_file)
 
-        document.Close() 
+    #     article = article_from_text(document.GetText())
 
-    elif file_type in [".ppt", ".pptx", ".pps", ".ppsx"]:
+    #     document.Close() 
 
-        presentation = Presentation()
-        presentation.LoadFromFile(uploaded_file)
+    # elif file_type in [".ppt", ".pptx", ".pps", ".ppsx"]:
 
-        sb = []
+    #     presentation = Presentation()
+    #     presentation.LoadFromFile(uploaded_file)
 
-        # Loop through all slides and extract test to sb list - O(n^3) - maybe better way to do later? - quite slow
-        # based on https://github.com/eiceblue/Spire.Presentation-for-Python/blob/main/Python%20Examples/02_ParagraphAndText/ExtractText.py
-        for slide in presentation.Slides:
-            for shape in slide.Shapes:
-                if isinstance(shape, IAutoShape):
-                    for tp in ( shape if isinstance(shape, IAutoShape) else None).TextFrame.Paragraphs:
-                        sb.append (tp.Text)
+    #     sb = []
+
+    #     # Loop through all slides and extract test to sb list - O(n^3) - maybe better way to do later? - quite slow
+    #     # based on https://github.com/eiceblue/Spire.Presentation-for-Python/blob/main/Python%20Examples/02_ParagraphAndText/ExtractText.py
+    #     for slide in presentation.Slides:
+    #         for shape in slide.Shapes:
+    #             if isinstance(shape, IAutoShape):
+    #                 for tp in ( shape if isinstance(shape, IAutoShape) else None).TextFrame.Paragraphs:
+    #                     sb.append (tp.Text)
         
-        article = article_from_text("\n".join(sb))
-        presentation.Dispose() # Releases all resources used by presentation object
+    #     article = article_from_text("\n".join(sb))
+    #     presentation.Dispose() # Releases all resources used by presentation object
 
-    elif file_type in [".md", ".html", ".htm"]:
+    # elif file_type in [".md", ".html", ".htm"]:
 
-        with open(uploaded_file, "r", encoding="utf-8") as f:
-            file_content = f.read()
+    #     with open(uploaded_file, "r", encoding="utf-8") as f:
+    #         file_content = f.read()
         
-        if file_type == ".md":
-            file_content = markdown(file_content)
+    #     if file_type == ".md":
+    #         file_content = markdown(file_content)
 
-        # from https://gist.github.com/lorey/eb15a7f3338f959a78cc3661fbc255fe
-        soup = BeautifulSoup(file_content, "html.parser")
-        article = article_from_text("\n".join(soup.find_all(string=True)))
+    #     # from https://gist.github.com/lorey/eb15a7f3338f959a78cc3661fbc255fe
+    #     soup = BeautifulSoup(file_content, "html.parser")
+    #     article = article_from_text("\n".join(soup.find_all(string=True)))
 
-    elif file_type == ".txt":
+    # elif file_type == ".txt":
 
-        # adapted from https://www.geeksforgeeks.org/pandas/read-html-file-in-python-using-pandas/
-        with open(uploaded_file, "r", encoding="utf-8") as f:
-            article = article_from_text(f.read())
-    else:
-        raise ValueError("Unsupported file type: " + file_type)
+    #     # adapted from https://www.geeksforgeeks.org/pandas/read-html-file-in-python-using-pandas/
+    #     with open(uploaded_file, "r", encoding="utf-8") as f:
+    #         article = article_from_text(f.read())
+    # else:
+    #     raise ValueError("Unsupported file type: " + file_type)
 
-    return article
+    # return article
+
 
 # if __name__ == "__main__":
 

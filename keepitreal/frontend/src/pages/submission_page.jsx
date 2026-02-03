@@ -1,5 +1,6 @@
 import {useState, useEffect} from 'react';
-import Cookies from 'js-cookie'
+import Cookies from 'js-cookie';
+import CircularProgress from "./circleProgress";
 
 
 function Submission(){
@@ -10,7 +11,19 @@ function Submission(){
     let [results, SetResults] = useState(null);
     let [submitted, SetSubmitted] = useState(null);
 
-
+    function move(target) {
+        const elem = document.getElementById("resultsBar");
+        let width = 1;
+        const id = setInterval(frame, 10);
+        function frame() {
+        if (width >= target) {
+            clearInterval(id);
+        } else {
+            width = width + 0.25;
+            elem.style.width = width + "%";
+        }
+        }
+    }
 
     const SubmitData = (e) => {
         e.preventDefault();
@@ -51,16 +64,24 @@ function Submission(){
 
     
     useEffect(() => {
-            if (!submitted) return;
-            fetch(`http://127.0.0.1:8000/api/analysis/${submitted}/`)
-            .then(response => response.json())
-            .then(data => {
-                console.log("API Response:", data);
-                SetResults(data);
-                })
-                .catch(error => console.error("API Error fetching results:", error))
-        }, [submitted])
+        if (!submitted) return;
+        fetch(`http://127.0.0.1:8000/api/analysis/${submitted}/`)
+        .then(response => response.json())
+        .then(data => {
+            console.log("API Response:", data);
+            SetResults(data);
+            })
+            .catch(error => console.error("API Error fetching results:", error))
+    }, [submitted])
     
+
+    useEffect(() => {
+        if (results) {
+            const target = results.result * 100
+            move(target);
+        }
+    }, [results]);
+
 
     return(
         <div>
@@ -73,9 +94,17 @@ function Submission(){
             <h1>Results</h1>
             <div>
                 {results && (
-                    <div>
-                        <pre>{JSON.stringify(results, null, 2)}</pre>
+                <>
+                    <div id="progressBar">
+                        <h3 id ="resultsBar">{JSON.stringify(results.result, null, 2)}</h3>
                     </div>
+                    <div>
+                        <CircularProgress value={results.bias?.[0]?.[0]?.score * 100} />
+                        <CircularProgress value={results["Sentiment"]?.[0]?.score * 100} />
+                        <CircularProgress value={results["AI or Human"]?.[0]?.score * 100} />
+                        <CircularProgress value={results["True or False"]?.[0]?.score * 100} />
+                    </div>
+                </>
                 )}
             </div>
         </div>

@@ -4,7 +4,7 @@ from .detection_models import (pulk_pipe, sentiment_pipe, bias_pipe, gpt_pipe, g
 from .compute_trustworthiness import computation
 from rest_framework.decorators import api_view
 from .extraction_tools import (extract_from_file, extract_from_url, extract_from_text)
-from .models import DetectionResults
+from .models import DetectionResults, User_History
 from .forms import RegistrationForm
 from django.shortcuts import render
 from django.views.decorators.csrf import ensure_csrf_cookie
@@ -40,7 +40,8 @@ def extract_file(request):
     if not file:
         return JsonResponse({"error": "No file uploaded."}, status=400)
     
-    article = extract_from_file(file)
+    article = extract_from_text(file)
+
 
     return JsonResponse({"title": article.title, "authors": article.authors, "publish_date": str(article.publish_date), "text": article.text}) # just return json for testing
 
@@ -86,10 +87,11 @@ def analyse(request):
     if request.user.is_authenticated:
         info_obj = DetectionResults.objects.create(user=request.user, text=article_info, pulk=pulk_result, bias=bias_result, sentiment=sentiment_result, gpt=gpt_result, result=result)
         info_obj.save()
+        User_History.objects.create(user=request.user, response=info_obj)
 
 
 
-    return JsonResponse({ "result": result, "True or False": pulk_result, "bias": bias_result, "AI or Human": gpt_result})
+    return JsonResponse({ "result": result, "True or False": pulk_result, "bias": bias_result, "AI or Human": gpt_result, "Sentiment": sentiment_result})
 
 @api_view(['GET'])
 def get_analysis(request, id):
@@ -100,7 +102,7 @@ def get_analysis(request, id):
             "error": "No analysis results found yet."
         }, status=404)
 
-    return JsonResponse({"id": analysis_result.id, "result": analysis_result.result, "True or False": analysis_result.pulk, "bias": analysis_result.bias, "AI or Human": analysis_result.gpt})
+    return JsonResponse({"id": analysis_result.id, "result": analysis_result.result, "True or False": analysis_result.pulk, "bias": analysis_result.bias, "AI or Human": analysis_result.gpt, "Sentiment":analysis_result.gpt})
 
 def register(request):
     if request.method == "POST":
@@ -137,10 +139,27 @@ def login_to_account(request):
             login(request, user)
             return JsonResponse({"message": "Login Successful"})
         
-        return JsonResponse({"error":"Invalid creditionals"})
+        return JsonResponse({"message":"Invalid creditionals"})
     
     return JsonResponse({"error":"POST required"})
+
+def account_logout(request):
+    logout(request)
+    return JsonResponse({"message":"Logged out"})
 
 @ensure_csrf_cookie
 def get_csrf(request):
     return JsonResponse({"message":"CSRF set"})
+
+@api_view(['GET'])
+def history(request):
+    if request.user.is_authenticated:
+        user = request.user
+
+        data = list(
+            User_History.objects.filter(user=user).values()  # returns a dict of all fields
+        )
+
+        return JsonResponse(data, safe=False)
+    return JsonResponse({"message": None})
+

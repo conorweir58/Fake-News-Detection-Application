@@ -30,6 +30,10 @@ DEBUG = config("DEBUG", default=False, cast=bool)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+#Databases info
+user = config("USER")
+password = config("PASSWORD")
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -81,8 +85,12 @@ WSGI_APPLICATION = 'backend_config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'FakenewsDatabase',
+        'USER': user,
+        'PASSWORD': password,
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
 
