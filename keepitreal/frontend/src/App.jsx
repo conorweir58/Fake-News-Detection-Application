@@ -1,8 +1,8 @@
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import './App.css'
-import SubmitData from "./pages/submission_page"
-import Register from './pages/register';
-import Login from './pages/login';
+import SubmitData from "./pages/SubmissionPage"
+import Register from "./pages/Register";
+import Login from "./pages/Login";
 
 function App() {
   return (
