@@ -91,7 +91,7 @@ function Submission(){
                 <input type="file" onChange = {(e) => setFile(e.target.files[0])}></input>
                 <button type="submit">Send Article</button>
             </form>
-            <h1>Results</h1>
+            <h1 class="text-3xl font-bold underline">Results</h1>
             <div>
                 {results && (
                 <>
