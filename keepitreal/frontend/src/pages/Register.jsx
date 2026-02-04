@@ -7,7 +7,7 @@ function Register () {
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
     const [username, setUsername] = useState("");
-    const [confirm_password, setConfirm] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
 
     // Need to add check for password to match confirm_password
 
@@ -39,7 +39,7 @@ function Register () {
             <input type="email" placeholder="Enter your email" value = {email} onChange = {(e) => setEmail(e.target.value)}></input>
             <input type="text" placeholder="Enter your username" value = {username} onChange = {(e) => setUsername(e.target.value)}></input>
             <input type="password" placeholder="Enter your password" value = {password} onChange = {(e) => setPassword(e.target.value)}></input>
-            <input type="password" placeholder="Confirm your password" value = {confirm_password} onChange = {(e) => setConfirm(e.target.value)}></input>
+            <input type="password" placeholder="Confirm your password" value = {confirmPassword} onChange = {(e) => setConfirmPassword(e.target.value)}></input>
             <button type="submit">Register</button>
 
             {message &&
