@@ -1,6 +1,5 @@
 import {useState, useEffect} from 'react';
 
-
 function Submission(){
 
     const [text, setText] = useState("");
@@ -8,8 +7,6 @@ function Submission(){
     const [file, setFile] = useState(null);
     let [results, SetResults] = useState(null);
     let [submitted, SetSubmitted] = useState(null);
-
-
 
     const SubmitData = (e) => {
         e.preventDefault();
@@ -20,7 +17,7 @@ function Submission(){
         if (file) {
             body = new FormData()
             body.append("file", file)
-        } 
+        }
         else {
             body = JSON.stringify({text, url})
             headers["Content-Type"] = "application/json"
@@ -36,12 +33,8 @@ function Submission(){
             console.log("Backend response:", data);
             SetSubmitted(data.id);
         })
-        
-
-
     }
 
-    
     useEffect(() => {
             if (!submitted) return;
             fetch(`http://127.0.0.1:8000/api/analysis/${submitted}/`)
@@ -52,7 +45,6 @@ function Submission(){
                 })
                 .catch(error => console.error("API Error fetching results:", error))
         }, [submitted])
-    
 
     return(
         <div>
@@ -62,6 +54,7 @@ function Submission(){
                 <input type="file" onChange = {(e) => setFile(e.target.files[0])}></input>
                 <button type="submit">Send Article</button>
             </form>
+
             <h1 class="text-3xl font-bold underline">Results</h1>
             <div>
                 {results && (

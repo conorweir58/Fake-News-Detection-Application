@@ -34,8 +34,6 @@ function Register () {
         })
     }
 
-
-        
     return (
          <form onSubmit={SubmitData}>
             <input type="email" placeholder="Enter your email" value = {email} onChange = {(e) => setEmail(e.target.value)}></input>
@@ -43,6 +41,7 @@ function Register () {
             <input type="password" placeholder="Enter your password" value = {password} onChange = {(e) => setPassword(e.target.value)}></input>
             <input type="password" placeholder="Confirm your password" value = {confirm_password} onChange = {(e) => setConfirm(e.target.value)}></input>
             <button type="submit">Register</button>
+
             {message &&
                 <p>{message}</p>
             }
@@ -50,4 +49,5 @@ function Register () {
     );
 
 }
+
 export default Register;
