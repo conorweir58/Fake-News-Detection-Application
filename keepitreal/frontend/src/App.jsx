@@ -6,7 +6,7 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Logout from './pages/logout';
 import Navbar from './assets/navbar';
-import User_History from "./pages/past_submissions";
+import UserHistory from "./pages/past_submissions";
 
 function App() {
   return (
@@ -20,7 +20,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/logout" element={<Logout />} />
-          <Route path="/history" element={<User_History/>} />
+          <Route path="/history" element={<UserHistory />} />
       </Routes>
     </BrowserRouter>
   )
