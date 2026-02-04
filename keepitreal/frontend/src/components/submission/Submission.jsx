@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react';
 import Cookies from 'js-cookie';
-import CircularProgress from "./circleProgress";
+import CircularProgress from "../results/CircleProgress";
 
 function Submission(){
 
