@@ -1,16 +1,20 @@
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import './App.css'
-import SubmitData from "./pages/SubmissionPage"
+
+import SubmitData from "./pages/Submission"
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 
 function App() {
   return (
-<BrowserRouter>
+    <BrowserRouter>
       <Routes>
-        <Route path="/" element={<SubmitData />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/" element={<Layout />} />
+          <Route index element={<SubmitData />} />
+
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+
       </Routes>
     </BrowserRouter>
   )
