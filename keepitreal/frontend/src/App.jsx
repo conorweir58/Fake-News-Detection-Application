@@ -1,12 +1,13 @@
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import './App.css'
 
-import SubmitData from "./pages/Submission"
-import Register from "./pages/Register";
-import Login from "./pages/Login";
-import Logout from './pages/logout';
 import Navbar from './assets/navbar';
-import UserHistory from "./pages/past_submissions";
+
+import SubmitData from "./components/submission/Submission";
+import Register from "./components/account_managment/Register";
+import Login from "./components/account_managment/Login";
+import Logout from './components/account_managment/Logout';
+import UserHistory from "./components/history/UserHistory";
 
 function App() {
   return (
