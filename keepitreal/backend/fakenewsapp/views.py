@@ -4,11 +4,12 @@ from .detection_models import (pulk_pipe, sentiment_pipe, bias_pipe, gpt_pipe, g
 from .compute_trustworthiness import computation
 from rest_framework.decorators import api_view
 from .extraction.extraction_tool import (extract_from_file, extract_from_url, extract_from_text)
-from .models import DetectionResults
+from .models import DetectionResults, User_History
 from .forms import RegistrationForm
 from django.shortcuts import render
 from django.views.decorators.csrf import ensure_csrf_cookie
 import json
+from django.forms.models import model_to_dict
 
 # EXTRACTION VIEWS - havent added text yet bc no real reason to test it bc its just setting text
 
@@ -40,7 +41,8 @@ def extract_file(request):
     if not file:
         return JsonResponse({"error": "No file uploaded."}, status=400)
     
-    article = extract_from_file(file)
+    article = extract_from_text(file)
+
 
     return JsonResponse({"title": article.title, "authors": article.authors, "publish_date": str(article.publish_date), "text": article.text}) # just return json for testing
 
@@ -50,16 +52,23 @@ def extract_file(request):
 @api_view(['POST'])
 def analyse(request):       
 
+    print("User:", request.user)
+    print("Authenticated:", request.user.is_authenticated)
+
     url = request.data.get("url")
     article_text = request.data.get("text")
     files = request.FILES.get("file")
 
     if url:
         article = extract_from_url(url)
+        article_info = url
     elif files:
         article = extract_from_file(files)
+        article_info = article.text
     elif article_text:
         article = extract_from_text(article_text)
+        article_info = article.text
+
 
     # here i call all the models with the given text
     pulk_result = pulk_pipe(article.text[:1900])
@@ -76,10 +85,14 @@ def analyse(request):
 
     result = computation(pulk_result, sentiment_result, bias_result, gpt_result)
 
-    info_obj = DetectionResults(pulk=pulk_result, bias=bias_result, sentiment=sentiment_result, gpt=gpt_result, text=article.text[:1900], result=result)
-    info_obj.save()
+    if request.user.is_authenticated:
+        info_obj = DetectionResults.objects.create(user=request.user, text=article_info, pulk=pulk_result, bias=bias_result, sentiment=sentiment_result, gpt=gpt_result, result=result)
+        info_obj.save()
+        User_History.objects.create(user=request.user, response=info_obj)
 
-    return JsonResponse({ "id": info_obj.id, "result": result, "True or False": pulk_result, "bias": bias_result, "AI or Human": gpt_result})
+
+
+    return JsonResponse({ "result": result, "True or False": pulk_result, "bias": bias_result, "AI or Human": gpt_result, "Sentiment": sentiment_result})
 
 @api_view(['GET'])
 def get_analysis(request, id):
@@ -90,7 +103,7 @@ def get_analysis(request, id):
             "error": "No analysis results found yet."
         }, status=404)
 
-    return JsonResponse({"id": analysis_result.id, "result": analysis_result.result, "True or False": analysis_result.pulk, "bias": analysis_result.bias, "AI or Human": analysis_result.gpt})
+    return JsonResponse({"id": analysis_result.id, "result": analysis_result.result, "True or False": analysis_result.pulk, "bias": analysis_result.bias, "AI or Human": analysis_result.gpt, "Sentiment":analysis_result.gpt})
 
 def register(request):
     if request.method == "POST":
@@ -127,10 +140,47 @@ def login_to_account(request):
             login(request, user)
             return JsonResponse({"message": "Login Successful"})
         
-        return JsonResponse({"error":"Invalid creditionals"})
+        return JsonResponse({"message":"Invalid creditionals"})
     
     return JsonResponse({"error":"POST required"})
+
+def account_logout(request):
+    logout(request)
+    return JsonResponse({"message":"Logged out"})
 
 @ensure_csrf_cookie
 def get_csrf(request):
     return JsonResponse({"message":"CSRF set"})
+
+@api_view(['GET'])
+def history(request):
+    if not request.user.is_authenticated:
+        return JsonResponse({"message": None})
+
+    items = (
+        User_History.objects
+        .filter(user=request.user)
+        .select_related("response")  # avoids extra DB queries
+    )
+
+    data = []
+
+    for item in items:
+        r = item.response  # DetectionResults instance
+
+        data.append({
+            "id": item.id,
+            "response": {
+                "id": r.id,
+                "text": r.text,
+                "result": r.result,
+                "pulk": r.pulk,
+                "sentiment": r.sentiment,
+                "bias": r.bias,
+                "gpt": r.gpt,
+                "created_at": r.created_at,
+            }
+        })
+
+    return JsonResponse(data, safe=False)
+

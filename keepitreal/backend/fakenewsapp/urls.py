@@ -9,7 +9,7 @@ urlpatterns = [
     path('extract/file/', views.extract_file),
     path('login/', views.login_to_account),
     path('register/', views.register),
-    path('logout/', views.logout),
+    path('logout/', views.account_logout),
+    path('history/', views.history),
     path('csrf/', views.get_csrf),
 ]
-
