@@ -19,7 +19,7 @@ function User_History(){
 
     return(
         <div>
-            <pre>{history && JSON.stringify(history.response, null, 2)}</pre>
+            <pre>{history && JSON.stringify(history, null, 2)}</pre>
         </div>
     )
 }

@@ -9,6 +9,7 @@ from .forms import RegistrationForm
 from django.shortcuts import render
 from django.views.decorators.csrf import ensure_csrf_cookie
 import json
+from django.forms.models import model_to_dict
 
 # EXTRACTION VIEWS - havent added text yet bc no real reason to test it bc its just setting text
 
@@ -153,13 +154,33 @@ def get_csrf(request):
 
 @api_view(['GET'])
 def history(request):
-    if request.user.is_authenticated:
-        user = request.user
+    if not request.user.is_authenticated:
+        return JsonResponse({"message": None})
 
-        data = list(
-            User_History.objects.filter(user=user).values()  # returns a dict of all fields
-        )
+    items = (
+        User_History.objects
+        .filter(user=request.user)
+        .select_related("response")  # avoids extra DB queries
+    )
 
-        return JsonResponse(data, safe=False)
-    return JsonResponse({"message": None})
+    data = []
+
+    for item in items:
+        r = item.response  # DetectionResults instance
+
+        data.append({
+            "id": item.id,
+            "response": {
+                "id": r.id,
+                "text": r.text,
+                "result": r.result,
+                "pulk": r.pulk,
+                "sentiment": r.sentiment,
+                "bias": r.bias,
+                "gpt": r.gpt,
+                "created_at": r.created_at,
+            }
+        })
+
+    return JsonResponse(data, safe=False)
 
