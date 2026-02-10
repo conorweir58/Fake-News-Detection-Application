@@ -2,7 +2,7 @@ import Navbar from './Navbar';
 
 function Header() {
     return (
-        <header class="fixed w-full z-20 top-0 start-0">
+        <header className="top-0 start-0 flex items-center justify-evenly p-4">
             <Navbar />
         </header>
     );
