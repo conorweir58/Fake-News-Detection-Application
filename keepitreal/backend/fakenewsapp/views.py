@@ -152,6 +152,13 @@ def account_logout(request):
 def get_csrf(request):
     return JsonResponse({"message":"CSRF set"})
 
+# Check if user is authenticated function for frontend
+def check_auth(request):
+    if request.user.is_authenticated:
+        return JsonResponse({"authenticated": True, "email": request.user.email, "username": request.user.username})
+    else:
+        return JsonResponse({"authenticated": False})
+
 @api_view(['GET'])
 def history(request):
     if not request.user.is_authenticated:
@@ -183,4 +190,3 @@ def history(request):
         })
 
     return JsonResponse(data, safe=False)
-
