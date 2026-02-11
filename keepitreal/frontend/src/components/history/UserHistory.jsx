@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 
 
-function User_History(){
+function UserHistory(){
 
-    const [history, SetHistory] = useState(null)
+    const [history, setHistory] = useState(null)
 
      useEffect(() => {
         fetch(`http://127.0.0.1:8000/api/history/`, {
@@ -11,8 +11,8 @@ function User_History(){
         })
         .then(response => response.json())
         .then(data => {
-            console.log("API Response:", data);
-            SetHistory(data);
+                console.log("API Response:", data);
+                setHistory(data);
             })
             .catch(error => console.error("API Error fetching history:", error))
     }, []);
@@ -24,4 +24,4 @@ function User_History(){
     )
 }
 
-export default User_History;
+export default UserHistory;

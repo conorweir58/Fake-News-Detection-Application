@@ -1,22 +1,26 @@
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import './App.css'
-import SubmitData from "./pages/SubmissionPage"
-import Register from "./pages/Register";
-import Login from "./pages/Login";
-import Logout from './pages/logout';
-import Navbar from './assets/navbar';
-import User_History from "./pages/past_submissions";
+
+import Layout from './pages/layout/Layout';
+
+import Submission from "./components/submission/Submission";
+import Register from "./components/account_managment/Register";
+import Login from "./components/account_managment/Login";
+import Logout from './components/account_managment/Logout';
+import UserHistory from "./components/history/UserHistory";
 
 function App() {
   return (
     <BrowserRouter>
-    <Navbar />
       <Routes>
-        <Route path="/" element={<SubmitData />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/logout" element={<Logout />} />
-        <Route path="/history" element={<User_History/>} />
+        <Route path="/" element={<Layout />} >
+          <Route index element={<Submission />} />
+
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/logout" element={<Logout />} />
+          <Route path="/history" element={<UserHistory />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   )

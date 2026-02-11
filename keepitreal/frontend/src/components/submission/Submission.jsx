@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react';
 import Cookies from 'js-cookie';
-import Models from '../assets/ChosenModels';
-import CircularProgress from "../assets/circleProgress";
+import Models from '../submission/ChosenModels';
+import CircularProgress from "../results/CircleProgress";
 
 
 function Submission(){
@@ -62,12 +62,8 @@ function Submission(){
                 SetSubmitted(data.id);
             }
         })
-        
-
-
     }
 
-    
     useEffect(() => {
         if (!submitted) return;
         fetch(`http://127.0.0.1:8000/api/analysis/${submitted}/`)
@@ -99,7 +95,8 @@ function Submission(){
                 <input type="file" onChange = {(e) => setFile(e.target.files[0])}></input>
                 <button type="submit">Send Article</button>
             </form>
-            <h1 class="text-3xl font-bold underline">Results</h1>
+
+            <h1 className="text-3xl font-bold underline">Results</h1>
             <div>
                 {results && (
                 <>

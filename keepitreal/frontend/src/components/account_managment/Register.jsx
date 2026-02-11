@@ -7,9 +7,7 @@ function Register () {
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
     const [username, setUsername] = useState("");
-    const [confirm_password, setConfirm] = useState("");
-
-    // Need to add check for password to match confirm_password
+    const [confirmPassword, setConfirmPassword] = useState("");
 
     useEffect(() => {
         fetch("http://127.0.0.1:8000/api/csrf/", {
@@ -34,15 +32,14 @@ function Register () {
         })
     }
 
-
-        
     return (
          <form onSubmit={SubmitData}>
             <input type="email" placeholder="Enter your email" value = {email} onChange = {(e) => setEmail(e.target.value)}></input>
             <input type="text" placeholder="Enter your username" value = {username} onChange = {(e) => setUsername(e.target.value)}></input>
             <input type="password" placeholder="Enter your password" value = {password} onChange = {(e) => setPassword(e.target.value)}></input>
-            <input type="password" placeholder="Confirm your password" value = {confirm_password} onChange = {(e) => setConfirm(e.target.value)}></input>
+            <input type="password" placeholder="Confirm your password" value = {confirmPassword} onChange = {(e) => setConfirmPassword(e.target.value)}></input>
             <button type="submit">Register</button>
+
             {message &&
                 <p>{message}</p>
             }
@@ -50,4 +47,5 @@ function Register () {
     );
 
 }
+
 export default Register;

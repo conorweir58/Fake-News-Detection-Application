@@ -29,6 +29,7 @@ function Login () {
             setMessage(data.message);
         })
     }
+    
     return (
          <form onSubmit={SubmitData}>
             <input type="email" placeholder="Enter your email" value={email} onChange = {(e) => setEmail(e.target.value)}></input>
@@ -40,6 +41,6 @@ function Login () {
             }
         </form>
     );
-
 }
+
 export default Login;
