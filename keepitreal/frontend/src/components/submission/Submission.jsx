@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react';
 import Cookies from 'js-cookie';
 import CircularProgress from "../results/CircleProgress";
-import Models from '../assets/ChosenModels';
+import Models from '../submission/ChosenModels';
 
 function Submission(){
 
@@ -37,16 +37,10 @@ function Submission(){
         let headers = {"X-CSRFToken": csrftoken};
 
         if (file) {
-<<<<<<< HEAD:keepitreal/frontend/src/components/submission/Submission.jsx
-            body = new FormData()
-            body.append("file", file)
-        }
-=======
             body = new FormData();
             body.append("file", file);
             body.append("selected", JSON.stringify(selectedModels));
         } 
->>>>>>> backend:keepitreal/frontend/src/pages/SubmissionPage.jsx
         else {
             body = JSON.stringify({text, url, selected:selectedModels});
             headers["Content-Type"] = "application/json";
