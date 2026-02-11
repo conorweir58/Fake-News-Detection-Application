@@ -9,8 +9,6 @@ function Register () {
     const [username, setUsername] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
-    // Need to add check for password to match confirm_password
-
     useEffect(() => {
         fetch("http://127.0.0.1:8000/api/csrf/", {
             credentials: "include"
