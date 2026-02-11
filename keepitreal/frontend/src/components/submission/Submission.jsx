@@ -87,7 +87,7 @@ function Submission(){
                 <button type="submit">Send Article</button>
             </form>
 
-            <h1 class="text-3xl font-bold underline">Results</h1>
+            <h1 className="text-3xl font-bold underline">Results</h1>
             <div>
                 {results && (
                 <>
