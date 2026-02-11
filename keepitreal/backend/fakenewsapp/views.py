@@ -58,6 +58,16 @@ def analyse(request):
     url = request.data.get("url")
     article_text = request.data.get("text")
     files = request.FILES.get("file")
+    
+
+    if(files):
+        selected_raw = request.data.get("selected")
+        selected_flags = json.loads(selected_raw)
+    else:
+        selected_flags = request.data.get("selected")
+
+    models = ["pulk", "sentiment", "bias", "gpt"]
+    selected_models = [model for model, flag in zip(models, selected_flags) if flag]
 
     if url:
         article = extract_from_url(url)
@@ -69,30 +79,52 @@ def analyse(request):
         article = extract_from_text(article_text)
         article_info = article.text
 
+    api_models = {}
+    final_results = {}
+
 
     # here i call all the models with the given text
-    pulk_result = pulk_pipe(article.text[:1900])
-    print(pulk_result)
-    sentiment_result = sentiment_pipe(article.text[:1900])
-    print(sentiment_result)
-    bias_result = bias_pipe(article.text[:1900])
-    print(bias_result)
-    gpt_result = gpt_pipe(article.text[:1900])
-    print(gpt_result)
+    if "pulk" in selected_models:
+        pulk_result = pulk_pipe(article.text[:1900])
+        api_models["pulk"] = pulk_result
+        final_results["True or False"] = pulk_result
+        print(pulk_result)
+    if "sentiment" in selected_models:
+        sentiment_result = sentiment_pipe(article.text[:1900])
+        api_models["sentiment"] = sentiment_result
+        final_results["Sentiment"] = sentiment_result
+        print(sentiment_result)
+    if "bias" in selected_models:
+        bias_result = bias_pipe(article.text[:1900])
+        api_models["bias"] = bias_result
+        final_results["bias"] = bias_result
+        print(bias_result)
+    if "gpt" in selected_models:
+        gpt_result = gpt_pipe(article.text[:1900])
+        api_models["gpt"] = gpt_result
+        final_results["AI or Human"] = gpt_result
+        print(gpt_result)
     # #
     # fact_check_result = googFactCheckSearch(text)
 
 
-    result = computation(pulk_result, sentiment_result, bias_result, gpt_result)
+    result = computation(api_models)
+
+    final_results["result"] = result
 
     if request.user.is_authenticated:
-        info_obj = DetectionResults.objects.create(user=request.user, text=article_info, pulk=pulk_result, bias=bias_result, sentiment=sentiment_result, gpt=gpt_result, result=result)
+        info_obj = DetectionResults.objects.create(
+            user=request.user, 
+            text=article_info, 
+            pulk=api_models.get("pulk"),
+            bias=api_models.get("bias"),
+            sentiment=api_models.get("sentiment"),
+            gpt=api_models.get("gpt"), 
+            result=result)
         info_obj.save()
         User_History.objects.create(user=request.user, response=info_obj)
 
-
-
-    return JsonResponse({ "result": result, "True or False": pulk_result, "bias": bias_result, "AI or Human": gpt_result, "Sentiment": sentiment_result})
+    return JsonResponse(final_results)
 
 @api_view(['GET'])
 def get_analysis(request, id):
@@ -103,7 +135,7 @@ def get_analysis(request, id):
             "error": "No analysis results found yet."
         }, status=404)
 
-    return JsonResponse({"id": analysis_result.id, "result": analysis_result.result, "True or False": analysis_result.pulk, "bias": analysis_result.bias, "AI or Human": analysis_result.gpt, "Sentiment":analysis_result.gpt})
+    return JsonResponse({"id": analysis_result.id, "result": analysis_result.result, "True or False": analysis_result.pulk, "bias": analysis_result.bias, "AI or Human": analysis_result.gpt, "Sentiment":analysis_result.sentiment})
 
 def register(request):
     if request.method == "POST":
@@ -164,28 +196,24 @@ def history(request):
     if not request.user.is_authenticated:
         return JsonResponse({"message": None})
 
-    items = (
-        User_History.objects
-        .filter(user=request.user)
-        .select_related("response")  # avoids extra DB queries
-    )
+    items = (User_History.objects.filter(user=request.user).select_related("response"))
 
     data = []
 
     for item in items:
-        r = item.response  # DetectionResults instance
+        det = item.response  # DetectionResults instance
 
         data.append({
             "id": item.id,
             "response": {
-                "id": r.id,
-                "text": r.text,
-                "result": r.result,
-                "pulk": r.pulk,
-                "sentiment": r.sentiment,
-                "bias": r.bias,
-                "gpt": r.gpt,
-                "created_at": r.created_at,
+                "id": det.id,
+                "text": det.text,
+                "result": det.result,
+                "pulk": det.pulk,
+                "sentiment": det.sentiment,
+                "bias": det.bias,
+                "gpt": det.gpt,
+                "created_at": det.created_at,
             }
         })
 
