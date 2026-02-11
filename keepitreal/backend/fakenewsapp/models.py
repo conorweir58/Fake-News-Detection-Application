@@ -24,10 +24,10 @@ class DetectionResults(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True)
     text = models.TextField()
     result = models.FloatField()
-    pulk = models.JSONField()
-    sentiment = models.JSONField()
-    bias = models.JSONField()
-    gpt = models.JSONField()
+    pulk = models.JSONField(null=True, blank=True)
+    sentiment = models.JSONField(null=True, blank=True)
+    bias = models.JSONField(null=True, blank=True)
+    gpt = models.JSONField(null=True, blank=True)
     created_at = models.DateField(auto_now_add=True)
 
 class User_History(models.Model):

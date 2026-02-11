@@ -1,6 +1,7 @@
 import {useState, useEffect} from 'react';
 import Cookies from 'js-cookie';
-import CircularProgress from "./circleProgress";
+import Models from '../assets/ChosenModels';
+import CircularProgress from "../assets/circleProgress";
 
 
 function Submission(){
@@ -8,6 +9,7 @@ function Submission(){
     const [text, setText] = useState("");
     const [url, setUrl] = useState("");
     const [file, setFile] = useState(null);
+    const [selectedModels, setSelectedModels] = useState([]);
     let [results, SetResults] = useState(null);
     let [submitted, SetSubmitted] = useState(null);
 
@@ -28,18 +30,21 @@ function Submission(){
     const SubmitData = (e) => {
         e.preventDefault();
 
-        const csrftoken = Cookies.get("csrftoken")
+        SetResults(null);
+
+        const csrftoken = Cookies.get("csrftoken");
 
         let body;
-        let headers = {"X-CSRFToken": csrftoken}
+        let headers = {"X-CSRFToken": csrftoken};
 
         if (file) {
-            body = new FormData()
-            body.append("file", file)
+            body = new FormData();
+            body.append("file", file);
+            body.append("selected", JSON.stringify(selectedModels));
         } 
         else {
-            body = JSON.stringify({text, url})
-            headers["Content-Type"] = "application/json"
+            body = JSON.stringify({text, url, selected:selectedModels});
+            headers["Content-Type"] = "application/json";
         }
 
         fetch("http://127.0.0.1:8000/api/analysis/", {
@@ -52,7 +57,7 @@ function Submission(){
         .then(data => {
             console.log("Backend response:", data);
             if (data.id == null){
-                SetResults(data)
+                SetResults(data);
             }else{
                 SetSubmitted(data.id);
             }
@@ -72,7 +77,7 @@ function Submission(){
             SetResults(data);
             })
             .catch(error => console.error("API Error fetching results:", error))
-    }, [submitted])
+    }, [submitted]);
     
 
     useEffect(() => {
@@ -85,6 +90,9 @@ function Submission(){
 
     return(
         <div>
+            <div>
+                <Models onSelectionChange={setSelectedModels}/>
+            </div>
             <form onSubmit={SubmitData}>
                 <textarea placeholder='Paste your text into here...' value = {text} onChange = {(e) => setText(e.target.value)}/>
                 <input type="text" placeholder="Enter your URL here..." value = {url} onChange = {(e) => setUrl(e.target.value)}></input>
@@ -96,7 +104,7 @@ function Submission(){
                 {results && (
                 <>
                     <div id="progressBar">
-                        <h3 id ="resultsBar">{JSON.stringify(results.result, null, 2)}</h3>
+                        <div id ="resultsBar">{(results.result * 100).toFixed(2)}%</div>
                     </div>
                     <div>
                         <CircularProgress value={results.bias?.[0]?.[0]?.score * 100} />
