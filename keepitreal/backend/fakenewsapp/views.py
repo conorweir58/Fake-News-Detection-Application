@@ -59,15 +59,15 @@ def analyse(request):
     article_text = request.data.get("text")
     files = request.FILES.get("file")
     
+    selected_raw = request.data.get("selected")
 
     if(files):
-        selected_raw = request.data.get("selected")
-        selected_flags = json.loads(selected_raw)
+        selected_models = json.loads(selected_raw)
     else:
-        selected_flags = request.data.get("selected")
+        selected_models = selected_raw
 
-    models = ["pulk", "sentiment", "bias", "gpt"]
-    selected_models = [model for model, flag in zip(models, selected_flags) if flag]
+    # models = ["pulk", "sentiment", "bias", "gpt"]
+    # selected_models = [model for model, flag in zip(models, selected_flags) if flag]
 
     if url:
         article = extract_from_url(url)
