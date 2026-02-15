@@ -8,3 +8,7 @@ export const submissionTabClasses = "w-full px-3 py-1 rounded cursor-pointer tex
 // have selected and unselected classes instead of "focus:" bc this way we can have URL be selected on page load as default
 export const selectedTabClasses = "bg-red-700 outline-none ring-1 ring-red-500 ring-opacity-400";
 export const unselectedTabClasses = "bg-slate-600 hover:bg-red-500";
+
+// LINKS
+
+export const linkClasses = "transition duration-150 ease-in-out hover:text-red-500 hover:drop-shadow-lg active:text-red-600 active:drop-shadow-red-500";

@@ -1,13 +1,11 @@
 import { Link } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import logo from '../../assets/KeepItREAL_Icon.png';
+import { linkClasses } from '../../styles/tailwindConstants';
 
 function Navbar()  {
 
   const { isAuth } = useAuth(); // Custom hook checks if a user is authenticated in backend and returns auth status
-
-  // Styling Variables
-  const linkClasses = "transition duration-150 ease-in-out hover:text-red-500 hover:drop-shadow-lg active:text-red-600 active:drop-shadow-red-500";
 
   return (
     <nav className="bg-neutral-100 dark:bg-slate-900 fixed w-full z-50 top-0 start-0 border-b border-default dark:border-b-slate-800 shadow-lg">
