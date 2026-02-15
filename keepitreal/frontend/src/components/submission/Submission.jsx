@@ -1,14 +1,23 @@
 import {useState, useEffect} from 'react';
 import Cookies from 'js-cookie';
 import CircularProgress from "../results/CircleProgress";
-import Models from '../submission/ChosenModels';
+import Models from './ChosenModels';
+import SubmissionSelection from './SubmissionSelection'
+
+// CSS variables
+const cardClasses = "w-full bg-neutral-100 dark:bg-slate-900 border border-default dark:border-slate-800 rounded-base shadow-md p-4 sm:p-6 mb-4";    
 
 function Submission(){
 
     const [text, setText] = useState("");
     const [url, setUrl] = useState("");
     const [file, setFile] = useState(null);
+
+    const [submissionType, setSubmissionType] = useState("url") // default to url
+
     const [selectedModels, setSelectedModels] = useState([]);
+
+
     let [results, SetResults] = useState(null);
     let [submitted, SetSubmitted] = useState(null);
 
@@ -82,26 +91,28 @@ function Submission(){
         }
     }, [results]);
 
-    // CSS variables
-    const cardClasses = "w-full bg-neutral-100 dark:bg-slate-900 border border-default dark:border-slate-800 rounded-base shadow-md p-4 sm:p-6 mb-4";
-
     return(
         <div>
             <h1 className="text-3xl font-bold whitespace-nowrap">KeepItREAL</h1>
             <p>Submit your News Source and Select Analysis Types </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4">
 
+                {/* While no results show submission - need to add some form of reversal of action without needing to use the navbar - UI concept of easy reversal of action */}
+                {!results && (
+                    <div className={`${cardClasses} md:col-span-2`}> {/* the md is applied to the grid colms so that on smaller devices they are stacked instead */}
+                        <h2 className="text-2xl font-bold whitespace-nowrap">Submit Your News Source</h2>
+                        <p className="font-bold text-gray-500 pt-1">Choose A Submission Format:</p>
 
-                <div className={`${cardClasses} md:col-span-2`}> {/* the md is applied to the grid colms so that on smaller devices they are stacked instead */}
-                    <h2 className="text-2xl font-bold whitespace-nowrap">Submit Your News Source</h2>
-                    <p className="font-bold text-gray-500 pt-1">Choose A Submission Format:</p>
-                    <form onSubmit={SubmitData}>
-                        <textarea placeholder='Paste your text into here...' value = {text} onChange = {(e) => setText(e.target.value)}/>
-                        <input type="text" placeholder="Enter your URL here..." value = {url} onChange = {(e) => setUrl(e.target.value)}></input>
-                        <input type="file" onChange = {(e) => setFile(e.target.files[0])}></input>
-                        <button type="submit">Send Article</button>
-                    </form>
-                </div>
+                        <SubmissionSelection submissionType={submissionType} onChange={setSubmissionType}/>
+
+                        <form onSubmit={SubmitData}>
+                            <input type="text" placeholder="Enter your URL here..." value = {url} onChange = {(e) => setUrl(e.target.value)}></input>
+                            <textarea placeholder='Paste your text into here...' value = {text} onChange = {(e) => setText(e.target.value)}/> {/* Will this update after every key press? is that gonna be too many updates? */}
+                            <input type="file" onChange = {(e) => setFile(e.target.files[0])}></input>
+                            <button type="submit">Send Article</button>
+                        </form>
+                    </div>
+                )}
 
                 <div className={`${cardClasses} md:col-span-1`}>
                     <h2 className="text-2xl font-bold whitespace-nowrap">Select Analysis Types</h2>

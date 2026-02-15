@@ -1,4 +1,5 @@
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
+import { cardClasses } from '../../styles/tailwindConstants';
 
 // Array of objects containing info needed to display check box and inform backend of models to use - based on idea from https://stackoverflow.com/questions/48333685/how-do-i-set-multiple-values-in-a-javascript-map-at-once
 const models = [
@@ -46,14 +47,12 @@ function Models({ onSelectionChange }){
         onSelectionChange(selectedModels);
     }
 
-    // CSS variables
-    const cardClasses = "w-full bg-neutral-100 dark:bg-slate-900 border border-default dark:border-slate-800 rounded-base shadow-md p-2 sm:p-4 mb-2";
-
     return(
         <div>
             {models.map((model, index) => (
                 // Wrap everything in label tag so clicking anywhere inside selection card will select the check box
-                <label key={index} for={model.id} className={`${cardClasses} flex items-center cursor-pointer focus:bg-amber-400 transition duration-150 ease-in-out select-none`}>
+                // NOTE: Maybe add has-checked stlying so unselected models are dimmed
+                <label key={index} for={model.id} className={`${cardClasses} flex items-center cursor-pointer transition duration-150 ease-in-out select-none`}>
                     <input type="checkbox" id={model.id} checked={checkedState[index]} onChange={() => handleOnChange(index)} className="w-5 h-5 mr-3 border rounded-xs focus:ring-1 focus:ring-brand-soft"/>
                     
                     <div className="flex-1">
