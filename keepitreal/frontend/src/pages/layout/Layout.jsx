@@ -9,6 +9,7 @@ function Layout() {
             
             <main className="grow pt-16 md:pt-20">
                 <div>
+                    <h1 className="text-3xl font-bold whitespace-nowrap">KeepItREAL</h1>
                     <Outlet />
                 </div>
             </main>
