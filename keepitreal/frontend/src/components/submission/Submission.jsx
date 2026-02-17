@@ -44,7 +44,7 @@ function Submission(){
         let headers = {"X-CSRFToken": csrftoken};
 
         if (selectedModels.every((x) => x === false)){
-            setError("Please select one model before submitting!");
+            setError("Please select at least one model before submitting!");
             return;
         }
 
