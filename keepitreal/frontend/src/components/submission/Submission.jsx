@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react';
 import Cookies from 'js-cookie';
-import Models from '../submission/ChosenModels';
+import Models from './ChosenModels';
 import CircularProgress from "../results/CircleProgress";
 
 
@@ -10,8 +10,9 @@ function Submission(){
     const [url, setUrl] = useState("");
     const [file, setFile] = useState(null);
     const [selectedModels, setSelectedModels] = useState([]);
-    let [results, SetResults] = useState(null);
-    let [submitted, SetSubmitted] = useState(null);
+    let [error, setError] = useState(null);
+    let [results, setResults] = useState(null);
+    let [submitted, setSubmitted] = useState(null);
 
     function move(target) {
         const elem = document.getElementById("resultsBar");
@@ -26,53 +27,88 @@ function Submission(){
         }
         }
     }
-
-    const SubmitData = (e) => {
+    const SubmitData = async (e) => {
         e.preventDefault();
 
-        SetResults(null);
+        setResults(null);
+        setError(null);
+
+        if (!text && !url && !file){
+            setError("Please select file, write text or provide URL before submitting!");
+            return;
+        }
 
         const csrftoken = Cookies.get("csrftoken");
 
         let body;
         let headers = {"X-CSRFToken": csrftoken};
 
+        if (selectedModels.every((x) => x === false)){
+            setError("Please select one model before submitting!");
+            return;
+        }
+
         if (file) {
             body = new FormData();
             body.append("file", file);
             body.append("selected", JSON.stringify(selectedModels));
-        } 
+        }
         else {
             body = JSON.stringify({text, url, selected:selectedModels});
             headers["Content-Type"] = "application/json";
         }
 
-        fetch("http://127.0.0.1:8000/api/analysis/", {
-            method: "POST",
-            credentials: "include",
-            headers,
-            body
-        })
-        .then(res => res.json())
-        .then(data => {
-            console.log("Backend response:", data);
-            if (data.id == null){
-                SetResults(data);
-            }else{
-                SetSubmitted(data.id);
+        try{
+            const response = await fetch("http://127.0.0.1:8000/api/analysis/", {
+                method: "POST",
+                credentials: "include",
+                headers,
+                body
+            })
+
+            if (!response.ok){
+                throw new Error(`API Error: ${response.status} ${response.statusText}`);
             }
-        })
+
+            const data = await response.json();
+
+            if (data.error){
+                setError(data.error);
+            }
+
+            if (data.id == null){
+                setResults(data);
+            }else{
+                setSubmitted(data.id);
+            }
+        } catch (error) {
+            throw new Error(`Failed to fetch data: ${error.message}`)
+        }
+
+
     }
 
+    
     useEffect(() => {
-        if (!submitted) return;
-        fetch(`http://127.0.0.1:8000/api/analysis/${submitted}/`)
-        .then(response => response.json())
-        .then(data => {
-            console.log("API Response:", data);
-            SetResults(data);
-            })
-            .catch(error => console.error("API Error fetching results:", error))
+        if (!submitted){
+            return;
+        }
+        const submittedResults = async () => {
+            try {
+                const response = await fetch(`http://127.0.0.1:8000/api/analysis/${submitted}/`);
+                
+                if (!response.ok){
+                    throw new Error(`API Error Fetching Results: ${response.status} ${response.statusText}`)
+                }
+                
+                const data = await response.json();
+                console.log("API Response:", data);
+                setResults(data);
+            } catch {
+                throw new Error(`API Error fetching results: ${error.message}`)
+            }
+        }
+        submittedResults();
     }, [submitted]);
     
 
@@ -80,9 +116,16 @@ function Submission(){
         if (results) {
             const target = results.result * 100
             move(target);
+        } else {
+            return;
         }
     }, [results]);
 
+    const trustScore = results?.result ?? 0; //this is a mix of optional chaininh and the nullish coalescing operator
+    const biasScore = results?.bias?.[0]?.[0]?.score ?? 0;
+    const sentimentScore = results?.["Sentiment"]?.[0]?.score ?? 0;
+    const aiScore = results?.["AI or Human"]?.[0]?.score ?? 0;
+    const pulkScore = results?.["True or False"]?.[0]?.score ?? 0
 
     return(
         <div>
@@ -96,18 +139,24 @@ function Submission(){
                 <button type="submit">Send Article</button>
             </form>
 
-            <h1 className="text-3xl font-bold underline">Results</h1>
+            {error && (
+                <div style={{ color: "red", marginTop: "10px" }}>
+                    {error}
+                </div>
+            )}
+
+            <h1 class="text-3xl font-bold underline">Results</h1>
             <div>
                 {results && (
                 <>
                     <div id="progressBar">
-                        <div id ="resultsBar">{(results.result * 100).toFixed(2)}%</div>
+                        <div id ="resultsBar">{(trustScore * 100).toFixed(2)}%</div>
                     </div>
                     <div>
-                        <CircularProgress value={results.bias?.[0]?.[0]?.score * 100} />
-                        <CircularProgress value={results["Sentiment"]?.[0]?.score * 100} />
-                        <CircularProgress value={results["AI or Human"]?.[0]?.score * 100} />
-                        <CircularProgress value={results["True or False"]?.[0]?.score * 100} />
+                        <CircularProgress value={biasScore * 100} />
+                        <CircularProgress value={sentimentScore * 100} />
+                        <CircularProgress value={aiScore * 100} />
+                        <CircularProgress value={pulkScore * 100} />
                     </div>
                 </>
                 )}

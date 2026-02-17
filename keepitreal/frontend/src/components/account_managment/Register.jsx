@@ -10,27 +10,45 @@ function Register () {
     const [confirmPassword, setConfirmPassword] = useState("");
 
     useEffect(() => {
-        fetch("http://127.0.0.1:8000/api/csrf/", {
-            credentials: "include"
-        });
+        const getCSRF = async () => {
+            try{
+                fetch("http://127.0.0.1:8000/api/csrf/", {
+                    credentials: "include"
+                });
+            } catch (error) {
+                console.log("Error fetching CSRF", error);
+            }
+        };
+        getCSRF();
     }, []);
 
-    const SubmitData = (e) => {
+    const SubmitData = async (e) => {
         e.preventDefault();
 
-        const csrftoken = Cookies.get('csrftoken')
+        if (password !== confirmPassword){
+            setMessage("Passwords do not match");
+            return;
+        }
 
-        fetch("http://127.0.0.1:8000/api/register/", {
-            method: "POST",
-            credentials: "include",
-            headers: {"Content-type":"application/json", "X-CSRFToken": csrftoken},
-            body: JSON.stringify({email, password, username, confirm_password})
-        })
-        .then(res => res.json())
-        .then(data => {
+       
+        try{
+            const csrftoken = Cookies.get('csrftoken')
+
+            const response = await fetch("http://127.0.0.1:8000/api/register/", {
+                method: "POST",
+                credentials: "include",
+                headers: {"Content-type":"application/json", "X-CSRFToken": csrftoken},
+                body: JSON.stringify({email, password, username, confirmPassword})
+            })
+            if (!response.ok){
+                throw new Error(`API Error creating account: ${response.status} ${response.statusText}`);
+            }
+            const data = await response.json()
             setMessage(data.message);
-        })
-    }
+        } catch (error){
+            throw new Error(`Failed to fetch register endpoint data: ${error.message}`);
+        }
+    };
 
     return (
          <form onSubmit={SubmitData}>

@@ -13,22 +13,27 @@ function Login () {
         });
     }, []);
 
-    const SubmitData = (e) => {
+    const SubmitData = async (e) => {
         e.preventDefault();
+       
+        try{
+            const csrftoken = Cookies.get('csrftoken')
 
-        const csrftoken = Cookies.get('csrftoken')
-
-        fetch("http://127.0.0.1:8000/api/login/", {
-            method: "POST",
-            credentials: "include",
-            headers: {"Content-type":"application/json", "X-CSRFToken": csrftoken},
-            body: JSON.stringify({email, password})
-        })
-        .then(res => res.json())
-        .then(data => {
+            const response = await fetch("http://127.0.0.1:8000/api/login/", {
+                method: "POST",
+                credentials: "include",
+                headers: {"Content-type":"application/json", "X-CSRFToken": csrftoken},
+                body: JSON.stringify({email, password})
+            })
+            if (!response.ok){
+                throw new Error(`API Error logging into account: ${response.status} ${response.statusText}`);
+            }
+            const data = await response.json()
             setMessage(data.message);
-        })
-    }
+        } catch (error){
+            throw new Error(`Failed to fetch login endpoint data: ${error.message}`);
+        }
+    };
     
     return (
          <form onSubmit={SubmitData}>
