@@ -3,9 +3,7 @@ import Cookies from 'js-cookie';
 import CircularProgress from "../results/CircleProgress";
 import Models from './ChosenModels';
 import SubmissionSelection from './SubmissionSelection'
-
-// CSS variables
-const cardClasses = "w-full bg-neutral-100 dark:bg-slate-900 border border-default dark:border-slate-800 rounded-base shadow-md p-4 sm:p-6 mb-4";    
+import { cardClasses } from '../../styles/tailwindConstants';
 
 function Submission(){
 
@@ -93,8 +91,7 @@ function Submission(){
 
     return(
         <div>
-            <h1 className="text-3xl font-bold whitespace-nowrap">KeepItREAL</h1>
-            <p>Submit your News Source and Select Analysis Types </p>
+            <p>Submit your News Source and Select Analysis Types</p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4">
 
                 {/* While no results show submission - need to add some form of reversal of action without needing to use the navbar - UI concept of easy reversal of action */}
