@@ -3,9 +3,7 @@ import Cookies from 'js-cookie';
 import CircularProgress from "../results/CircleProgress";
 import Models from './ChosenModels';
 import SubmissionSelection from './SubmissionSelection'
-
-// CSS variables
-const cardClasses = "w-full bg-neutral-100 dark:bg-slate-900 border border-default dark:border-slate-800 rounded-base shadow-md p-4 sm:p-6 mb-4";    
+import { cardClasses } from '../../styles/tailwindConstants';
 
 function Submission(){
 
