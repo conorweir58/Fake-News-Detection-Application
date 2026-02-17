@@ -16,17 +16,14 @@ def complete_analysis(request):
     if not (url or article_text or files):
         return JsonResponse({"error": "User must provide a URL, file or text."}, status=400)
 
+    selected_raw = request.data.get("selected")
+
     if(files):
-        selected_raw = request.data.get("selected")
-        selected_flags = json.loads(selected_raw)
+        selected_models = json.loads(selected_raw)
     else:
-        selected_flags = request.data.get("selected")
+        selected_models = selected_raw
 
-    if not selected_flags:
-        return JsonResponse({"error": "No models have been selected"}, status=400)
-
-    models = ["pulk", "sentiment", "bias", "gpt"]
-    selected_models = [model for model, flag in zip(models, selected_flags) if flag]
+    print(selected_models)
 
     if not selected_models:
         return JsonResponse({"error": "No models added to call from selected_models"}, status=400)

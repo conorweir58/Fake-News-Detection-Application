@@ -10,10 +10,12 @@ function Submission(){
     const [text, setText] = useState("");
     const [url, setUrl] = useState("");
     const [file, setFile] = useState(null);
-    const [selectedModels, setSelectedModels] = useState([]);
+    const [selectedModels, setSelectedModels] = useState(["pulk", "sentiment", "bias", "gpt"]);
     let [error, setError] = useState(null);
     let [results, setResults] = useState(null);
     let [submitted, setSubmitted] = useState(null);
+    const [submissionType, setSubmissionType] = useState("url") // default URL
+
 
     function move(target) {
         const elem = document.getElementById("resultsBar");
@@ -44,7 +46,7 @@ function Submission(){
         let body;
         let headers = {"X-CSRFToken": csrftoken};
 
-        if (selectedModels.every((x) => x === false)){
+        if (!selectedModels){
             setError("Please select at least one model before submitting!");
             return;
         }
@@ -83,9 +85,8 @@ function Submission(){
                 setSubmitted(data.id);
             }
         } catch (error) {
-            throw new Error(`Failed to fetch data: ${error.message}`)
+            throw new Error(`Failed to fetch data: ${error.message}`);
         }
-
 
     }
 
