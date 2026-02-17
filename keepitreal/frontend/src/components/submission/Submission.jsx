@@ -93,8 +93,7 @@ function Submission(){
 
     return(
         <div>
-            <h1 className="text-3xl font-bold whitespace-nowrap">KeepItREAL</h1>
-            <p>Submit your News Source and Select Analysis Types </p>
+            <p>Submit your News Source and Select Analysis Types</p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4">
 
                 {/* While no results show submission - need to add some form of reversal of action without needing to use the navbar - UI concept of easy reversal of action */}
