@@ -37,8 +37,8 @@ function Login () {
         <div>
             <div className="p-4">
                 <div className={`${cardClasses}`}>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-16 p-4 items-center">
-                        <div className="md:border-r">
+                    <div className="grid grid-cols-1 md:grid-cols-2 p-4 items-center">
+                        <div className="md:border-r flex flex-col h-full justify-evenly">
                             <div className="pb-4">
                                 <h2 className="font-bold text-xl">Log In To Your KeepItREAL Account!</h2>
                                 <p className="text-md mt-1 text-body text-gray-500">Don't have an account? <Link to="/register" className="text-blue-500">Register Now!</Link></p>
@@ -59,7 +59,7 @@ function Login () {
 
                             <div className="w-full">
                                 <label className={formLabel}>Your Email</label>
-                                <input type="email" id="email" required placeholder="Enter your email" value={email} onChange = {(e) => setEmail(e.target.value)} className={`${formInput} invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500 placeholder:text-gray-400`}></input>
+                                <input type="email" id="email" required placeholder="Enter your email" value={email} onChange = {(e) => setEmail(e.target.value)} className={`${formInput}`}></input>
                             </div>
 
                             <div className="w-full">
