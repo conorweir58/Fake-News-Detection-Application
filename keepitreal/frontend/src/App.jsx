@@ -8,6 +8,7 @@ import Register from "./components/account_managment/Register";
 import Login from "./components/account_managment/Login";
 import Logout from './components/account_managment/Logout';
 import UserHistory from "./components/history/UserHistory";
+import FourOhFour from './pages/error/fourohfour';
 
 function App() {
   return (
@@ -20,6 +21,8 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="/history" element={<UserHistory />} />
+
+          <Route path="*" element={<FourOhFour />} />
         </Route>
       </Routes>
     </BrowserRouter>
