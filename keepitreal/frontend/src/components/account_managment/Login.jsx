@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react'
 import Cookies from 'js-cookie'
+import { Link } from 'react-router-dom';
+import { cardClasses, formLabel, formButton, formInput } from '../../styles/tailwindConstants';
+import logo from '../../assets/KeepItREAL_Icon.png';
 
 function Login () {
 
@@ -31,16 +34,50 @@ function Login () {
     }
     
     return (
-         <form onSubmit={SubmitData}>
-            <input type="email" placeholder="Enter your email" value={email} onChange = {(e) => setEmail(e.target.value)}></input>
-            <input type="password" placeholder="Enter your password" value={password} onChange = {(e) => setPassword(e.target.value)}></input>
-            <button type="submit">Login</button>
+        <div>
+            <div className="p-4">
+                <div className={`${cardClasses}`}>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-16 p-4 items-center">
+                        <div className="md:border-r">
+                            <div className="pb-4">
+                                <h2 className="font-bold text-xl">Log In To Your KeepItREAL Account!</h2>
+                                <p className="text-md mt-1 text-body text-gray-500">Don't have an account? <Link to="/register" className="text-blue-500">Register Now!</Link></p>
+                            </div>
 
-            {message &&
-                <p>{message}</p>
-            }
-        </form>
+                            <img src={logo} alt="KeepItREAL Logo" className="h-32 rounded-md shadow-md mx-auto block"/>
+
+                            <div className="pt-4 mr-4">
+                                <h3 className="font-bold">An Account Is Required To:</h3>
+                                <ul className="mt-2 list-disc list-inside text-body text-gray-600">
+                                    <li>Store A History of Previous Submissions</li>
+                                    <li>Manage and Access Your Submission History</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <form onSubmit={SubmitData} className="flex flex-col items-center gap-8">
+
+                            <div className="w-full">
+                                <label className={formLabel}>Your Email</label>
+                                <input type="email" id="email" required placeholder="Enter your email" value={email} onChange = {(e) => setEmail(e.target.value)} className={`${formInput} invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500 placeholder:text-gray-400`}></input>
+                            </div>
+
+                            <div className="w-full">
+                                <label className={formLabel}>Your Password</label>
+                                <input type="password" id="password" required placeholder="Enter your password" value={password} onChange = {(e) => setPassword(e.target.value)} className={formInput}></input>
+                            </div>
+
+                            <button type="submit" className={`${formButton} w-1/5 mt-4`}>Log In</button>
+
+                            {message &&
+                                <p>{message}</p>
+                            }
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     );
-}
+};
 
 export default Login;
