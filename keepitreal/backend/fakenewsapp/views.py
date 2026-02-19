@@ -7,6 +7,11 @@ from .account_history import account_history
 from .extraction.extraction_tool import (extract_from_file, extract_from_url, extract_from_text)
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.http import JsonResponse
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from .models import ContactForm
+from .serializers import ContactFormSerializer
 
 # EXTRACTION VIEWS - havent added text yet bc no real reason to test it bc its just setting text
 
@@ -107,3 +112,14 @@ def history(request):
     data = account_history(request)
 
     return data
+
+# from https://www.geeksforgeeks.org/python/build-a-contact-form-using-django-react-and-tailwind/
+class SubmitContactFormView(APIView):
+    def post(self, request, format=None):
+        serializer = ContactFormSerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'message': 'Form submitted successfully!'}, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
