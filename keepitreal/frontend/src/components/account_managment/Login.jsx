@@ -7,11 +7,12 @@ import { useAuth } from '../../contexts/AuthContext';
 import LoadingSpinner from '../../pages/loading/LoadingSpinner';
 
 function Login () {
-    const { login } = useAuth(); // get login using useAuth function from AuthContext - lets us use login to update global isAuth
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
+    const { login } = useAuth();
+    
 
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -44,8 +45,9 @@ function Login () {
             const data = await response.json()
 
             if(data.authenticated === "true") {
-                login(data.username); // update gloabal isAuth and auth username
+                login(data.username); // update global isAuth and auth username
             }
+            setMessage(data.message);
         } catch (error){
             setError(`Failed to fetch login endpoint data: ${error.message}`);
         } finally {

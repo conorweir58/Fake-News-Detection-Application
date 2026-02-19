@@ -1,10 +1,11 @@
 import {useState, useEffect} from 'react';
 import Cookies from 'js-cookie';
-import CircularProgress from "../results/CircleProgress";
 import Models from './ChosenModels';
 import SubmissionSelection from './SubmissionSelection'
 import LoadingSpinner from '../../pages/loading/LoadingSpinner';
 import { cardClasses } from '../../styles/tailwindConstants';
+import { useNavigate } from "react-router-dom";
+
 
 function Submission(){
 
@@ -13,11 +14,13 @@ function Submission(){
     const [file, setFile] = useState(null);
 
     const [submissionType, setSubmissionType] = useState("url"); // default submission type to url
-    const [selectedModels, setSelectedModels] = useState([]);
+    const [selectedModels, setSelectedModels] = useState(["pulk", "sentiment", "bias", "gpt"]);
 
     let [error, setError] = useState(null);
     let [results, setResults] = useState(null);
     let [submitted, setSubmitted] = useState(null);
+
+    const navigate = useNavigate();
 
     const [isLoading, setIsLoading] = useState(false);
 
@@ -45,7 +48,7 @@ function Submission(){
             return;
         }
 
-        if (selectedModels.every((x) => x === false)){
+        if (!selectedModels){
             setError("Please select at least one model before submitting!");
             return;
         }
@@ -86,10 +89,10 @@ function Submission(){
                 setError(data.error);
             }
 
-            if (data.id == null){
-                setResults(data);
+            if (data.id != null){
+                setError("Not expecting result type");
             }else{
-                setSubmitted(data.id);
+                navigate("/results/direct", { state: { results: data } });
             }
         } catch (error) {
             setError(`Failed to submit data: ${error.message}`);
@@ -134,12 +137,6 @@ function Submission(){
             return;
         }
     }, [results]);
-
-    const trustScore = results?.result ?? 0; //this is a mix of optional chaininh and the nullish coalescing operator
-    const biasScore = results?.bias?.[0]?.[0]?.score ?? 0;
-    const sentimentScore = results?.["Sentiment"]?.[0]?.score ?? 0;
-    const aiScore = results?.["AI or Human"]?.[0]?.score ?? 0;
-    const pulkScore = results?.["True or False"]?.[0]?.score ?? 0
 
     if(isLoading){
         return <LoadingSpinner />;
@@ -191,20 +188,6 @@ function Submission(){
                         <Models onSelectionChange={setSelectedModels}/>
                     </div>
                 </div>
-
-                {results && (
-                <>
-                    <div id="progressBar">
-                        <div id ="resultsBar">{(trustScore * 100).toFixed(2)}%</div>
-                    </div>
-                    <div>
-                        <CircularProgress value={biasScore * 100} />
-                        <CircularProgress value={sentimentScore * 100} />
-                        <CircularProgress value={aiScore * 100} />
-                        <CircularProgress value={pulkScore * 100} />
-                    </div>
-                </>
-                )}
             </div>
         </div>
     );

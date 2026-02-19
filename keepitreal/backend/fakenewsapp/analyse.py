@@ -16,30 +16,32 @@ def complete_analysis(request):
     if not (url or article_text or files):
         return JsonResponse({"error": "User must provide a URL, file or text."}, status=400)
 
+    selected_raw = request.data.get("selected")
+
     if(files):
-        selected_raw = request.data.get("selected")
-        selected_flags = json.loads(selected_raw)
+        selected_models = json.loads(selected_raw)
     else:
-        selected_flags = request.data.get("selected")
+        selected_models = selected_raw
 
-    if not selected_flags:
-        return JsonResponse({"error": "No models have been selected"}, status=400)
-
-    models = ["pulk", "sentiment", "bias", "gpt"]
-    selected_models = [model for model, flag in zip(models, selected_flags) if flag]
+    print(selected_models)
 
     if not selected_models:
         return JsonResponse({"error": "No models added to call from selected_models"}, status=400)
 
     if url:
         article = extract_from_url(url)
-        article_info = article
+        article_info = article.text
+        article_title = article.title
     elif files:
         article = extract_from_file(files)
         article_info = article.text
+        article_title = article.title
     elif article_text:
         article = extract_from_text(article_text)
         article_info = article.text
+        article_title = article.title
+
+    print(article_title)
 
     api_models = {}
     final_results = {}
@@ -47,24 +49,24 @@ def complete_analysis(request):
 
     # here i call all the models with the given text
     if "pulk" in selected_models:
-        pulk_result = pulk_pipe(article.text[:1900])
+        pulk_result = pulk_pipe(article.text)
         api_models["pulk"] = pulk_result
-        final_results["True or False"] = pulk_result
+        final_results["pulk"] = pulk_result
         print(pulk_result)
     if "sentiment" in selected_models:
-        sentiment_result = sentiment_pipe(article.text[:1900])
+        sentiment_result = sentiment_pipe(article.text)
         api_models["sentiment"] = sentiment_result
-        final_results["Sentiment"] = sentiment_result
+        final_results["sentiment"] = sentiment_result
         print(sentiment_result)
     if "bias" in selected_models:
-        bias_result = bias_pipe(article.text[:1900])
+        bias_result = bias_pipe(article.text)
         api_models["bias"] = bias_result
         final_results["bias"] = bias_result
         print(bias_result)
     if "gpt" in selected_models:
-        gpt_result = gpt_pipe(article.text[:1900])
+        gpt_result = gpt_pipe(article.text)
         api_models["gpt"] = gpt_result
-        final_results["AI or Human"] = gpt_result
+        final_results["gpt"] = gpt_result
         print(gpt_result)
     # #
     # fact_check_result = googFactCheckSearch(text)
@@ -76,12 +78,15 @@ def complete_analysis(request):
         return JsonResponse({"error": "Failed to receive overall result from the models"}, status=500)
 
     final_results["result"] = result
+    article_text=article.text.split(" ")
+    final_results["text"] = " ".join(article_text[:300])
 
     if request.user.is_authenticated:
         try:
             info_obj = DetectionResults.objects.create(
                 user=request.user, 
-                text=article_info, 
+                text=article_info,
+                title=article_title,
                 pulk=api_models.get("pulk"),
                 bias=api_models.get("bias"),
                 sentiment=api_models.get("sentiment"),

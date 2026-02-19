@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-function CircularProgress({value}) {
+function CircularProgress({ value }) {
 
     const circleRef = useRef(null)
 
@@ -35,10 +35,9 @@ function CircularProgress({value}) {
     return (
         <div className="circularWrapper">
             <svg>
-                <circle className="bg" cx="57" cy="57" r="52" />
-                <circle ref={circleRef} className="progress" cx="57" cy="57" r="52" />
+                <circle className="bg" cx="70" cy="70" r="60" />
+                <circle ref={circleRef} className="progress" cx="70" cy="70" r="60" />
             </svg>
-            <div className="value">{Math.round(value)}%</div>
         </div>
     );
 }

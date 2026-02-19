@@ -30,6 +30,7 @@ function Models({ onSelectionChange }){
     const [checkedState, setCheckedState] = useState(new Array(models.length).fill(true)); // default to all true
 
     const handleOnChange = (position) => {
+        console.log("Working");
         const updatedCheckedState = checkedState.map((item, index) =>
             index === position ? !item : item
         );

@@ -73,8 +73,6 @@ def get_analysis(request, id):
 
     return JsonResponse({"id": analysis_result.id, "result": analysis_result.result, "True or False": analysis_result.pulk, "bias": analysis_result.bias, "AI or Human": analysis_result.gpt, "Sentiment":analysis_result.sentiment})
 
-
-
 def register(request):
     message = register_account(request)
     return message
@@ -84,24 +82,6 @@ def login_to_account(request):
     message = account_login(request)
     return message
 
-<<<<<<< HEAD
-        email = data.get("email")
-        password = data.get("password")
-
-        if not email or not password:
-            return JsonResponse({"error":"Need both password and email for login"})
-        
-        user = authenticate(request, username=email, password=password)
-
-        if user:
-            login(request, user)
-            return JsonResponse({"message": "Login Successful", "authenticated": "true"})
-        
-        return JsonResponse({"message":"Invalid creditionals", "authenticated": "false"})
-    
-    return JsonResponse({"error":"POST required"})
-=======
->>>>>>> backend
 
 def account_logout(request):
     logout(request)

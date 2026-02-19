@@ -22,34 +22,32 @@ function Logout () {
     const LoggingOut = async (e) => {
         e.preventDefault();
 
-        const csrftoken = Cookies.get('csrftoken')
-
-        fetch("http://127.0.0.1:8000/api/logout/", {
-            method: "POST",
-            credentials: "include",
-            headers: {"X-CSRFToken": csrftoken},
-        })
-        .then(res => res.json())
-        .then(data => {
-            logout(); // wipe global auth info
-        })
-        try{
-            const csrftoken = Cookies.get('csrftoken')
+        try {
+            const csrftoken = Cookies.get("csrftoken");
 
             const response = await fetch("http://127.0.0.1:8000/api/logout/", {
                 method: "POST",
                 credentials: "include",
-                headers: {"X-CSRFToken": csrftoken},
-            })
-            if (!response.ok){
-                throw new Error(`API Error logging out of account: ${response.status} ${response.statusText}`);
+                headers: {
+                    "X-CSRFToken": csrftoken,
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error(`Logout failed: ${response.status} ${response.statusText}`);
             }
-            const data = await response.json()
-            setMessage(data.message);
-        } catch (error){
-            throw new Error(`Failed to fetch logout endpoint data: ${error.message}`);
+
+            const data = await response.json();
+
+            // Update global auth state AFTER backend confirms logout
+            logout();
+
+            console.log("Logout successful:", data.message);
+
+        } catch (error) {
+            console.error("Error logging out:", error);
         }
-    }
+    };
     return (
         <button onClick={LoggingOut} type="submit" className={`${linkClasses} cursor-pointer`}>Logout</button>
     );

@@ -8,7 +8,11 @@ import Register from "./components/account_managment/Register";
 import Login from "./components/account_managment/Login";
 import Logout from './components/account_managment/Logout';
 import UserHistory from "./components/history/UserHistory";
+<<<<<<< HEAD
 import ContactUs from "./components/contact/ContactUs";
+=======
+import ResultsDisplay from './components/results/Results';
+>>>>>>> backend
 import FourOhFour from './pages/error/fourohfour';
 
 function App() {
@@ -23,7 +27,7 @@ function App() {
           <Route path="/logout" element={<Logout />} />
           <Route path="contact" element={<ContactUs />} />
           <Route path="/history" element={<UserHistory />} />
-
+          <Route path="/results/direct" element={<ResultsDisplay />} />
           <Route path="*" element={<FourOhFour />} />
         </Route>
       </Routes>
