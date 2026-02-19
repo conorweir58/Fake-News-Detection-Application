@@ -3,6 +3,7 @@ import Cookies from 'js-cookie';
 import CircularProgress from "../results/CircleProgress";
 import Models from './ChosenModels';
 import SubmissionSelection from './SubmissionSelection'
+import LoadingSpinner from '../../pages/loading/LoadingSpinner';
 import { cardClasses } from '../../styles/tailwindConstants';
 
 function Submission(){
@@ -10,10 +11,15 @@ function Submission(){
     const [text, setText] = useState("");
     const [url, setUrl] = useState("");
     const [file, setFile] = useState(null);
+
+    const [submissionType, setSubmissionType] = useState("url"); // default submission type to url
     const [selectedModels, setSelectedModels] = useState([]);
+
     let [error, setError] = useState(null);
     let [results, setResults] = useState(null);
     let [submitted, setSubmitted] = useState(null);
+
+    const [isLoading, setIsLoading] = useState(false);
 
     function move(target) {
         const elem = document.getElementById("resultsBar");
@@ -39,15 +45,17 @@ function Submission(){
             return;
         }
 
-        const csrftoken = Cookies.get("csrftoken");
-
-        let body;
-        let headers = {"X-CSRFToken": csrftoken};
-
         if (selectedModels.every((x) => x === false)){
             setError("Please select at least one model before submitting!");
             return;
         }
+
+        setIsLoading(true); // set loading to true when submission starts
+
+        const csrftoken = Cookies.get("csrftoken");
+
+        let body;
+        let headers = {"X-CSRFToken": csrftoken};
 
         if (file) {
             body = new FormData();
@@ -68,7 +76,8 @@ function Submission(){
             })
 
             if (!response.ok){
-                throw new Error(`API Error: ${response.status} ${response.statusText}`);
+                setError(`API Error Submitting Data: ${response.status} ${response.statusText}`);
+                return;
             }
 
             const data = await response.json();
@@ -83,30 +92,34 @@ function Submission(){
                 setSubmitted(data.id);
             }
         } catch (error) {
-            throw new Error(`Failed to fetch data: ${error.message}`)
+            setError(`Failed to submit data: ${error.message}`);
+        } finally {
+            setIsLoading(false); // set loading to false when submission finishes (either success or error)
         }
-
-
     }
 
-    
     useEffect(() => {
         if (!submitted){
             return;
         }
         const submittedResults = async () => {
+            setIsLoading(true); // set loading to true when fetching results starts
+
             try {
                 const response = await fetch(`http://127.0.0.1:8000/api/analysis/${submitted}/`);
                 
                 if (!response.ok){
-                    throw new Error(`API Error Fetching Results: ${response.status} ${response.statusText}`)
+                    setError(`API Error Fetching Results: ${response.status} ${response.statusText}`);
+                    return;
                 }
                 
                 const data = await response.json();
                 console.log("API Response:", data);
                 setResults(data);
-            } catch {
-                throw new Error(`API Error fetching results: ${error.message}`)
+            } catch (error) {
+                setError(`Failed to fetch results: ${error.message} - Please try again.`);
+            } finally {
+                setIsLoading(false); // set loading to false when fetching results finishes
             }
         }
         submittedResults();
@@ -128,6 +141,10 @@ function Submission(){
     const aiScore = results?.["AI or Human"]?.[0]?.score ?? 0;
     const pulkScore = results?.["True or False"]?.[0]?.score ?? 0
 
+    if(isLoading){
+        return <LoadingSpinner />;
+    }
+
     return(
         <div>
             <p>Submit your News Source and Select Analysis Types</p>
@@ -135,7 +152,7 @@ function Submission(){
 
                 {/* While no results show submission - need to add some form of reversal of action without needing to use the navbar - UI concept of easy reversal of action */}
                 {!results && (
-                    <div className={`${cardClasses} md:col-span-2 flex flex-col`}> {/* the md is applied to the grid colms so that on smaller devices they are stacked instead */}
+                    <div className={`w-full ${cardClasses} md:col-span-2 flex flex-col`}> {/* the md is applied to the grid colms so that on smaller devices they are stacked instead */}
                         <h2 className="text-2xl font-bold whitespace-nowrap">Submit Your News Source</h2>
                         <p className="font-bold text-gray-500 pt-1">Choose A Submission Format:</p>
 
@@ -165,7 +182,7 @@ function Submission(){
                     </div>
                 )}
 
-                <div className={`${cardClasses} md:col-span-1`}>
+                <div className={`w-full ${cardClasses} md:col-span-1`}>
                     <h2 className="text-2xl font-bold whitespace-nowrap">Select Analysis Types</h2>
                     <p className="font-bold text-gray-500 pt-1">
                         <small>The following selection will be used to build your analysis of your chosen news source:</small>

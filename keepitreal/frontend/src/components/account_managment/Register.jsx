@@ -12,6 +12,9 @@ function Register () {
     const [username, setUsername] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
+
     useEffect(() => {
         const getCSRF = async () => {
             try{
@@ -33,6 +36,9 @@ function Register () {
             return;
         }
         
+        setError(null);
+        setIsLoading(true);
+
         try{
             const csrftoken = Cookies.get('csrftoken')
 
@@ -43,19 +49,27 @@ function Register () {
                 body: JSON.stringify({email, password, username, confirmPassword})
             })
             if (!response.ok){
-                throw new Error(`API Error creating account: ${response.status} ${response.statusText}`);
+                setError(data?.message || `API Error registering account: ${response.status}`);
+                return;
             }
             const data = await response.json()
+
             setMessage(data.message);
         } catch (error){
-            throw new Error(`Failed to fetch register endpoint data: ${error.message}`);
+            setError(`Failed to fetch register endpoint data: ${error.message}`);
+        } finally {
+            setIsLoading(false);
         }
     };
+
+    if(isLoading){
+        return <LoadingSpinner />;
+    }
 
     return (
         <div>
             <div className="p-4">
-                <div className={`${cardClasses}`}>
+                <div className={`w-full ${cardClasses}`}>
                     <div className="grid grid-cols-1 md:grid-cols-2 p-4 items-center">
                         <div className="md:border-r flex flex-col h-full justify-evenly">
                             <div className="pb-4">

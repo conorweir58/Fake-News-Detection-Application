@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { cardClasses, formLabel, formButton, formInput } from '../../styles/tailwindConstants';
 import logo from '../../assets/KeepItREAL_Icon.png';
 import { useAuth } from '../../contexts/AuthContext';
+import LoadingSpinner from '../../pages/loading/LoadingSpinner';
 
 function Login () {
     const { login } = useAuth(); // get login using useAuth function from AuthContext - lets us use login to update global isAuth
@@ -11,6 +12,9 @@ function Login () {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
+
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         fetch("http://127.0.0.1:8000/api/csrf/", {
@@ -20,6 +24,9 @@ function Login () {
 
     const SubmitData = async (e) => {
         e.preventDefault();
+
+        setError(null);
+        setIsLoading(true);
        
         try{
             const csrftoken = Cookies.get('csrftoken')
@@ -31,21 +38,29 @@ function Login () {
                 body: JSON.stringify({email, password})
             })
             if (!response.ok){
-                throw new Error(`API Error logging into account: ${response.status} ${response.statusText}`);
+                setError(data?.message || `API Error logging in to account: ${response.status}`);
+                return;
             }
             const data = await response.json()
+
             if(data.authenticated === "true") {
                 login(data.username); // update gloabal isAuth and auth username
             }
         } catch (error){
-            throw new Error(`Failed to fetch login endpoint data: ${error.message}`);
+            setError(`Failed to fetch login endpoint data: ${error.message}`);
+        } finally {
+            setIsLoading(false);
         }
     };
+
+    if(isLoading){
+        return <LoadingSpinner />;
+    }
     
     return (
         <div>
             <div className="p-4">
-                <div className={`${cardClasses}`}>
+                <div className={`w-full ${cardClasses}`}>
                     <div className="grid grid-cols-1 md:grid-cols-2 p-4 items-center">
                         <div className="md:border-r flex flex-col h-full justify-evenly">
                             <div className="pb-4">
