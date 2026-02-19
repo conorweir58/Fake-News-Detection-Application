@@ -49,22 +49,22 @@ def complete_analysis(request):
 
     # here i call all the models with the given text
     if "pulk" in selected_models:
-        pulk_result = pulk_pipe(article.text[:1900])
+        pulk_result = pulk_pipe(article.text)
         api_models["pulk"] = pulk_result
         final_results["pulk"] = pulk_result
         print(pulk_result)
     if "sentiment" in selected_models:
-        sentiment_result = sentiment_pipe(article.text[:1900])
+        sentiment_result = sentiment_pipe(article.text)
         api_models["sentiment"] = sentiment_result
         final_results["sentiment"] = sentiment_result
         print(sentiment_result)
     if "bias" in selected_models:
-        bias_result = bias_pipe(article.text[:1900])
+        bias_result = bias_pipe(article.text)
         api_models["bias"] = bias_result
         final_results["bias"] = bias_result
         print(bias_result)
     if "gpt" in selected_models:
-        gpt_result = gpt_pipe(article.text[:1900])
+        gpt_result = gpt_pipe(article.text)
         api_models["gpt"] = gpt_result
         final_results["gpt"] = gpt_result
         print(gpt_result)

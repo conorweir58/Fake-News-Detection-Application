@@ -96,14 +96,16 @@ function Submission(){
                             <div className="flex-1 flex flex-col justify-evenly items-center gap-2 text-black dark:text-white mb-4 mt-2">
                                 
                                 {submissionType === "url" && (
-                                    <input type="text" placeholder="Enter your URL here..." value = {url} onChange = {(e) => setUrl(e.target.value)} className="w-3/4 border text-sm rounded-base rounded-lg focus:ring-green-700 focus:border-green-700 block p-2 shadow-xs resize-none placeholder:font-bold"></input>
+                                    // show message for when a url is invalid or not possible to extract from and recommend using text
+                                    <input type="text" placeholder="Enter your URL here..." value = {url} onChange = {(e) => setUrl(e.target.value)} className="w-3/4 border text-sm rounded-base rounded-lg focus:ring-2 focus:ring-green-700 focus:border-green-700 focus:outline-none block p-2 resize-none placeholder:font-bold"></input>
                                 )}
 
                                 {submissionType === "text" && (
-                                    <textarea placeholder='Paste your article here...' value = {text} onChange = {(e) => setText(e.target.value)} rows="10" className="border text-sm rounded-base focus:ring-green-700 focus:border-green-700 block w-full p-2 shadow-xs resize-none placeholder:font-bold"/> // Will this update after every key press? is that gonna be too many updates?
+                                    <textarea placeholder='Paste your article here...' value = {text} onChange = {(e) => setText(e.target.value)} rows="12" className="border text-sm rounded-base rounded-lg focus:ring-2 focus:ring-green-700 focus:border-green-700 focus:outline-none block w-full p-2 shadow-xs resize-none placeholder:font-bold"/> // Will this update after every key press? is that gonna be too many updates?
                                 )}                            
                                 
                                 {submissionType === "file" && (
+                                    // make it so its green when valid file given and red if file not valid, and shows message when trying to submit invalid file
                                     <input type="file" onChange = {(e) => setFile(e.target.files[0])} className="w-full p-10 border-2 border-dashed rounded-lg text-center cursor-pointer transition"></input>
                                 )}
 

@@ -6,6 +6,8 @@ function Login () {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
+    const { login } = useAuth();
+    
 
     useEffect(() => {
         fetch("http://127.0.0.1:8000/api/csrf/", {
@@ -29,6 +31,9 @@ function Login () {
                 throw new Error(`API Error logging into account: ${response.status} ${response.statusText}`);
             }
             const data = await response.json()
+            if(data.authenticated === "true") {
+                login(data.username); // update global isAuth and auth username
+            }
             setMessage(data.message);
         } catch (error){
             throw new Error(`Failed to fetch login endpoint data: ${error.message}`);

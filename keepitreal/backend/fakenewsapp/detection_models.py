@@ -1,4 +1,4 @@
-from transformers import pipeline
+from transformers import pipeline, AutoTokenizer
 from django.conf import settings
 import requests
 
@@ -9,22 +9,26 @@ import requests
 # Using the PULK17 model on hugging face however I had to add certain files to model for functionality hence it is coming from my account
 
 HF_Key = settings.PULK17_HF_KEY # My hugging face key because the model is private
-pulk_pipe = pipeline("text-classification", model="Andrewbrady27/Fake-News-Pulk17", token=HF_Key)
+pulk_tokenizer = AutoTokenizer.from_pretrained("Andrewbrady27/Fake-News-Pulk17", token=HF_Key)
+pulk_pipe = pipeline("text-classification", model="Andrewbrady27/Fake-News-Pulk17", tokenizer=pulk_tokenizer, token=HF_Key, truncation=True, max_length=512)
 
 #----------------------------
 
 # This model from hugging face classifies whether text is AI-generated or Human created.
-gpt_pipe = pipeline("text-classification", model="Hello-SimpleAI/chatgpt-detector-roberta")
+gpt_tokenizer = AutoTokenizer.from_pretrained("Hello-SimpleAI/chatgpt-detector-roberta")
+gpt_pipe = pipeline("text-classification", model="Hello-SimpleAI/chatgpt-detector-roberta", tokenizer=gpt_tokenizer, truncation=True, max_length=512)
 
 #----------------------------
 
 # This model performs a sentiment analysis on the text to check if it is positive or neutral specifically trained on news articles, it is also hosted on hugging face
-sentiment_pipe = pipeline("sentiment-analysis", model="mervp/SentimentBERT")
+sentiment_tokenizer = AutoTokenizer.from_pretrained("mervp/SentimentBERT")
+sentiment_pipe = pipeline("sentiment-analysis", model="mervp/SentimentBERT", tokenizer=sentiment_tokenizer, truncation=True, max_length=512)
 
 #----------------------------
 
 #This model is also hosted on hugging face, it searches for multiple types of bias within the text
-bias_pipe = pipeline("text-classification", model="cirimus/modernbert-large-bias-type-classifier", top_k=True)
+bias_tokenizer = AutoTokenizer.from_pretrained("cirimus/modernbert-large-bias-type-classifier")
+bias_pipe = pipeline("text-classification", model="cirimus/modernbert-large-bias-type-classifier", tokenizer=bias_tokenizer, top_k=True, truncation=True, max_length=1024)
 
 #----------------------------
 

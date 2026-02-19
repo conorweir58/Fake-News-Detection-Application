@@ -5,6 +5,9 @@ from .forms import RegistrationForm
 
 
 def register_account(request):
+    if request.user.is_authenticated:
+        return JsonResponse({"message":"Please logout before trying to register an account"})
+
     if request.method == "POST":
         try:
             data = json.loads(request.body)
@@ -22,6 +25,9 @@ def register_account(request):
 
 
 def account_login(request):
+    if request.user.is_authenticated:
+        return JsonResponse({"message":"User is already logged in"})
+
     if request.method == "POST":
         try:
             data = json.loads(request.body)

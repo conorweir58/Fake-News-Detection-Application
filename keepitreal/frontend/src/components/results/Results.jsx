@@ -62,7 +62,7 @@ function ResultsDisplay() {
                 <div className={`${cardClasses}`}>
                     <div className={`dark:bg-slate-900 border border-default dark:border-slate-800 rounded-base shadow-md mb-6`}>
                         <CircularProgress value={biasScore * 100}/>
-                        <div className="mr-100 pb-25 text-4xl">Bias: {results?.bias?.[0]?.[0]?.label ?? "This model was not selected"} {Math.round(biasScore * 100)}% </div>    
+                        <div className="mr-100 pb-25 text-4xl">Bias Type: {results?.bias?.[0]?.[0]?.label ?? "This model was not selected"} {Math.round(biasScore * 100)}% </div>    
                     </div>
                     <div className={`dark:bg-slate-900 border border-default dark:border-slate-800 rounded-base shadow-md mb-6`}>
                         <CircularProgress value={sentimentScore * 100}/>
