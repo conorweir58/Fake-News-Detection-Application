@@ -53,7 +53,7 @@ function Models({ onSelectionChange }){
             {models.map((model, index) => (
                 // Wrap everything in label tag so clicking anywhere inside selection card will select the check box
                 // NOTE: Maybe add has-checked stlying so unselected models are dimmed
-                <label key={index} htmlFor={model.id} className={`${cardClasses} flex items-center cursor-pointer transition duration-150 ease-in-out select-none`}>
+                <label key={index} htmlFor={model.id} className={`w-full ${cardClasses} flex items-center cursor-pointer transition duration-150 ease-in-out select-none`}>
                     <input type="checkbox" id={model.id} checked={checkedState[index]} onChange={() => handleOnChange(index)} className="w-5 h-5 mr-3 border rounded-xs focus:ring-1 focus:ring-brand-soft"/>
                     
                     <div className="flex-1">

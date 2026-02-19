@@ -73,8 +73,6 @@ def get_analysis(request, id):
 
     return JsonResponse({"id": analysis_result.id, "result": analysis_result.result, "True or False": analysis_result.pulk, "bias": analysis_result.bias, "AI or Human": analysis_result.gpt, "Sentiment":analysis_result.sentiment})
 
-
-
 def register(request):
     message = register_account(request)
     return message
@@ -83,6 +81,7 @@ def register(request):
 def login_to_account(request):
     message = account_login(request)
     return message
+
 
 def account_logout(request):
     logout(request)

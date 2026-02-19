@@ -44,8 +44,8 @@ def account_login(request):
 
         if user:
             login(request, user)
-            return JsonResponse({"message": "Login Successful"})
+            return JsonResponse({"message": "Login Successful", "authenticated": "true"})
         
-        return JsonResponse({"message":"Invalid creditionals"}, status=401)
+        return JsonResponse({"message":"Invalid creditionals", "authenticated": "false"}, status=401)
     
     return JsonResponse({"error":"POST required"})
