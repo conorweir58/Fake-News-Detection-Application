@@ -1,6 +1,6 @@
 // based on https://medium.com/@didemsahin1789/building-secure-authentication-with-react-context-in-react-native-3a55f27346fa
 
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 
 const AuthContext = createContext();
 
