@@ -60,6 +60,9 @@ def pulk_score(pulk_result):
     else:
         pulk_num = score
 
+    if pulk_num < 0.01:
+        return 0.01
+
     return pulk_num
 
 def sentiment_score(sentiment_result):
@@ -82,6 +85,10 @@ def bias_score(bias_result):
         return None
 
     bias_num = 1 - max(bias_options)
+
+    if bias_num < 0.01:
+        return 0.01
+
     return bias_num
 
 def gpt_score(gpt_result):
@@ -95,4 +102,7 @@ def gpt_score(gpt_result):
     else:
         gpt_num = 1 - score
         
+    if gpt_num < 0.01:
+        return 0.01
+    
     return gpt_num

@@ -1,9 +1,10 @@
 import {useState, useEffect} from 'react';
 import Cookies from 'js-cookie';
-import CircularProgress from "../results/CircleProgress";
 import Models from './ChosenModels';
 import SubmissionSelection from './SubmissionSelection'
 import { cardClasses } from '../../styles/tailwindConstants';
+import { useNavigate } from "react-router-dom";
+
 
 function Submission(){
 
@@ -16,20 +17,8 @@ function Submission(){
     let [submitted, setSubmitted] = useState(null);
     const [submissionType, setSubmissionType] = useState("url") // default URL
 
+    const navigate = useNavigate();
 
-    function move(target) {
-        const elem = document.getElementById("resultsBar");
-        let width = 1;
-        const id = setInterval(frame, 10);
-        function frame() {
-        if (width >= target) {
-            clearInterval(id);
-        } else {
-            width = width + 0.25;
-            elem.style.width = width + "%";
-        }
-        }
-    }
     const SubmitData = async (e) => {
         e.preventDefault();
 
@@ -79,55 +68,16 @@ function Submission(){
                 setError(data.error);
             }
 
-            if (data.id == null){
-                setResults(data);
+            if (data.id != null){
+                setError("Not expecting result type");
             }else{
-                setSubmitted(data.id);
+                navigate("/results/direct", { state: { results: data } });
             }
         } catch (error) {
             throw new Error(`Failed to fetch data: ${error.message}`);
         }
 
     }
-
-    
-    useEffect(() => {
-        if (!submitted){
-            return;
-        }
-        const submittedResults = async () => {
-            try {
-                const response = await fetch(`http://127.0.0.1:8000/api/analysis/${submitted}/`);
-                
-                if (!response.ok){
-                    throw new Error(`API Error Fetching Results: ${response.status} ${response.statusText}`)
-                }
-                
-                const data = await response.json();
-                console.log("API Response:", data);
-                setResults(data);
-            } catch {
-                throw new Error(`API Error fetching results: ${error.message}`)
-            }
-        }
-        submittedResults();
-    }, [submitted]);
-    
-
-    useEffect(() => {
-        if (results) {
-            const target = results.result * 100
-            move(target);
-        } else {
-            return;
-        }
-    }, [results]);
-
-    const trustScore = results?.result ?? 0; //this is a mix of optional chaininh and the nullish coalescing operator
-    const biasScore = results?.bias?.[0]?.[0]?.score ?? 0;
-    const sentimentScore = results?.["Sentiment"]?.[0]?.score ?? 0;
-    const aiScore = results?.["AI or Human"]?.[0]?.score ?? 0;
-    const pulkScore = results?.["True or False"]?.[0]?.score ?? 0
 
     return(
         <div>
@@ -173,20 +123,6 @@ function Submission(){
                         <Models onSelectionChange={setSelectedModels}/>
                     </div>
                 </div>
-
-                {results && (
-                <>
-                    <div id="progressBar">
-                        <div id ="resultsBar">{(trustScore * 100).toFixed(2)}%</div>
-                    </div>
-                    <div>
-                        <CircularProgress value={biasScore * 100} />
-                        <CircularProgress value={sentimentScore * 100} />
-                        <CircularProgress value={aiScore * 100} />
-                        <CircularProgress value={pulkScore * 100} />
-                    </div>
-                </>
-                )}
             </div>
         </div>
     );

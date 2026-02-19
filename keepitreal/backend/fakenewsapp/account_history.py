@@ -27,6 +27,7 @@ def account_history(request):
                 "bias": detection.bias,
                 "gpt": detection.gpt,
                 "created_at": detection.created_at,
+                "title": detection.title,
             }
         })
 

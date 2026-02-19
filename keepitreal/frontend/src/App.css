@@ -44,34 +44,34 @@
 }
 
 #progressBar {
-  width: 100%;
+  width: 50%;
   background-color: #ddd;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 #resultsBar {
   width: 100%;
-  height: 30px;
+  height: 60px;
   background-image: linear-gradient(to right, red, yellow, green);
   background-attachment: fixed;
-}
-
-.progress {
-  fill: none;
-  stroke: aqua;
-  stroke-width: 10;
-  stroke-linecap: round;
-  transition: stroke-dashoffset 3s ease;
 }
 
 .circularWrapper {
   position: relative;
   width: 120px;
-  height: 120px;
+  height: 60px;
   display: inline-block;
 }
 
-
 svg {
+  width: 200px;
+  height: 200px;
+  transform: translateX(100%) translateY(-17%);
+}
+
+.bg,
+.progress {
   transform: rotate(-90deg);
   transform-origin: 50% 50%;
 }
@@ -79,7 +79,15 @@ svg {
 .bg {
   fill: none;
   stroke: #eee;
-  stroke-width: 10;
+  stroke-width: 14;
+}
+
+.progress {
+  fill: none;
+  stroke: aqua;
+  stroke-width: 14;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 3s ease;
 }
 
 .value {

@@ -64,14 +64,14 @@ def analyse(request):
     return final_results
 
 
-@api_view(['GET'])
-def get_analysis(request, id):
-    analysis_result = DetectionResults.objects.get(id=id)
+# @api_view(['GET'])
+# def get_analysis(request, id):
+#     analysis_result = DetectionResults.objects.get(id=id)
 
-    if analysis_result is None:
-        return JsonResponse({"error": "No analysis results found yet."}, status=401)
+#     if analysis_result is None:
+#         return JsonResponse({"error": "No analysis results found yet."}, status=401)
 
-    return JsonResponse({"id": analysis_result.id, "result": analysis_result.result, "True or False": analysis_result.pulk, "bias": analysis_result.bias, "AI or Human": analysis_result.gpt, "Sentiment":analysis_result.sentiment})
+#     return JsonResponse({"id": analysis_result.id, "text": analysis_result.text, "result": analysis_result.result, "True or False": analysis_result.pulk, "bias": analysis_result.bias, "AI or Human": analysis_result.gpt, "Sentiment":analysis_result.sentiment})
 
 
 
