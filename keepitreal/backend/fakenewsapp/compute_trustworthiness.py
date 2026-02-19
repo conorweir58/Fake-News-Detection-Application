@@ -86,8 +86,10 @@ def sentiment_score(sentiment_result):
     if not score:
         return None
 
-
-    sentiment_num = 1 - score
+    if sentiment_result[0]['label'] == "positive":
+        sentiment_num = score
+    else:
+        sentiment_num = 1 - score
 
     return max(0.15, sentiment_num)
 
