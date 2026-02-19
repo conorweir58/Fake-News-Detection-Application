@@ -14,7 +14,7 @@ function Submission(){
     const [file, setFile] = useState(null);
 
     const [submissionType, setSubmissionType] = useState("url"); // default submission type to url
-    const [selectedModels, setSelectedModels] = useState(["pulk", "sentiment", "bias", "gpt"]);
+    const [selectedModels, setSelectedModels] = useState(["pulk", "sentiment", "bias", "gpt"]); // set all to selected as default
 
     let [error, setError] = useState(null);
     let [results, setResults] = useState(null);
@@ -178,6 +178,12 @@ function Submission(){
                             </div>
 
                         </form>
+
+                        {submitStatus === 'error' && (
+                            <div className="text-red-500 font-bold">
+                                <p>{error}</p>
+                            </div>
+                        )}
                     </div>
                 )}
 

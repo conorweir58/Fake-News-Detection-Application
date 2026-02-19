@@ -11,7 +11,7 @@ function ResultsDisplay() {
     const directResults = location.state?.results || null;
 
     const [results, setResults] = useState(directResults);
-    const [error, setError] = useState(null);
+    // const [error, setError] = useState(null);
 
     function move(target) {
         const elem = document.getElementById("resultsBar");
@@ -36,9 +36,15 @@ function ResultsDisplay() {
         }
     }, [results]);
 
-    if (error) {
-        return <p className="text-red-500">{error}</p>;
-    }
+    // if (error) {
+    //     return (
+    //         <div className="p-4">
+    //             <div className={`${cardClasses}`}>
+    //                 <p className="text-red-500">{error}</p>
+    //             </div>
+    //         </div>
+    //     )
+    // }
 
     if (!results) {
         return <p>Loading results…</p>;
