@@ -5,16 +5,23 @@ function UserHistory(){
 
     const [history, setHistory] = useState(null)
 
-     useEffect(() => {
-        fetch(`http://127.0.0.1:8000/api/history/`, {
-            credentials: "include"
-        })
-        .then(response => response.json())
-        .then(data => {
-                console.log("API Response:", data);
+    useEffect(() => {
+        const fetchHistory = async() => {
+            try{
+                const response = await fetch(`http://127.0.0.1:8000/api/history/`, {
+                    credentials: "include"
+                });
+
+                if (!response.ok){
+                    throw new Error(`API Error: ${response.status} ${response.statusText}`);
+                }
+                const data = await response.json()
                 setHistory(data);
-            })
-            .catch(error => console.error("API Error fetching history:", error))
+            } catch (error) {
+                throw new error (`API Error fetching history: ${error.message}`);
+            }
+        }
+        fetchHistory()
     }, []);
 
     return(

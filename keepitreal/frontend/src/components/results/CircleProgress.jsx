@@ -9,6 +9,8 @@ function CircularProgress({value}) {
     if (!circle) return;
 
     const radius = circle.r.baseVal.value;
+    if (!radius) return;
+
     const circumference = radius * Math.PI * 2;
 
     circle.style.strokeDasharray = circumference;
@@ -18,7 +20,11 @@ function CircularProgress({value}) {
 
     useEffect(() => {
         const circle = circleRef.current;
+        if (!circle) return;
+
         const radius = circle.r.baseVal.value;
+        if (!radius) return;
+
         const circumference = radius * Math.PI * 2;
 
         const offset = circumference - (value/100) * circumference;
