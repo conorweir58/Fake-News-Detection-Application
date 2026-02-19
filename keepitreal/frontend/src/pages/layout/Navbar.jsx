@@ -1,11 +1,17 @@
 import { Link } from 'react-router-dom';
-import useAuth from '../../hooks/useAuth';
 import logo from '../../assets/KeepItREAL_Icon.png';
 import { linkClasses } from '../../styles/tailwindConstants';
+import Logout from '../../components/account_managment/Logout';
+import { useAuth } from '../../contexts/AuthContext';
 
 function Navbar()  {
 
-  const { isAuth } = useAuth(); // Custom hook checks if a user is authenticated in backend and returns auth status
+  const { isAuth, loading } = useAuth(); // Get global auth status (and loading status to prevent loading false navbar)
+
+  // update this with loading spinner or other
+  if (loading) {
+    return null;
+  }
 
   return (
     <nav className="bg-neutral-100 dark:bg-slate-900 fixed w-full z-50 top-0 start-0 border-b border-default dark:border-b-slate-800 shadow-lg">
@@ -34,7 +40,7 @@ function Navbar()  {
           <div className="justify-self-end items-center flex md:order-2 space-x-3 md:space-x-0">
             {isAuth ? (
               <div className="font-semibold">
-                <Link to="/logout" className={linkClasses}>Logout</Link>
+                <Logout/>
               </div>
             ) : (
               <div className="font-semibold">
