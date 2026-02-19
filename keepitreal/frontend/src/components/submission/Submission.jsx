@@ -139,8 +139,10 @@ function Submission(){
     }, [results]);
 
     if(isLoading){
-        return <LoadingSpinner />;
-    }
+        return (
+            <LoadingSpinner message="Analysing..." />
+        );
+    };
 
     return(
         <div>
