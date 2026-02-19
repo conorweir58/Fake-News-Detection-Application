@@ -170,9 +170,9 @@ def login_to_account(request):
 
         if user:
             login(request, user)
-            return JsonResponse({"message": "Login Successful"})
+            return JsonResponse({"message": "Login Successful", "authenticated": "true"})
         
-        return JsonResponse({"message":"Invalid creditionals"})
+        return JsonResponse({"message":"Invalid creditionals", "authenticated": "false"})
     
     return JsonResponse({"error":"POST required"})
 
