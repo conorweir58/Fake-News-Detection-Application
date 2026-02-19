@@ -27,7 +27,7 @@ function Register () {
             method: "POST",
             credentials: "include",
             headers: {"Content-type":"application/json", "X-CSRFToken": csrftoken},
-            body: JSON.stringify({email, password, username, confirm_password})
+            body: JSON.stringify({email, password, username, confirmPassword})
         })
         .then(res => res.json())
         .then(data => {
@@ -50,7 +50,7 @@ function Register () {
 
                             <div className="pt-4 mr-4">
                                 <h3 className="font-bold">An Account Is Required To:</h3>
-                                <ul className="mt-2 list-disc list-inside text-body text-gray-600">
+                                <ul className="mt-2 list-disc list-inside text-body text-gray-600 dark:text-gray-400">
                                     <li>Store A History of Previous Submissions</li>
                                     <li>Manage and Access Your Submission History</li>
                                 </ul>

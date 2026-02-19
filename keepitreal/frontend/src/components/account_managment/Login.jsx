@@ -3,8 +3,10 @@ import Cookies from 'js-cookie'
 import { Link } from 'react-router-dom';
 import { cardClasses, formLabel, formButton, formInput } from '../../styles/tailwindConstants';
 import logo from '../../assets/KeepItREAL_Icon.png';
+import { useAuth } from '../../contexts/AuthContext';
 
 function Login () {
+    const { login } = useAuth(); // get login using useAuth function from AuthContext - lets us use login to update global isAuth
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -29,6 +31,9 @@ function Login () {
         })
         .then(res => res.json())
         .then(data => {
+            if(data.authenticated === "true") {
+                login(data.username); // update gloabal isAuth and auth username
+            }
             setMessage(data.message);
         })
     }
@@ -48,7 +53,7 @@ function Login () {
 
                             <div className="pt-4 mr-4">
                                 <h3 className="font-bold">An Account Is Required To:</h3>
-                                <ul className="mt-2 list-disc list-inside text-body text-gray-600">
+                                <ul className="mt-2 list-disc list-inside text-body text-gray-600 dark:text-gray-400">
                                     <li>Store A History of Previous Submissions</li>
                                     <li>Manage and Access Your Submission History</li>
                                 </ul>

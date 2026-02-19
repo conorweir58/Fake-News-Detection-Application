@@ -1,8 +1,10 @@
 import { useEffect } from 'react'
 import Cookies from 'js-cookie'
 import { linkClasses } from '../../styles/tailwindConstants';
+import { useAuth } from '../../contexts/AuthContext';
 
 function Logout () {
+    const { logout } = useAuth();
 
     useEffect(() => {
         fetch("http://127.0.0.1:8000/api/csrf/", {
@@ -22,11 +24,11 @@ function Logout () {
         })
         .then(res => res.json())
         .then(data => {
-            setMessage("Logged Out", data);
+            logout(); // wipe global auth info
         })
     }
     return (
-        <button onClick={LoggingOut} type="submit" className={linkClasses}>Logout</button>
+        <button onClick={LoggingOut} type="submit" className={`${linkClasses} cursor-pointer`}>Logout</button>
     );
 
 }
