@@ -8,11 +8,8 @@ import Register from "./components/account_managment/Register";
 import Login from "./components/account_managment/Login";
 import Logout from './components/account_managment/Logout';
 import UserHistory from "./components/history/UserHistory";
-<<<<<<< HEAD
 import ContactUs from "./components/contact/ContactUs";
-=======
 import ResultsDisplay from './components/results/Results';
->>>>>>> backend
 import FourOhFour from './pages/error/fourohfour';
 
 function App() {
