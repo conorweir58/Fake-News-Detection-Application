@@ -41,7 +41,7 @@ function Login () {
             const data = await response.json()
 
             if (!response.ok){
-                setError(data?.message || `API Error logging in to account: ${response.status}`);
+                setMessage(data?.message || `API Error logging in to account: ${response.status}`);
                 return;
             }
 
@@ -49,6 +49,7 @@ function Login () {
                 login(data.username); // update global isAuth and auth username
             }
             setMessage(data.message);
+            console.log(message);
         } catch (error){
             setError(`Failed to fetch login endpoint data: ${error.message}`);
         } finally {

@@ -11,6 +11,7 @@ import UserHistory from "./components/history/UserHistory";
 import ContactUs from "./components/contact/ContactUs";
 import ResultsDisplay from './components/results/Results';
 import FourOhFour from './pages/error/fourohfour';
+import Help from './pages/help/Help';
 
 function App() {
   return (
@@ -25,7 +26,9 @@ function App() {
           <Route path="contact" element={<ContactUs />} />
           <Route path="/history" element={<UserHistory />} />
           <Route path="/results/direct" element={<ResultsDisplay />} />
+          <Route path="/results/:id" element={<ResultsDisplay />} />
           <Route path="*" element={<FourOhFour />} />
+          <Route path="/help" element={<Help />}/>
         </Route>
       </Routes>
     </BrowserRouter>

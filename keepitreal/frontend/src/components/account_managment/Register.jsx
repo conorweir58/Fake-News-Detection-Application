@@ -52,7 +52,7 @@ function Register () {
             const data = await response.json()
             
             if (!response.ok){
-                setError(data?.message || `API Error registering account: ${response.status}`);
+                setMessage(data?.message || `API Error registering account: ${response.status}`);
                 return;
             }
 

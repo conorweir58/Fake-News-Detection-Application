@@ -70,8 +70,7 @@
   transform: translateX(100%) translateY(-17%);
 }
 
-.bg,
-.progress {
+.bg, .progress {
   transform: rotate(-90deg);
   transform-origin: 50% 50%;
 }

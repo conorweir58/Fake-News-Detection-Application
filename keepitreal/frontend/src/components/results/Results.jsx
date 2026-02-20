@@ -2,10 +2,13 @@ import { useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import { cardClasses } from "../../styles/tailwindConstants";
 import ResultProgress from "./ResultProgress";
+import Cookies from 'js-cookie';
 
 function ResultsDisplay() {
     const { id } = useParams();
     const location = useLocation();
+
+    const csrftoken = Cookies.get("csrftoken");
 
     // If results were passed directly (no ID)
     const directResults = location.state?.results || null;
@@ -28,6 +31,38 @@ function ResultsDisplay() {
         }
     }
 
+    useEffect(() => {
+        if (!results && id) {
+            const fetchResults = async () => {
+                try {
+                    const res = await fetch(`http://127.0.0.1:8000/api/history/${id}/`, {
+                        method: "GET",
+                        credentials: "include",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-CSRFToken": csrftoken,
+                        }
+                    });
+
+                    if (res.status === 401) {
+                        console.error("Unauthorized - not logged in");
+                        return;
+                    }
+
+                    if (!res.ok) {
+                        throw new Error(`HTTP error! status: ${res.status}`);
+                    }
+
+                    const data = await res.json();
+                    setResults(data);
+                } catch (err) {
+                    console.error("Error fetching results:", err);
+                }
+            };
+
+            fetchResults();
+        }
+    }, [id, results, csrftoken]);
     // Animate trust bar
     useEffect(() => {
         if (results) {
