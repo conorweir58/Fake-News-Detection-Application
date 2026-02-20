@@ -10,7 +10,6 @@ from django.http import JsonResponse
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import ContactForm
 from .serializers import ContactFormSerializer
 
 # EXTRACTION VIEWS - havent added text yet bc no real reason to test it bc its just setting text
@@ -49,7 +48,7 @@ def extract_file(request):
     if not file:
         return JsonResponse({"error": "No file uploaded."}, status=400)
     
-    article = extract_from_text(file)
+    article = extract_from_file(file)
 
     if article == None:
         return JsonResponse({"error": "Failed to extract data from file"}, status=500)
