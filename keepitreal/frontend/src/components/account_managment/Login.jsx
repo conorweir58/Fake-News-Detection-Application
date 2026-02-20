@@ -49,7 +49,6 @@ function Login () {
                 login(data.username); // update global isAuth and auth username
             }
             setMessage(data.message);
-            console.log(message);
         } catch (error){
             setError(`Failed to fetch login endpoint data: ${error.message}`);
         } finally {
