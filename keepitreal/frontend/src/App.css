@@ -1,0 +1,100 @@
+@import "tailwindcss";
+
+#root {
+  /* max-width: 1280px; */
+  margin: 0 auto;
+  /* padding: 2rem; */
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+#progressBar {
+  width: 50%;
+  background-color: #ddd;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#resultsBar {
+  width: 100%;
+  height: 60px;
+  background-image: linear-gradient(to right, red, yellow, green);
+  background-attachment: fixed;
+}
+
+.circularWrapper {
+  position: relative;
+  width: 120px;
+  height: 60px;
+  display: inline-block;
+}
+
+.result-svg {
+  width: 200px;
+  height: 200px;
+  transform: translateX(100%) translateY(-17%);
+}
+
+.bg,
+.progress {
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+}
+
+.bg {
+  fill: none;
+  stroke: #eee;
+  stroke-width: 14;
+}
+
+.progress {
+  fill: none;
+  stroke: aqua;
+  stroke-width: 14;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 3s ease;
+}
+
+.value {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 20px;
+  font-weight: bold;
+}

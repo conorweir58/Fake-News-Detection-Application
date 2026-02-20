@@ -1,0 +1,16 @@
+requests
+python-decouple #for protecting keys
+transformers #for pulk model
+torch --index-url https://download.pytorch.org/whl/cpu # got this from pytorch get started locally page using linux as os pip as package and compute platform being CPU
+newspaper4k
+huggingface_hub[hf_xet]
+tokenizers
+django
+pypdf
+lxml[html_clean]
+django-cors-headers
+djangorestframework
+markdown
+beautifulsoup4
+python-docx
+python-pptx
