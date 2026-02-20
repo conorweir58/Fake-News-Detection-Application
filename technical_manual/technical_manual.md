@@ -59,9 +59,17 @@ For the remainder of the document, the KeepItREAL web application will simply be
 
 - **Vite:** A build tool for React that aims to provide a faster and leaner development experience for modern web projects.
 
+- **HMR - Hot Module Replacement:** A technique for updating modules in your app without needing to reload the page.
+
 ## 1.4 References
 
 - [Django-React Software Architecture - Mahdia Aliyya (Medium)](https://mahdiaaliyya.medium.com/software-architecture-bb44325bf0cf)
+
+- https://www.geeksforgeeks.org/blogs/why-choose-react-for-web-development/ 
+
+- https://vite.dev/guide/
+
+- https://reactrouter.com/explanation/hot-module-replacement
 
 ## 1.5 Overview
 
@@ -118,8 +126,71 @@ The services which make up the frontend and backend in the diagram are not the e
 
 ### 2.2.2 The Frontend (VITE REACT (JS)) Architecture
 
-The presentation layer of the web application were implemented using ReactJS for creating a dynamic and fast-to-build capabilities due to it's component-based approach and virtual DOM. Reacts component-based approach also allowed us to follow the SPA (Single-page application) approach, allowing us to curate a modular codebase with an easy-to-scale final application.
+The frontend layer of the web application was implemented using ReactJS for creating a dynamic and fast-to-build capabilities due to its component-based approach and virtual DOM. React's component-based approach also allowed us to follow the SPA (Single-page application) approach, allowing us to organise a modular and maintainable codebase with an easy-to-scale final application.
 
-This was all imporoved by the use of Vite, allowing for fast HMR (Hot Module Replacement)
+This was all improved by the use of Vite, allowing for fast HMR (Hot Module Replacement) and using Vite's build command that bundles code with Rollup to speed up development.
+
+The UI elements of the frontend were designed largely using TailwindCSS, allowing for complete freedom of design with our UI while simplifying the CSS styling process. Tailwind also allowed us to create a responsive application by creating UI alterations based on screen size and differences in light/dark mode, creating an accessable web application with differences in users.
+
+The structure of our frontend codebase (where the frontend system services seen in figure 2.2.1.1 are located) is as follows:
+
+- assets
+- components
+  - account_managemnt
+  - contact
+  - history
+  - results
+  - submission
+- contexts
+- pages
+  - error
+  - layout
+  - loading
+- styling
+
+Users communicate with the frontend application through HTTP requests (with future plans of converting to HTTPS with deployment), which are validated.
+
+The frontend communicates with the backend application using REST Api Calls to Get, Post, Put or Delete Data.
 
 ### 2.2.3 The Backend (DJANGO + REST) Architecture
+
+The backend layer of the web application was built using Django and the Django REST Framework.
+
+### 2.2.4 PostgreSQL Database
+
+A PostgreSQL Database was used for our data storage. It provides strict data integrity and
+was chosen with scalability and extensability in mind. With the flexibility it brings, it reduces long-term risk for the maintainability and extension of the web application in the future, allowing for added capabilities without switching platforms.
+
+### 2.2.5 External Tools
+
+With the time constraints of the delivery of this project, we used existing pre-trained models to conduct our analysis methods.
+
+#### 2.2.5.1 Pulk-17 Fake News Model
+
+The model can be found here: [Pulk-17 Fake News Model](https://huggingface.co/Pulk17/Fake-News-Detection).
+
+Returns a label for "REAL" or "FAKE" and a confidence score in this label.
+
+#### 2.2.5.2 Hello SimpleAI ChatGPT Model
+
+The model can be found here: [Hello SimpleAI ChatGPT Model](https://huggingface.co/spaces/Hello-SimpleAI/chatgpt-detector-qa).
+
+Returns a label for "HUMAN" or "AI" and a confidence score in this label.
+
+#### 2.2.5.3 Mervp Sentiment Model
+
+The model can be found here: [Mervp Sentiment Model](https://huggingface.co/mervp/SentimentBERT).
+
+Returns a label for "Positive" or "Negative" or "Neutral" and a confidence score in this label.
+
+#### 2.2.5.4 Cirimus Bias Model
+
+The model can be found here: [Cirimus Bias Model](https://huggingface.co/cirimus/modernbert-large-bias-type-classifier).
+
+Returns a list of labels containing many different bias types and a confidence score related to each label.
+
+### 3\. High-Level Design
+
+### 4\. Problems and Resolution
+
+### 5\. Installation Guide
