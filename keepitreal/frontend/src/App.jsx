@@ -27,8 +27,8 @@ function App() {
           <Route path="/history" element={<UserHistory />} />
           <Route path="/results/direct" element={<ResultsDisplay />} />
           <Route path="/results/:id" element={<ResultsDisplay />} />
-          <Route path="*" element={<FourOhFour />} />
           <Route path="/help" element={<Help />}/>
+          <Route path="*" element={<FourOhFour />} />
         </Route>
       </Routes>
     </BrowserRouter>
