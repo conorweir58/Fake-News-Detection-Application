@@ -104,7 +104,8 @@ function Login () {
 
                             {error &&
                                 <div className="text-red-500">
-                                    <p>{error}</p>
+                                    <p>Error Logging In. Please Try Again</p>
+                                    <p>Error Message: {error}</p>
                                 </div>
                             }
                         </form>

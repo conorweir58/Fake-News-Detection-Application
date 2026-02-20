@@ -3,6 +3,7 @@ import Cookies from 'js-cookie'
 import { Link } from 'react-router-dom';
 import { formButton, formInput, formLabel, cardClasses } from '../../styles/tailwindConstants';
 import logo from '../../assets/KeepItREAL_Icon.png';
+import LoadingSpinner from '../../pages/loading/LoadingSpinner';
 
 function Register () {
 
@@ -48,11 +49,12 @@ function Register () {
                 headers: {"Content-type":"application/json", "X-CSRFToken": csrftoken},
                 body: JSON.stringify({email, password, username, confirmPassword})
             })
+            const data = await response.json()
+            
             if (!response.ok){
                 setError(data?.message || `API Error registering account: ${response.status}`);
                 return;
             }
-            const data = await response.json()
 
             setMessage(data.message);
         } catch (error){
@@ -121,7 +123,8 @@ function Register () {
 
                             {error &&
                                 <div className="text-red-500">
-                                    <p>{error}</p>
+                                    <p>Registration Failed!</p>
+                                    <p>Error Message: {error}</p>
                                 </div>
                             }
                         </form>
