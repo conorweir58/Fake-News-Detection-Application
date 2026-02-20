@@ -1,6 +1,6 @@
 // CARDS
 
-export const cardClasses = "w-full bg-neutral-100 dark:bg-slate-900 border border-default dark:border-slate-800 rounded-base shadow-md p-4 sm:p-6 mb-4";  
+export const cardClasses = "bg-neutral-100 dark:bg-slate-800 border border-default dark:border-slate-600 rounded-base shadow-md p-4 sm:p-6 mb-4";  
 
 // BUTTONS
 

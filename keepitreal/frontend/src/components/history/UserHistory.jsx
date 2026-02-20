@@ -2,8 +2,15 @@ import { useEffect, useState } from "react";
 import LoadingSpinner from "../../pages/loading/LoadingSpinner";
 import { cardClasses, formButton } from "../../styles/tailwindConstants";
 import Cookies from 'js-cookie';
+import { useAuth } from '../../contexts/AuthContext';
+import { Link } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 function UserHistory(){
+
+    const navigate = useNavigate();
+
+    const { isAuth } = useAuth(); // Get global auth status
 
     const [history, setHistory] = useState(null)
 
@@ -55,21 +62,29 @@ function UserHistory(){
 
     if(isLoading){
         return <LoadingSpinner />;
-    }
+    };
+
+    if(!isAuth) {
+        return (
+            <div className="p-8 md:p-20">
+                <div className={`${cardClasses}`}>
+                    <h2 className="font-bold text-3xl pb-4 text-red-600">Sorry :(</h2>
+                    <h3 className="font-bold text-xl pb-2">History is only accessible with a KeepItREAL account.</h3>
+                    <Link to="/register" className="text-blue-500 p-2">Click Here to Register!</Link>
+                    <Link to="/login" className="text-blue-500 p-2">Click Here to Log In!</Link>
+                </div>
+            </div>
+        );
+    };
 
     return(
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 p-10">
+        <div className="flex flex-col items-center gap-6 p-10">
             {history && history.map(prev_sub => (
-                <div className={`${cardClasses}`} key={prev_sub.response.id}>
+                <div className={`${cardClasses}  w-full max-w-md text-left`} key={prev_sub.response.id}>
 
                     <h1 className="text-2xl font-bold">{prev_sub.response?.title ?? "No heading Provided"}</h1><br></br>
-                    <p>Result: {(prev_sub.response.result * 100).toFixed(2)}</p><br></br>
-                    <p>Bias: {prev_sub.response?.bias?.[0]?.[0]?.label ?? "Model was not used for this submission"} {(prev_sub.response?.bias?.[0]?.[0]?.score * 100) ?? 0}</p><br></br>
-                    <p>Sentiment: {prev_sub.response?.sentiment?.[0]?.label ?? "Model was not used for this submission"} {(prev_sub.response?.sentiment?.[0]?.score * 100) ?? 0}</p><br></br>
-                    <p>AI or Human: {prev_sub.response?.gpt?.[0]?.label ?? "Model was not used for this submission"} {(prev_sub.response?.gpt?.[0]?.score * 100) ?? 0}</p><br></br>
-                    <p>Pulk Model: {prev_sub.response?.pulk?.[0]?.label ?? "Model was not used for this submission"} {(prev_sub.response?.pulk?.[0]?.score * 100) ?? 0}</p><br></br>
-                    <p>Submitted on: {prev_sub.response.created_at}</p><br></br>
-                    <p>Story snippet: {prev_sub.response?.text?.split(" ").slice(0, 200).join(" ") ?? "There was no text saved for this submission"}</p><br></br>
+                    <div className="text-l">ID: {prev_sub.response.id}</div><br></br>
+                    <button className="px-3 py-1 rounded-2xl cursor-pointer text-white font-bold bg-blue-700 outline-none ring-1 ring-blue-500 ring-opacity-400 hover:bg-blue-600 transition duration-150 ease-in-out" onClick={() => navigate(`/results/${prev_sub.response.id}`)}>See Results</button>
                     <button className="px-3 py-1 rounded-2xl cursor-pointer text-white font-bold bg-red-700 outline-none ring-1 ring-red-500 ring-opacity-400 hover:bg-red-600 transition duration-150 ease-in-out" onClick={() => deleteHistory(prev_sub.response.id)}>Delete</button>
                 </div>
             ))}

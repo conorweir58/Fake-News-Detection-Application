@@ -38,7 +38,6 @@ function Login () {
                 headers: {"Content-type":"application/json", "X-CSRFToken": csrftoken},
                 body: JSON.stringify({email, password})
             })
-
             const data = await response.json()
 
             if (!response.ok){
@@ -95,13 +94,20 @@ function Login () {
                                 <label className={formLabel}>Your Password</label>
                                 <input type="password" id="password" required placeholder="Enter your password" value={password} onChange = {(e) => setPassword(e.target.value)} className={formInput}></input>
                             </div>
-                            <div className="w-full">
-                                {message &&
-                                    <p className="text-xl font-bold text-red-500">{message}</p>
-                                }
-                                <button type="submit" className={`${formButton} w-1/5 mt-4`}>Log In</button>
-                            </div>
-                            
+
+                            <button type="submit" className={`${formButton} w-1/5 mt-4`}>Log In</button>
+
+                            {message &&
+                                <div>
+                                    <p>{message}</p>
+                                </div>
+                            }
+
+                            {error &&
+                                <div className="text-red-500">
+                                    <p>{error}</p>
+                                </div>
+                            }
                         </form>
                     </div>
                 </div>

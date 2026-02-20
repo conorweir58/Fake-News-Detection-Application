@@ -7,6 +7,11 @@ from .account_history import account_history, delete_history
 from .extraction.extraction_tool import (extract_from_file, extract_from_url, extract_from_text)
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.http import JsonResponse
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from .models import ContactForm, User_History
+from .serializers import ContactFormSerializer
 
 # EXTRACTION VIEWS - havent added text yet bc no real reason to test it bc its just setting text
 
@@ -44,7 +49,7 @@ def extract_file(request):
     if not file:
         return JsonResponse({"error": "No file uploaded."}, status=400)
     
-    article = extract_from_text(file)
+    article = extract_from_file(file)
 
     if article == None:
         return JsonResponse({"error": "Failed to extract data from file"}, status=500)
@@ -111,3 +116,41 @@ def history(request):
 def delete_his(request, id):
     data = delete_history(request, id)
     return data
+
+def history_item(request, id):
+
+    if request.method != "GET":
+        return JsonResponse({"error": "GET request required"}, status=400)
+
+    try:
+        entry = User_History.objects.get(id=id, user=request.user)
+    except User_History.DoesNotExist:
+        return JsonResponse({"error": "Item not found in history"}, status=404)
+
+
+
+    
+    data = {
+        "id": entry.response.id,
+        "title": entry.response.title,
+        "text": entry.response.text,
+        "result": entry.response.result,
+        "bias": entry.response.bias,
+        "sentiment": entry.response.sentiment,
+        "gpt": entry.response.gpt,
+        "pulk": entry.response.pulk,
+        "created_at": entry.response.created_at,
+    }
+
+    return JsonResponse(data, safe=False)
+
+# from https://www.geeksforgeeks.org/python/build-a-contact-form-using-django-react-and-tailwind/
+class SubmitContactFormView(APIView):
+    def post(self, request, format=None):
+        serializer = ContactFormSerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'message': 'Form submitted successfully!'}, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

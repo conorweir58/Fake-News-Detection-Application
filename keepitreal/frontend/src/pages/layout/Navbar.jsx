@@ -14,7 +14,7 @@ function Navbar()  {
   }
 
   return (
-    <nav className="bg-neutral-100 dark:bg-slate-900 fixed w-full z-50 top-0 start-0 border-b border-default dark:border-b-slate-800 shadow-lg">
+    <nav className="bg-neutral-100 dark:bg-slate-800 fixed w-full z-50 top-0 start-0 border-b border-default dark:border-b-slate-800 shadow-lg">
         <div className="grid grid-cols-3 items-center mx-auto p-4">
 
           {/* Link acts as KeepItREAL title which routes to home page */}

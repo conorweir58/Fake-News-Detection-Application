@@ -81,6 +81,7 @@ def complete_analysis(request):
     final_results["result"] = result
     article_text=article.text.split(" ")
     final_results["text"] = " ".join(article_text[:300])
+    final_results["title"] = article.title
 
     if request.user.is_authenticated:
         try:
