@@ -14,3 +14,4 @@ markdown
 beautifulsoup4
 python-docx
 python-pptx
+psycopg
