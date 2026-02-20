@@ -29,9 +29,8 @@ function Navbar()  {
           <div className="justify-self-center items-center justify-between hidden md:flex md:order-1">
             <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-default rounded-base md:space-x-8 md:flex-row md:mt-0 md:border-0 md:bg-neutral-primary">
               <li className="font-semibold"><Link to="/" className={linkClasses}>Submission</Link></li>
-              <li className="font-semibold"><Link to="/about" className={linkClasses}>About</Link></li>
               <li className="font-semibold" ><Link to="/help" className={linkClasses}>Help</Link></li>
-              <li className="font-semibold"><Link to="/contact" className={linkClasses}>Contact Us</Link></li>
+              <li className="font-semibold"><Link to="/contact" className={linkClasses}>Contact</Link></li>
               <li className="font-semibold"><Link to="/history" className={linkClasses}>History</Link></li>
             </ul>
           </div>

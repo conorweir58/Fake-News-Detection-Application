@@ -74,6 +74,12 @@
 
 ### 7\. User History
 
+7.1 [Accessing History](#71-access-history)
+
+7.2 [Deleting History](#72-deleting-history)
+
+7.3 [See Previous Result](#73-access-previous-results)
+
 ### 8\. Contact Us
 
 8.1 [Submitting a Message](#81-submitting-a-message)
@@ -310,7 +316,21 @@ The steps to take when logging out of your account include:
 3. The top right hand corner will change back to "Register | Login"
 
 ## 7 User History
+### 7.1 Access History
+- To access your history simply locate the history option on the navbar at the top of the screen
+- If you have not logged in you will be displayed an error page
+- If you have logged in you will see all your previous submissions
 
+### 7.2 Deleting history
+- Once in the history page and logged in you will have access to your previous submissions
+- Each submission will have a heading, an id, and two buttons
+- The red button is the delete button and is labelled accordingly
+- Click the red button to delete that submission and it will not be stored in the database any longer.
+
+### 7.3 Access Previous results
+- To access previous results for each submission make sure you are on the history page and logged in
+- Click on the blue button labelled See Results
+- Once clicked you will be redirected to the results page and will see all your previous scores and text for that submission
 
 ## 8 Contact us
 ![Figure 8.0 - Contact Us Page](screenshots/Contact_us.png)
