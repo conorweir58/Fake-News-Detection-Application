@@ -1,5 +1,6 @@
 from django.http import JsonResponse
 from .models import User_History
+from django.contrib.auth.decorators import login_required
 
 
 def account_history(request):
@@ -35,3 +36,12 @@ def account_history(request):
         return JsonResponse({"error": "Failed to add past submission objects"})
 
     return JsonResponse(data, safe=False)
+
+@login_required
+def delete_history(request, id):
+    try:
+        entry = User_History.objects.get(id=id, user=request.user)
+        entry.delete()
+        return JsonResponse({"message": "Item successfully deleted"})
+    except User_History.DoesNotExist:
+        return JsonResponse({"error":" Item not found in history"}, status=404)

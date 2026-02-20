@@ -34,7 +34,7 @@ function CircularProgress({ value }) {
 
     return (
         <div className="circularWrapper">
-            <svg>
+            <svg className="result-svg">
                 <circle className="bg" cx="70" cy="70" r="60" />
                 <circle ref={circleRef} className="progress" cx="70" cy="70" r="60" />
             </svg>

@@ -48,11 +48,13 @@ function Register () {
                 headers: {"Content-type":"application/json", "X-CSRFToken": csrftoken},
                 body: JSON.stringify({email, password, username, confirmPassword})
             })
+
+            const data = await response.json()
+
             if (!response.ok){
-                setError(data?.message || `API Error registering account: ${response.status}`);
+                setMessage(data?.message || `API Error registering account: ${response.status}`);
                 return;
             }
-            const data = await response.json()
 
             setMessage(data.message);
         } catch (error){

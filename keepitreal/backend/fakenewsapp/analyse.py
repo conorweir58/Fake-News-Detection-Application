@@ -1,4 +1,4 @@
-from .detection_models import (pulk_pipe, sentiment_pipe, bias_pipe, gpt_pipe, googFactCheckSearch)
+from .detection_models import (pulk_pipe, sentiment_pipe, bias_pipe, gpt_pipe)
 from django.http import JsonResponse
 from .extraction.extraction_tool import (extract_from_file, extract_from_url, extract_from_text)
 from .compute_trustworthiness import computation
@@ -68,8 +68,9 @@ def complete_analysis(request):
         api_models["gpt"] = gpt_result
         final_results["gpt"] = gpt_result
         print(gpt_result)
-    # #
-    # fact_check_result = googFactCheckSearch(text)
+
+    # fact_check_result = googFactCheckSearch(article.title)
+    # print(fact_check_result)
 
 
     result = computation(api_models)

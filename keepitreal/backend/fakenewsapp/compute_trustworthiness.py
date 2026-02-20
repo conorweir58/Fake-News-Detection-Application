@@ -88,8 +88,10 @@ def sentiment_score(sentiment_result):
 
     if sentiment_result[0]['label'] == "positive":
         sentiment_num = score
-    else:
+    elif sentiment_result[0]['label'] == "negative":
         sentiment_num = 1 - score
+    else:
+        sentiment_num = 0.5 + (score/2) #if it is neutral it is highly trustworthy so we influence it to be worth minimum 0.5 + whatever
 
     return max(0.15, sentiment_num)
 

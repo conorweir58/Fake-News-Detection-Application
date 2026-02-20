@@ -3,7 +3,7 @@ from .analyse import complete_analysis
 from rest_framework.decorators import api_view
 from .models import DetectionResults
 from .account_handler import register_account, account_login
-from .account_history import account_history
+from .account_history import account_history, delete_history
 from .extraction.extraction_tool import (extract_from_file, extract_from_url, extract_from_text)
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.http import JsonResponse
@@ -106,4 +106,8 @@ def history(request):
 
     data = account_history(request)
 
+    return data
+
+def delete_his(request, id):
+    data = delete_history(request, id)
     return data

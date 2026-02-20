@@ -1,6 +1,6 @@
 // CARDS
 
-export const cardClasses = "bg-neutral-100 dark:bg-slate-900 border border-default dark:border-slate-800 rounded-base shadow-md p-4 sm:p-6 mb-4";  
+export const cardClasses = "w-full bg-neutral-100 dark:bg-slate-900 border border-default dark:border-slate-800 rounded-base shadow-md p-4 sm:p-6 mb-4";  
 
 // BUTTONS
 
@@ -18,4 +18,4 @@ export const linkClasses = "transition duration-150 ease-in-out hover:text-red-5
 // FORMS
 
 export const formLabel = "block mb-1 font-bold text-lg"
-export const formInput = "w-3/4 border-2 px-2 py-1 rounded-base rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 placeholder:text-gray-400 bg-white dark:bg-slate-800"
+export const formInput = "w-3/4 border-2 px-2 py-1 rounded-base rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 placeholder:text-gray-400"

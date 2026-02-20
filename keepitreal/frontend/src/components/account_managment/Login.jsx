@@ -38,16 +38,19 @@ function Login () {
                 headers: {"Content-type":"application/json", "X-CSRFToken": csrftoken},
                 body: JSON.stringify({email, password})
             })
+
+            const data = await response.json()
+
             if (!response.ok){
-                setError(data?.message || `API Error logging in to account: ${response.status}`);
+                setMessage(data?.message || `API Error logging in to account: ${response.status}`);
                 return;
             }
-            const data = await response.json()
 
             if(data.authenticated === "true") {
                 login(data.username); // update global isAuth and auth username
             }
             setMessage(data.message);
+            console.log(message);
         } catch (error){
             setError(`Failed to fetch login endpoint data: ${error.message}`);
         } finally {
@@ -92,12 +95,13 @@ function Login () {
                                 <label className={formLabel}>Your Password</label>
                                 <input type="password" id="password" required placeholder="Enter your password" value={password} onChange = {(e) => setPassword(e.target.value)} className={formInput}></input>
                             </div>
-
-                            <button type="submit" className={`${formButton} w-1/5 mt-4`}>Log In</button>
-
-                            {message &&
-                                <p>{message}</p>
-                            }
+                            <div className="w-full">
+                                {message &&
+                                    <p className="text-xl font-bold text-red-500">{message}</p>
+                                }
+                                <button type="submit" className={`${formButton} w-1/5 mt-4`}>Log In</button>
+                            </div>
+                            
                         </form>
                     </div>
                 </div>
