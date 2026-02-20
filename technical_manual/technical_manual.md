@@ -154,7 +154,7 @@ The frontend communicates with the backend application using REST Api Calls to G
 
 ### 2.2.3 The Backend (DJANGO + REST) Architecture
 
-The backend layer of the web application was built using Django and the Django REST Framework.
+The backend layer of the web application was built using Django and the Django REST Framework, using CSRF protection and structured API endpoints for the frontend to communicate with our backend. All backend functionality goes through the endpoint "api" in the frontend. Our models include Detection Results which creates objects of submission, user use our custom user model. The User_History model stores all previous submissions for users to access them.
 
 ### 2.2.4 PostgreSQL Database
 
