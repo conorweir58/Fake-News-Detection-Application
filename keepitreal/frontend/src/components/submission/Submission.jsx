@@ -179,9 +179,10 @@ function Submission(){
 
                         </form>
 
-                        {submitStatus === 'error' && (
-                            <div className="text-red-500 font-bold">
+                        {error && (
+                            <div className="text-red-500">
                                 <p>{error}</p>
+                                <p>Sorry, there was an error sending your message. Please try again.</p>
                             </div>
                         )}
                     </div>
