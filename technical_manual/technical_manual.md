@@ -191,27 +191,105 @@ Returns a list of labels containing many different bias types and a confidence s
 
 ### 3\. High-Level Design
 
-### 3.1 Component and Data Flow Model
-
-The following Component Model below (figure 3.1.1) outlines the system design at a semi heigh-level, including the system components and the relationship between these components and the system enviornment.
-
-This component model also shows the flow of data through the relationships established in the system.
-
-Some components represent multiple areas of code in the system, e.g. Presentation Components represent all UI components a user interacts with.
-
-![Figure 3.1.1 - Component and DFD Model](imgs/component.png)
-**Figure 3.1.1** *Component Model displaying the main components used in the design of the KeepItREAL web application, and how Data Flows through these primary components.*
-
 ### 4\. Problems and Resolution
 
-### 4.1
+### 4.1 Tensor flow: tokens over max limit
 
-### 4.2
+#### Problem
+When calling the external hugging face models they had a different amount of max tokens they could accept. This meant that we would sometimes encounter a tensor flow error stating we had e.g. 3172 tokens and the max limit was 512.
 
-### 4.3
+#### Solution
+We did some research and found that each model has an AutoTokenizer we could call through the transformers and set the max we send to be 512 tokens to stop the error from arising. We set this for three models because that was there max. For the other model the max was 8192 but that would take too long to run but we still gave it 1024 so it had more information to run to get a more accurate result.
 
-### 4.4
+### 4.2 Circular Progress Bar
+#### Problem
+The circular progress bar was an idea to include in the breakdown of results for each model. However we encountered many issues with this due to things such as misalignment caused by the circle having to be flipped so the progress bar started from the top of the circle.
 
-### 4.5
+#### Solution
+We realised that in terms of cohesion with the project it did not really fit and was not very modular so we decided to make them flat progress bars aligning closer with the rest of our results page.
+
+### 4.3 Increasing Progress Bar
+#### Problem
+So one issue that arose was for our main trustworthiness progress bar we had it working except for the fact that when the page loaded it was already at the point at which it stops. It turned out it was never moving in the first place.
+
+#### Solution
+The solution we found was to create a move function that would increase the width of the bar gradually. This created a very smooth bar transition to show it growing.
+
+### 4.4 Newspaper3k 
+#### Problem
+One of our text extraction tools was newspaper3k in the early stages of development. One day it stopped working and we did not know exactly what was causing the issue.
+
+#### Solution
+During the course of our project the newspaper3k library was deprecated and no longer usable because they had updated to newspaper4k. This involved implementing the new library and changing all the functions based off the new documentation
+
+### 4.5 Spire-doc Spire-powerpoint
+#### Problem
+The django file stream that takes in user files is not compatable with the file stream needed for Spire doc.
+
+#### Solution
+We had to find a lower level library and create our own functions to extract the metadata from the supported file types. This ended up leading to a more efficient solution.
 
 ### 5\. Installation Guide
+
+#### 5.1 Prerequisite
+- Software Requirements
+  - Python 3.10 or newer 
+  - git
+  - Node.js
+  - npm
+  - Any form of Modern Browser (tested on Chrome, FireFox)
+
+- Hardware Requirements
+  - Windows 10 or Windows 11 Machine
+  - 5GB of free disk space
+  - Stable Internet Connection
+
+#### Manual Install Instructions
+1. Check all the prerequisite version
+```bash
+- node -v
+- npm -v
+- python -v
+- git -v 
+```
+2. Clone our project repository into a folder
+```bash
+git clone https://gitlab.computing.dcu.ie/andrewb5/2026-csc1049-bandrew-fakenewsdetection.git
+cd 2026-csc1049-bandrew-fakenewsdetection
+```
+3. Install requirements.txt
+```bash
+pip install -r keepitreal\backend\requirements.txt
+```
+4. Install frontend requirements
+```bash
+cd ..\..\keepitreal\frontend\
+npm install
+```
+5. Create an .env file and add these
+```bash
+SECRET_KEY='REMOVED'
+GOOGLE_FACTCHECK_API_KEY='REMOVED'
+PULK17_HF_KEY='REMOVED'
+X_RAPIDAPI_KEY_DOCXTRACT='REMOVED'
+DEBUG=True
+```
+6. Run database migrations
+```bash
+cd ..\..\keepitreal\backend
+python manage.py makemigrations
+python manage.py migrate
+```
+7. Start backend server
+```bash
+python manage.py runserver
+```
+8. Open another termninal to run frontend
+```bash
+cd keepitreal\frontend
+npm run dev
+```
+9. Once frontend server is started copy the link shown beside local: and paste that into your browser
+
+
+
