@@ -114,7 +114,15 @@ function Register () {
                             <button type="submit" className={`${formButton} w-1/5 mt-4`}>Register</button>
 
                             {message &&
-                                <p>{message}</p>
+                                <div>
+                                    <p>{message}</p>
+                                </div>
+                            }
+
+                            {error &&
+                                <div className="text-red-500">
+                                    <p>{error}</p>
+                                </div>
                             }
                         </form>
                     </div>

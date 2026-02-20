@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
 import LoadingSpinner from "../../pages/loading/LoadingSpinner";
 import { cardClasses } from "../../styles/tailwindConstants";
+import { useAuth } from '../../contexts/AuthContext';
+import { Link } from 'react-router-dom';
 
 function UserHistory(){
+
+    const { isAuth } = useAuth(); // Get global auth status
 
     const [history, setHistory] = useState(null)
 
@@ -36,7 +40,20 @@ function UserHistory(){
 
     if(isLoading){
         return <LoadingSpinner />;
-    }
+    };
+
+    if(!isAuth) {
+        return (
+            <div className="p-8 md:p-20">
+                <div className={`${cardClasses}`}>
+                    <h2 className="font-bold text-3xl pb-4 text-red-600">Sorry :(</h2>
+                    <h3 className="font-bold text-xl pb-2">History is only accessible with a KeepItREAL account.</h3>
+                    <Link to="/register" className="text-blue-500 p-2">Click Here to Register!</Link>
+                    <Link to="/login" className="text-blue-500 p-2">Click Here to Log In!</Link>
+                </div>
+            </div>
+        );
+    };
 
     return(
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 p-10">

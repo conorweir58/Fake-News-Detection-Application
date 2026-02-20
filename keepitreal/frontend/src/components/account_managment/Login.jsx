@@ -38,11 +38,12 @@ function Login () {
                 headers: {"Content-type":"application/json", "X-CSRFToken": csrftoken},
                 body: JSON.stringify({email, password})
             })
+            const data = await response.json()
+
             if (!response.ok){
                 setError(data?.message || `API Error logging in to account: ${response.status}`);
                 return;
             }
-            const data = await response.json()
 
             if(data.authenticated === "true") {
                 login(data.username); // update global isAuth and auth username
@@ -96,7 +97,15 @@ function Login () {
                             <button type="submit" className={`${formButton} w-1/5 mt-4`}>Log In</button>
 
                             {message &&
-                                <p>{message}</p>
+                                <div>
+                                    <p>{message}</p>
+                                </div>
+                            }
+
+                            {error &&
+                                <div className="text-red-500">
+                                    <p>{error}</p>
+                                </div>
                             }
                         </form>
                     </div>
