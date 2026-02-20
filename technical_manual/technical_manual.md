@@ -191,6 +191,27 @@ Returns a list of labels containing many different bias types and a confidence s
 
 ### 3\. High-Level Design
 
+### 3.1 Component and Data Flow Model
+
+The following Component Model below (figure 3.1.1) outlines the system design at a semi heigh-level, including the system components and the relationship between these components and the system enviornment.
+
+This component model also shows the flow of data through the relationships established in the system.
+
+Some components represent multiple areas of code in the system, e.g. Presentation Components represent all UI components a user interacts with.
+
+![Figure 3.1.1 - Component and DFD Model](imgs/component.png)
+**Figure 3.1.1** *Component Model displaying the main components used in the design of the KeepItREAL web application, and how Data Flows through these primary components.*
+
 ### 4\. Problems and Resolution
+
+### 4.1
+
+### 4.2
+
+### 4.3
+
+### 4.4
+
+### 4.5
 
 ### 5\. Installation Guide
