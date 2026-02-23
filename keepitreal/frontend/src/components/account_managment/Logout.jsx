@@ -34,7 +34,7 @@ function Logout () {
             });
 
             if (!response.ok) {
-                throw new Error(`Logout failed: ${response.status} ${response.statusText}`);
+                console.log(`Logout failed: ${response.status} ${response.statusText}`);
             }
 
             const data = await response.json();
