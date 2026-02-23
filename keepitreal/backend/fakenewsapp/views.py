@@ -58,7 +58,7 @@ def check_auth(request):
     if request.user.is_authenticated:
         return JsonResponse({"authenticated": True, "email": request.user.email, "username": request.user.username})
     else:
-        return JsonResponse({"authenticated": False}, status=401)
+        return JsonResponse({"authenticated": False})
 
 
 @api_view(['GET'])
