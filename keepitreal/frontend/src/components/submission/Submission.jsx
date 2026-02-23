@@ -47,8 +47,7 @@ function Submission(){
             setError("Please select file, write text or provide URL before submitting!");
             return;
         }
-
-        if (!selectedModels){
+        if (!selectedModels || selectedModels.length === 0){
             setError("Please select at least one model before submitting!");
             return;
         }
@@ -78,15 +77,12 @@ function Submission(){
                 body
             })
 
-            if (!response.ok){
-                setError(`API Error Submitting Data: ${response.status} ${response.statusText}`);
-                return;
-            }
 
             const data = await response.json();
 
-            if (data.error){
-                setError(data.error);
+            if (!response.ok){
+                setError(`${data.error}`);
+                return;
             }
 
             if (data.id != null){
