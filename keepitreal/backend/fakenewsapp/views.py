@@ -4,7 +4,6 @@ from rest_framework.decorators import api_view
 from .models import DetectionResults
 from .account_handler import register_account, account_login
 from .account_history import account_history, delete_history
-from .extraction.extraction_tool import (extract_from_file, extract_from_url, extract_from_text)
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.http import JsonResponse
 from rest_framework import status
@@ -13,53 +12,9 @@ from rest_framework.views import APIView
 from .models import ContactForm, User_History
 from .serializers import ContactFormSerializer
 
-# EXTRACTION VIEWS - havent added text yet bc no real reason to test it bc its just setting text
-
-def extract_url(request):
-
-    url = request.data.get("url")
-
-    if not url:
-        return JsonResponse({"error": "No URL provided."}, status=400)
-
-    article = extract_from_url()
-
-    if article == None:
-        return JsonResponse({"error": "Failed to extract data from URL"}, status=500)
-
-    return JsonResponse({"title": article.title, "authors": article.authors, "publish_date": str(article.publish_date), "text": article.text}) # just return json for testing
-
-def extract_text(request):
-    text = request.data.get("text")
-
-    if not text:
-        return JsonResponse({"error": "No text provided."}, status=400)
-
-    article = extract_from_text(text)
-
-    if article == None:
-        return JsonResponse({"error": "Failed to extract data from given text"}, status=500)
-
-    return JsonResponse({"title": article.title, "authors": article.authors, "publish_date": str(article.publish_date), "text": article.text}) # just return json for testing
-
-def extract_file(request):
-
-    file = request.FILES.get("file")
-
-    if not file:
-        return JsonResponse({"error": "No file uploaded."}, status=400)
-    
-    article = extract_from_file(file)
-
-    if article == None:
-        return JsonResponse({"error": "Failed to extract data from file"}, status=500)
-
-    return JsonResponse({"title": article.title, "authors": article.authors, "publish_date": str(article.publish_date), "text": article.text}) # just return json for testing
-
 # ANALYSIS VIEWS
 
 # The main function for running the detection models
-
 
 @api_view(['POST'])
 def analyse(request):       
