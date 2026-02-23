@@ -28,20 +28,18 @@ def complete_analysis(request):
     if not selected_models:
         return JsonResponse({"error": "No models added to call from selected_models"}, status=400)
 
-    if url:
-        article = extract_from_url(url)
-        article_info = article.text
-        article_title = article.title
-    elif files:
-        article = extract_from_file(files)
-        article_info = article.text
-        article_title = article.title
-    elif article_text:
-        article = extract_from_text(article_text)
-        article_info = article.text
-        article_title = article.title
+    try:
+        if url:
+            article = extract_from_url(url)
+        elif files:
+            article = extract_from_file(files)
+        elif article_text:
+            article = extract_from_text(article_text)
+    except Exception:
+        return JsonResponse({"error": "Failed to extract data, try a different form of submission"}, status=400)
 
-    print(article_title)
+    article_info = article.text
+    article_title = article.title
 
     api_models = {}
     final_results = {}
