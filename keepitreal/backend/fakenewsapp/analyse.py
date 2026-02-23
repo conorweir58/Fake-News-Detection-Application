@@ -30,22 +30,21 @@ def complete_analysis(request):
 
     if url:
         article = extract_from_url(url)
-        article_info = article.text
-        article_title = article.title
     elif files:
         article = extract_from_file(files)
-        article_info = article.text
-        article_title = article.title
     elif article_text:
         article = extract_from_text(article_text)
-        article_info = article.text
-        article_title = article.title
+
+    if not article:
+        return JsonResponse({"error": "Failed to extract data from given text"}, status=500)
+    
+    article_info = article.text
+    article_title = article.title
 
     print(article_title)
 
     api_models = {}
     final_results = {}
-
 
     # here i call all the models with the given text
     if "pulk" in selected_models:
