@@ -11,8 +11,6 @@ import Real_or_fake from '../../assets/Real_or_fake.png';
 import Register from '../../assets/Register.png';
 import Sentiment from '../../assets/Sentiment.png';
 import Trustworthiness from '../../assets/Trustworthiness.png';
-import { cardClasses } from '../../styles/tailwindConstants';
-
 
 function Help(){
 
