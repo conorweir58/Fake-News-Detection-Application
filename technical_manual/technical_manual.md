@@ -316,7 +316,7 @@ cd ..\..\keepitreal\frontend\
 npm install
 ```
 
-5. Create an .env file and add these
+5. Create an .env file in the backend directory and add these
 
 ```bash
 SECRET_KEY='REMOVED'
@@ -326,7 +326,33 @@ X_RAPIDAPI_KEY_DOCXTRACT='REMOVED'
 DEBUG=True
 ```
 
-6. Run database migrations
+6. If you do not want to install PostgreSQL simply:
+```bash
+Open the settings.py file into your chosen editor
+change the block of code:
+DATABASES = {
+  'default': {
+    'ENGINE': 'django.db.backends.postgresql',
+    'NAME': 'FakenewsDatabase',
+    'USER': user,
+    'PASSWORD': password,
+    'HOST': '127.0.0.1',
+    'PORT': '5432',
+  }
+}
+```
+
+with this block:
+```bash
+DATABASES = {
+  'default': {
+      'ENGINE': 'django.db.backends.sqlite3',
+      'NAME': BASE_DIR / 'db.sqlite3',
+  }
+}
+```
+
+7. Run database migrations
 
 ```bash
 cd ..\..\keepitreal\backend
@@ -334,17 +360,117 @@ python manage.py makemigrations
 python manage.py migrate
 ```
 
-7. Start backend server
+8. Start backend server
 
 ```bash
 python manage.py runserver
 ```
 
-8. Open another termninal to run frontend
+9. Open another termninal to run frontend
 
 ```bash
 cd keepitreal\frontend
 npm run dev
 ```
 
-9. Once frontend server is started copy the link shown beside local: and paste that into your browser
+10. Once frontend server is started copy the link shown beside local: and paste that into your browser
+
+# 6\. References
+- https://realpython.com/python-requests/
+- https://www.geeksforgeeks.org/git/git-ignore-and-gitignore/
+- https://www.codegenes.net/blog/pytorch-git/
+- https://www.geeksforgeeks.org/python/best-practices-for-managing-django-secret-keys-and-environment-variables/
+- https://www.roomacarthur.dev/notes/how-to-using-python-decouple-for-environment-variables-in-django/
+- https://pytorch.org/get-started/locally/
+- https://huggingface.co/transformers/v3.2.0/main_classes/configuration.html
+- https://huggingface.co/blog/sentiment-analysis-python
+- https://huggingface.co/cirimus/modernbert-large-bias-type-classifier
+- https://www.geeksforgeeks.org/blogs/how-to-build-an-api-from-scratch/
+- https://www.django-rest-framework.org/api-guide/views/
+- https://vite.dev/guide/
+- https://stackoverflow.com/questions/70612439/csrf-failed-origin-checking-failed-http-localhost8000-does-not-match-any
+- https://codezup.com/building-custom-authentication-system-django-step-by-step-guide/
+- https://codebrahma.com/react-csrf-protection-10-best-practices/
+- https://www.stackhawk.com/blog/react-csrf-protection-guide-examples-and-how-to-enable-it/#h-how-to-fix-the-csrf-vulnerability
+- https://www.cybersrely.com/5-ways-for-csrf-prevention-in-react-js/#How_to_Implement_CSRF_Prevention_in_Reactjs
+- https://newspaper4k.readthedocs.io/en/latest/
+- https://www.enterprisedb.com/postgresql-tutorial-resources-training-1?uuid=867f9c7f-7be7-44ed-b03f-103a0a430d51&campaignId=postgres_rc_18
+- https://stackoverflow.com/questions/73377958/is-there-a-way-to-store-class-instances-into-a-database-python
+- https://alvarotrigo.com/blog/progress-bar-css/
+- https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_progressbar_3
+- https://www.w3schools.com/tags/ref_httpmethods.asp
+- https://stackoverflow.com/questions/43871637/no-access-control-allow-origin-header-is-present-on-the-requested-resource-whe
+- https://www.freecodecamp.org/news/how-to-use-postgresql-in-django/
+- https://docs.djangoproject.com/en/6.0/topics/db/models/
+- https://www.geeksforgeeks.org/python/serializers-django-rest-framework/
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
+- https://www.w3schools.com/colors/colors_picker.asp
+- https://css-tip.com/progress-bar-dynamic-color/
+- https://stackoverflow.com/questions/3736964/django-query-using-order-by-and-latest
+- https://docs.djangoproject.com/en/6.0/ref/contrib/auth/#django.contrib.auth.models.User
+- https://www.geeksforgeeks.org/blogs/how-to-build-an-api-from-scratch/
+- https://docs.pytorch.org/docs/stable/index.html
+- https://www.django-rest-framework.org/api-guide/views/
+- https://www.w3schools.com/python/python_json.asp
+- https://www.freecodecamp.org/news/how-to-enable-cors-in-django/
+- https://www.sqlpey.com/python/resolved-how-to-fix-django-csrf-cookie-not-set-issue/
+- https://www.geeksforgeeks.org/python/django-orm-inserting-updating-deleting-data/
+- https://docs.djangoproject.com/en/6.0/topics/db/models/
+- https://docs.djangoproject.com/en/6.0/topics/auth/default/
+- https://www.geeksforgeeks.org/python/user-authentication-system-using-django/
+- https://docs.djangoproject.com/en/dev/ref/csrf/
+- https://docs.djangoproject.com/en/6.0/howto/csrf/
+- https://medium.com/django-unleashed/complete-tutorial-set-up-postgresql-database-with-django-application-d9e789ffa384
+- https://dev.to/udoka_emmanuel/how-to-build-a-navigation-bar-in-react-a-step-by-step-guide-2pcp
+- https://stackoverflow.com/questions/76449710/how-to-make-background-color-transition-gradually-into-another-color
+- https://css-tricks.com/building-progress-ring-quickly/
+- https://sqlpey.com/python/solved-how-to-fix-django-object-is-not-json-serializable/
+- https://stackoverflow.com/questions/33230540/django-select-related-when-to-use-it
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every
+- https://betterstack.com/community/guides/scaling-python/error-handling-django/
+- https://python.plainenglish.io/integrating-django-with-external-apis-best-practices-for-seamless-connections-dd8fca5ad9c0
+- https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/gradient/linear-gradient
+- https://codepen.io/alvarotrigo/pen/abLvEjW
+- https://www.w3tutorials.net/blog/how-to-create-a-circular-style-progressbar/#google_vignette
+- http://w3tutorials.net
+- https://mui.com/material-ui/react-progress/
+- https://www.geeksforgeeks.org/css/how-to-create-circular-progress-bar-using-svg/
+- https://www.joshwcomeau.com/svg/friendly-introduction-to-svg/
+- https://www.freecodecamp.org/news/how-to-work-with-multiple-checkboxes-in-react/
+- https://www.geeksforgeeks.org/machine-learning/weight-optimization/
+- https://fontawesomeicons.com/fa/react-js-round-two-decimal-places
+- https://www.geeksforgeeks.org/reactjs/how-to-handle-errors-in-react/
+- https://www.geeksforgeeks.org/reactjs/how-to-fetch-data-from-apis-using-asynchronous-await-in-reactjs/
+- https://www.xjavascript.com/blog/access-javascript-nested-objects-safely/#google_vignette
+- https://www.geeksforgeeks.org/blogs/10-most-common-http-status-codes/
+- https://stackoverflow.com/questions/39523040/concatenating-variables-and-strings-in-react
+- https://www.geeksforgeeks.org/reactjs/how-to-get-first-n-number-of-elements-from-an-array-using-reactjs/
+- https://tailwindcss.com/docs/
+- https://www.jamesmcguigan.com/content/llm/generative_ai/huggingface/transformers/AutoTokenizer.html
+- https://docs.djangoproject.com/en/6.0/topics/testing/overview/
+- https://www.django-rest-framework.org/api-guide/testing/
+
+- Here are two citations requested by two of our APIs
+  - Our Bias Model API
+  @inproceedings{JunquedeFortuny2025c,
+    title = {Bias Detection with ModernBERT-Large},
+    author = {Enric Junqué de Fortuny},
+    year = {2025},
+    howpublished = {\url{https://huggingface.co/cirimus/modernbert-large-bias-type-classifier}},
+  }
+  - Our AI vs Human Model API
+  @article{guo-etal-2023-hc3,
+    title = "How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection",
+    author = "Guo, Biyang  and
+      Zhang, Xin  and
+      Wang, Ziyuan  and
+      Jiang, Minqi  and
+      Nie, Jinran  and
+      Ding, Yuxuan  and
+      Yue, Jianwei  and
+      Wu, Yupeng",
+    journal={arXiv preprint arxiv:2301.07597}
+    year = "2023",
+  }
+
+
