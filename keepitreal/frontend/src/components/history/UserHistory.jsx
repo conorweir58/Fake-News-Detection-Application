@@ -77,6 +77,16 @@ function UserHistory(){
         );
     };
 
+    if (error) {
+        return (
+            <div className="p-4">
+                <div className={`${cardClasses}`}>
+                    <p className="text-red-500">{error}</p>
+                </div>
+            </div>
+        );
+    };
+
     return(
         <div className="flex flex-col items-center gap-6 p-10">
             {history && history.map(prev_sub => (
