@@ -14,7 +14,7 @@ function ResultsDisplay() {
     const directResults = location.state?.results || null;
 
     const [results, setResults] = useState(directResults);
-    // const [error, setError] = useState(null);
+    const [error, setError] = useState(null);
 
     function move(target) {
         const elem = document.getElementById("resultsBar");
@@ -45,24 +45,25 @@ function ResultsDisplay() {
                     });
 
                     if (res.status === 401) {
-                        console.error("Unauthorized - not logged in");
+                        setError("Unauthorized - Please log in to view results.");
                         return;
                     }
 
                     if (!res.ok) {
-                        throw new Error(`HTTP error! status: ${res.status}`);
+                        setError(`HTTP error! status: ${res.status}`);
                     }
 
                     const data = await res.json();
                     setResults(data);
-                } catch (err) {
-                    console.error("Error fetching results:", err);
+                } catch (error) {
+                    setError(`Error fetching results: ${error.message}`);
                 }
             };
 
             fetchResults();
         }
     }, [id, results, csrftoken]);
+
     // Animate trust bar
     useEffect(() => {
         if (results) {
@@ -71,15 +72,15 @@ function ResultsDisplay() {
         }
     }, [results]);
 
-    // if (error) {
-    //     return (
-    //         <div className="p-4">
-    //             <div className={`${cardClasses}`}>
-    //                 <p className="text-red-500">{error}</p>
-    //             </div>
-    //         </div>
-    //     )
-    // }
+    if (error) {
+        return (
+            <div className="p-4">
+                <div className={`${cardClasses}`}>
+                    <p className="text-red-500">{error}</p>
+                </div>
+            </div>
+        )
+    }
 
     if (!results) {
         return <p>Loading results…</p>;

@@ -18,7 +18,6 @@ def article_from_text(text):
     article = Article("https://user.upload") # Dummy url so it passes url check inside newspaper4k
 
     article.title = text.split("\n")[0] # In order to get the article summary - it requires a title - set first line as title - COULD THIS BE SLOW, CHECK IF THIS MEANS IT WILL GO THROUGH ALL TEXT TO SLICE
-    print("TITLE: " + article.title)
     article.text = text
 
     article.download_state = 2 # Set the download state as downloaded - allows us to parse
@@ -43,7 +42,6 @@ def doc_to_text(file):
 
     text = "\n".join([para.text for para in document.paragraphs]) # https://python-docx.readthedocs.io/en/latest/api/text.html#docx.text.paragraph.Paragraph.text
 
-    print(text)
     return text
 
 def ppt_to_text(file):
@@ -63,7 +61,6 @@ def ppt_to_text(file):
                     content.append(run.text)
     
     text = "\n".join(content)
-    print(text)
     return text
 
 def html_to_text(file, type):

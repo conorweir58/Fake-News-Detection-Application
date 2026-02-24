@@ -111,9 +111,8 @@ function Submission(){
                     setError(`API Error Fetching Results: ${response.status} ${response.statusText}`);
                     return;
                 }
-                
+
                 const data = await response.json();
-                console.log("API Response:", data);
                 setResults(data);
             } catch (error) {
                 setError(`Failed to fetch results: ${error.message} - Please try again.`);

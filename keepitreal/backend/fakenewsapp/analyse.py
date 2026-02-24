@@ -44,7 +44,6 @@ def complete_analysis(request):
     api_models = {}
     final_results = {}
 
-
     # here i call all the models with the given text
     if "pulk" in selected_models:
         pulk_result = pulk_pipe(article.text)

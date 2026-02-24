@@ -41,7 +41,7 @@ def extract_from_file(uploaded_file):
         text = html_to_text(uploaded_file, file_type)
 
     elif file_type == ".txt":
-        text = "".join([line.decode("utf-8", errors="replace") for line in uploaded_file]) # dunno if this works 100% of time
+        text = "".join([line.decode("utf-8", errors="replace") for line in uploaded_file])
 
     else:
         raise ValueError("Unsupported file type: " + file_type)

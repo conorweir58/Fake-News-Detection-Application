@@ -13,7 +13,7 @@ function Logout () {
                     credentials: "include"
                 });
             } catch (error) {
-                console.log("Error fetching CSRF", error);
+                throw new Error(`Error fetching CSRF: ${error.message}`);
             }
         };
         getCSRF();
@@ -41,11 +41,8 @@ function Logout () {
 
             // Update global auth state AFTER backend confirms logout
             logout();
-
-            console.log("Logout successful:", data.message);
-
         } catch (error) {
-            console.error("Error logging out:", error);
+           throw new Error(`Error logging out: ${error.message}`);
         }
     };
     return (

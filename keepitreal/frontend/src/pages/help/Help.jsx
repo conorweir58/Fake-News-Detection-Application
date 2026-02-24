@@ -11,14 +11,12 @@ import Real_or_fake from '../../assets/Real_or_fake.png';
 import Register from '../../assets/Register.png';
 import Sentiment from '../../assets/Sentiment.png';
 import Trustworthiness from '../../assets/Trustworthiness.png';
-import { cardClasses } from '../../styles/tailwindConstants';
-
 
 function Help(){
 
     return(
         <div className='bg-neutral-100 dark:bg-slate-800 border border-default dark:border-slate-600 rounded-base shadow-md p-4 sm:p-6 mb-4 text-left'>
-        <h1>User Manual</h1>
+        <h1 className="text-2xl font-bold">User Manual</h1>
         <div>
             <h2 id="table-of-contents"><strong>Table of Contents</strong></h2>
                 <h3 id="1-introduction"><strong>1. Introduction</strong></h3>
