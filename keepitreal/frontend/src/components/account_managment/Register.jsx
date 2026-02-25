@@ -23,7 +23,7 @@ function Register () {
                     credentials: "include"
                 });
             } catch (error) {
-                console.log("Error fetching CSRF", error);
+                throw new Error(`Error fetching CSRF: ${error.message}`);
             }
         };
         getCSRF();
