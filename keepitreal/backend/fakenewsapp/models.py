@@ -28,7 +28,7 @@ class DetectionResults(models.Model):
     sentiment = models.JSONField(null=True, blank=True)
     bias = models.JSONField(null=True, blank=True)
     gpt = models.JSONField(null=True, blank=True)
-    title = models.CharField(null=True, blank=True)
+    title = models.TextField(null=True, blank=True)
     created_at = models.DateField(auto_now_add=True)
 
 class User_History(models.Model):
